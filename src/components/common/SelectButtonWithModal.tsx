@@ -2,6 +2,7 @@ import Modal from "./Modal.tsx";
 import { ReactNode } from "react";
 import { BonPION } from "../../types";
 import { FadeIn } from "../../animations";
+import { PION } from "../../constants/strings.ts";
 
 const SelectButtonWithModal = ({
   title = "",
@@ -50,7 +51,7 @@ const SelectButtonWithModal = ({
                       className="rounded-lg bg-algo px-2 text-black md:px-3 py-2 flex gap-2 md:gap-3 items-center justify-between"
                     >
                       <p className="text-xs md:text-sm text-black">
-                        {`bonPION #` + selectedItem.tokenId}
+                        {`${PION.nft} #` + selectedItem.tokenId}
                       </p>
                       <img
                         onClick={(e) => {
@@ -73,7 +74,7 @@ const SelectButtonWithModal = ({
               <>
                 {selectedItems.length > 0 ? (
                   <p className="font-medium max-md:text-sm">
-                    {`bonPION #` +
+                    {`${PION.nft} #` +
                       selectedItems[0].tokenId +
                       " | Amount: " +
                       selectedItems[0].nodePower}

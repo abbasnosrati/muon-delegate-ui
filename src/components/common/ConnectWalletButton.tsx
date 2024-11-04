@@ -1,5 +1,6 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { usePion } from "../../context/PionContext";
+import { PION } from "../../constants/strings";
 
 export const ConnectWalletButton = ({
   size,
@@ -88,7 +89,7 @@ export const ConnectWalletButton = ({
                     size === "md" ? "" : "btn--small"
                   }`}
                 >
-                  {account.displayName} | {PionBalance?.dsp} PION
+                  {account.displayName} | {PionBalance?.dsp} {PION.token}
                 </button>
               );
             })()}

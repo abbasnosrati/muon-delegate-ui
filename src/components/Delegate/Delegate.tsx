@@ -4,6 +4,7 @@ import useBonPION from "../../context/BonPION/useBonPION";
 import SelectButtonWithModal from "../common/SelectButtonWithModal";
 import BonALICEModalBody from "../common/BonALICEModalBody";
 import useTransferAction from "../../context/TransferAction/useTransferAction";
+import { PION } from "../../constants/strings";
 enum Items {
   Pion = "pion",
   BonPion = "bonPion",
@@ -34,7 +35,7 @@ const Delegate = () => {
               }`}
               onClick={() => onSelectItem(Items.Pion)}
             >
-              PION
+              {PION.token}
             </div>
             <div
               className={`flex items-center py-5 border-b justify-center w-full cursor-pointer text-xs md:text-sm font-semibold transition-all text-gray3 ${
@@ -43,7 +44,7 @@ const Delegate = () => {
               }`}
               onClick={() => onSelectItem(Items.BonPion)}
             >
-              bonPION
+              {PION.nft}
             </div>
           </div>
           {selectedItem === Items.Pion ? (
@@ -81,7 +82,7 @@ const DelegatePion = ({
     <div>
       <div className="mb-2">
         <p className="balance flex text-sm max-md:text-sm max-md:font-semibold text-xyz-2 dark:text-alice-gray">
-          PION Balance:{" "}
+          {PION.token} Balance:{" "}
           <span className="ml-1 text-xyz-75 dark:text-black dark:font-semibold tracking-[1px]">
             {PionBalance?.dsp}
           </span>
@@ -96,7 +97,7 @@ const DelegatePion = ({
           onChange={(e) => handleChange(e.target.value)}
         />
         <div className="amount-input__token-name group font-semibold max-md:text-sm min-w-fit text-gray10 dark:text-black1 mr-5">
-          PION
+          {PION.token}
         </div>
       </div>
       {PionBalance && PionBalance.dsp < Number(pionDelegateAmount) && (
@@ -111,7 +112,7 @@ const DelegatePion = ({
             }
             className="underline cursor-pointer"
           >
-            Buy $PION here.
+            Buy ${PION.token} here.
           </span>
         </div>
       )}
@@ -138,11 +139,11 @@ const DelegateBonPion = () => {
   return (
     <div>
       <SelectButtonWithModal
-        title={`Select bonPION`}
+        title={`Select ${PION.nft}`}
         onClick={() => openTransferModal()}
         isModalOpen={isTransferModalOpen}
         closeModalHandler={() => closeTransferModal()}
-        modalTitle={`Select bonPION`}
+        modalTitle={`Select ${PION.nft}`}
         removeItem={() => {}}
         selectedItems={
           selectedTransferBonALICE ? [selectedTransferBonALICE] : []
@@ -178,7 +179,9 @@ const Details = () => {
           )
         }
       >
-        <p className="text-sm font-medium font-tomorrow underline">Buy $PION</p>
+        <p className="text-sm font-medium font-tomorrow underline">
+          Buy ${PION.token}
+        </p>
       </div>
       <div className="w-full text-xs md:text-sm font-semibold  transition-all text-white action-sidebar rounded-2xl mb-10 flex flex-col gap-3 px-3 py-3 md:rounded-2xl  bg-so-dark-gray md:px-6 md:py-4">
         <div>STAKED AMOUNT:</div>
