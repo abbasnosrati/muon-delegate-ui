@@ -3,7 +3,7 @@ import { ConnectWalletButton } from "../common/ConnectWalletButton";
 const Header = () => {
   return (
     <div>
-      <div className="flex w-full items-end justify-between pr-5 lg:pr-14 pt-10 absolute top-0">
+      <div className="  absolute w-full navbar justify-between items-center flex px-2 sm:px-4 sm:pt-10">
         <div className="flex items-center gap-2 pl-5 lg:pl-14">
           <img alt="bonPion" src="/assets/images/logo.svg" />
           <img alt="bonPion" src="/assets/images/logo-text.svg" />

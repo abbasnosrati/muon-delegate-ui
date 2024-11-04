@@ -12,7 +12,7 @@ import { TransferActionProvider } from "./context/TransferAction/TransferActionC
 function App() {
   document.getElementsByTagName("body")[0].className = "pion";
   return (
-    <div className="app page__bg relative overflow-x-hidden no-scrollbar flex flex-col justify-center">
+    <div className="app relative overflow-x-hidden max-md:pt-[calc(5*4px)] no-scrollbar page__bg">
       <Web3ModalProvider>
         <ApolloProvider client={pionClient}>
           <RefreshProvider>
@@ -21,7 +21,9 @@ function App() {
                 <LPTokenProvider>
                   <TransferActionProvider>
                     <Header />
-                    <Delegate />
+                    <div className="w-full">
+                      <Delegate />
+                    </div>
                     <Footer />
                   </TransferActionProvider>
                 </LPTokenProvider>

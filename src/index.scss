@@ -181,26 +181,6 @@ html {
   }
 }
 
-.dark {
-  & .page {
-    &__bg {
-      background-image: url("../public/assets/images/alice-app-background2.svg"),
-        linear-gradient(#f8faff 0%, #f8faff 100%);
-      background-position: 0 0;
-      background-repeat: no-repeat;
-      background-size: cover;
-
-      &--home {
-        background-image: url("../public/assets/images/alice-home-background.svg"),
-          linear-gradient(#f8faff 0%, #f8faff 100%);
-        background-position: top;
-        background-repeat: no-repeat;
-        background-size: cover;
-      }
-    }
-  }
-}
-
 .page {
   // Todo: Refactor this and use tailwind spacing classes
   @apply max-w-[90vw] py-12 pb-24 md:px-4 md:max-w-[1080px] md:pb-[148px] md:pt-[160px] mx-auto;

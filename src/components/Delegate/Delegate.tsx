@@ -19,13 +19,13 @@ const Delegate = () => {
   };
 
   return (
-    <div className="w-full flex flex-col items-center justify-center p-5 lg:p-0">
+    <div className="w-full flex flex-col items-center justify-center page ">
       <Details />
       <div className="w-full max-w-[768px]">
         <div className="sm:text-2xl text-lg font-medium font-tomorrow mb-5 text-white ">
           Delegate More
         </div>
-        <div className="pion actions-content relative dark:bg-alice-body-background dark:shadow-lg w-full px-4 py-5 max-md:min-w-[90vw] min-h-[300px] md:min-h-[428px] md:max-h-[424px] overflow-hidden md:px-11 rounded-2xl flex flex-col">
+        <div className="pion actions-content relative dark:bg-alice-body-background dark:shadow-lg w-full px-4 py-3 max-md:min-w-[90vw] min-h-[400px] md:min-h-[428px] md:max-h-[424px] overflow-hidden md:px-11 rounded-2xl flex flex-col">
           <div className="flex justify-between items-center mb-8">
             <div
               className={`flex items-center py-5 border-b justify-center w-full cursor-pointer text-xs md:text-sm font-semibold transition-all text-gray3 ${
@@ -78,7 +78,7 @@ const DelegatePion = ({
   };
 
   return (
-    <div className="">
+    <div>
       <div className="mb-2">
         <p className="balance flex text-sm max-md:text-sm max-md:font-semibold text-xyz-2 dark:text-alice-gray">
           PION Balance:{" "}
@@ -168,7 +168,7 @@ const DelegateBonPion = () => {
 
 const Details = () => {
   return (
-    <div className="max-w-[768px]  w-full">
+    <div className="max-w-[768px] w-full mt-5 sm:mt-0">
       <div
         className="flex items-center w-full justify-end mb-2 cursor-pointer"
         onClick={() =>
