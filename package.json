@@ -1,0 +1,47 @@
+{
+  "name": "delegate",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "contracts:compile:abi": "typechain --target ethers-v5 --out-dir src/abis/types \"./src/abis/**/*.json\"",
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "prepare": "graphql-codegen"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.11.8",
+    "@rainbow-me/rainbowkit": "^2.2.0",
+    "@tanstack/react-query": "^5.59.16",
+    "@typechain/ethers-v5": "^11.0.0",
+    "ethers": "^6.13.4",
+    "framer-motion": "^10.12.16",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typechain": "^8.2.0",
+    "viem": "2.x",
+    "graphql-tag": "^2.12.6",
+    "wagmi": "^2.12.25"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^7.13.1",
+    "@typescript-eslint/parser": "^7.13.1",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.7",
+    "postcss": "^8.4.47",
+    "sass-embedded": "^1.80.5",
+    "tailwindcss": "^3.4.14",
+    "typescript": "^5.2.2",
+    "vite": "^5.3.1",
+    "@graphql-codegen/cli": "^4.0.1",
+    "@graphql-codegen/client-preset": "^4.0.0",
+    "graphql": "^16.6.0"
+  }
+}
