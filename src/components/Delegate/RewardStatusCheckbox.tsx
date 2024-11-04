@@ -2,7 +2,6 @@ import useDelegateAction from "../../context/TransferAction/useDelegateAction";
 
 export const RewardStatusCheckbox = () => {
   const { selectedRewardStatus, handleCheckboxChange } = useDelegateAction();
-
   return (
     <div>
       <p className="balance flex text-sm max-md:text-sm max-md:font-semibold text-xyz-2 dark:text-alice-gray">
@@ -17,7 +16,7 @@ export const RewardStatusCheckbox = () => {
               onChange={() => handleCheckboxChange("ReStake Reward")}
               className="mr-1"
             />
-            ReStake
+            ReStake Reward
           </label>
 
           <label className="cursor-pointer">
@@ -27,7 +26,7 @@ export const RewardStatusCheckbox = () => {
               onChange={() => handleCheckboxChange("Transfer Reward")}
               className="mr-1"
             />
-            Transfer
+            Transfer Reward
           </label>
         </div>
         <p className="text-sm mt-3">Selected: {selectedRewardStatus || ""}</p>

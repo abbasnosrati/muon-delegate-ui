@@ -56,12 +56,22 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
   const [selectedRewardStatus, setSelectedRewardStatus] = useState(null);
 
   const handleCheckboxChange = (checkbox: any) => {
+    if (!checkIsWalletConnect()) return;
     setSelectedRewardStatus(
       checkbox === selectedRewardStatus ? null : checkbox
     );
   };
 
+  const checkIsWalletConnect = () => {
+    if (!walletAddress) {
+      setIsConnectWalletModalOpen(true);
+      return false;
+    }
+    return true;
+  };
+
   const handleChangeDelegateAmount = (amount: string) => {
+    if (!checkIsWalletConnect()) return;
     setPionDelegateAmount(amount);
   };
 
@@ -69,10 +79,7 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
     useState<BonPION | null>(null);
 
   const openTransferModal = useCallback(() => {
-    if (!walletAddress) {
-      setIsConnectWalletModalOpen(true);
-      return;
-    }
+    if (!checkIsWalletConnect()) return;
     setIsTransferModalOpen(true);
   }, []);
   const closeTransferModal = useCallback(
