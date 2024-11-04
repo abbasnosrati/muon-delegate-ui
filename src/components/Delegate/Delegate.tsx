@@ -21,7 +21,7 @@ const Delegate = () => {
 
   return (
     <div className="w-full flex flex-col items-center justify-center page ">
-      <Details />
+      <UserDetails />
       <div className="w-full max-w-[768px]">
         <div className="sm:text-2xl text-lg font-medium font-tomorrow mb-5 text-white ">
           Delegate More
@@ -167,7 +167,7 @@ const DelegateBonPion = () => {
   );
 };
 
-const Details = () => {
+const UserDetails = () => {
   return (
     <div className="max-w-[768px] w-full mt-5 sm:mt-0">
       <div
