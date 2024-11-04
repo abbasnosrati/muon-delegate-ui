@@ -89,7 +89,7 @@ const SelectButtonWithModal = ({
           </span>
           <img
             className="w-3 h-3 md:w-[14px] md:h-[14px]"
-            src="/assets/images/select-button/down-arrow.svg"
+            src="/assets/images/down-arrow.svg"
             alt=""
           />
         </div>

@@ -1,7 +1,9 @@
 import { PionContractAddress } from "../../constants/addresses";
 import { PION } from "../../constants/strings";
+import useDelegateAction from "../../context/TransferAction/useDelegateAction";
 
 export const UserDetails = () => {
+  const { userDelegateBalances } = useDelegateAction();
   return (
     <div className="max-w-[768px] w-full mt-5 sm:mt-0 mb-5">
       <div
@@ -21,7 +23,11 @@ export const UserDetails = () => {
         <div className="w-full text-xs md:text-sm  transition-all text-white action-sidebar rounded-2xl  flex flex-col justify-center gap-3 px-3 py-3 md:rounded-2xl  bg-so-dark-gray md:px-6 md:py-4">
           <div className="flex justify-between">
             <p>STAKED AMOUNT</p>
-            <div className="font-semibold sm:text-lg text-md">125</div>
+            <div className="font-semibold sm:text-lg text-md">
+              {userDelegateBalances
+                ? `${userDelegateBalances?.dsp} PION`
+                : "..."}
+            </div>
           </div>
           <div className="flex justify-between">
             <div>REWARD</div>

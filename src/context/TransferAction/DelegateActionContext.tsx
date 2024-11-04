@@ -6,9 +6,22 @@ import {
   useState,
 } from "react";
 import { BonPION } from "../../types";
-// import useTransfer from "../../hooks/useTransfer.ts";
-// import { Address } from "viem";
 import { useAccount } from "wagmi";
+import { PION } from "../../constants/strings";
+import Delegation_ABI from "../../abis/Delegation";
+import PION_ABI from "../../abis/Token.ts";
+
+import { writeContract } from "@wagmi/core";
+import {
+  DELEGATION_ADDRESS,
+  PionContractAddress,
+} from "../../constants/addresses";
+import { config } from "../../web3/config";
+import { w3bNumberFromString } from "../../utils/web3.ts";
+import { W3bNumber } from "../../types/wagmi.ts";
+import { waitForTransactionReceipt } from "wagmi/actions";
+import useAllowance from "../../hooks/useAllowance.ts";
+import useDelegateBalances from "../../hooks/useDelegateBalances.ts";
 
 const DelegateActionContext = createContext<{
   isTransferModalOpen: boolean;
@@ -25,6 +38,13 @@ const DelegateActionContext = createContext<{
   handleCheckboxChange: (checkbox: any) => void;
   isConnectWalletModalOpen: boolean;
   setIsConnectWalletModalOpen: (isOpen: boolean) => void;
+  handleDelegate: (delegateType: string) => void;
+  handleApprove: (delegateType: string) => void;
+  isMetaMaskLoadingApprove: boolean;
+  isMetaMaskLoadingDelegate: boolean;
+  PionAllowanceForDelegator: W3bNumber | null;
+  pionAllowance: boolean;
+  userDelegateBalances: W3bNumber | null;
 }>({
   isTransferModalOpen: false,
   openTransferModal: () => {},
@@ -32,7 +52,6 @@ const DelegateActionContext = createContext<{
   isSelectedTransferBonALICE: () => false,
   handleTransferModalItemClicked: () => {},
   selectedTransferBonALICE: null,
-  // transfer: () => {},
   unselectTransferModalSelectedBonALICE: () => {},
   pionDelegateAmount: null,
   handleChangeDelegateAmount: () => {},
@@ -40,6 +59,13 @@ const DelegateActionContext = createContext<{
   handleCheckboxChange: () => {},
   isConnectWalletModalOpen: false,
   setIsConnectWalletModalOpen: () => {},
+  handleDelegate: () => {},
+  handleApprove: () => {},
+  isMetaMaskLoadingApprove: false,
+  isMetaMaskLoadingDelegate: false,
+  PionAllowanceForDelegator: null,
+  pionAllowance: false,
+  userDelegateBalances: null,
 });
 
 const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
@@ -49,11 +75,35 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
     null
   );
 
+  const { userDelegateBalances, refetch: refetchUserDelegateBalance } =
+    useDelegateBalances();
+
+  const [isMetaMaskLoadingApprove, setIsMetamaskLoadingApprove] =
+    useState(false);
+
+  const [isMetaMaskLoadingDelegate, setIsMetamaskLoadingDelegate] =
+    useState(false);
+
   const [isConnectWalletModalOpen, setIsConnectWalletModalOpen] = useState(
     !walletAddress
   );
 
   const [selectedRewardStatus, setSelectedRewardStatus] = useState(null);
+
+  const [pionAllowance, setPionAllowance] = useState(false);
+
+  const {
+    allowance: PionAllowanceForDelegator,
+    refetch: refetchPionAllowance,
+  } = useAllowance(DELEGATION_ADDRESS);
+
+  useEffect(() => {
+    if (PionAllowanceForDelegator && pionDelegateAmount) {
+      setPionAllowance(
+        PionAllowanceForDelegator.dsp >= Number(pionDelegateAmount)
+      );
+    }
+  }, [PionAllowanceForDelegator, pionDelegateAmount]);
 
   const handleCheckboxChange = (checkbox: any) => {
     if (!checkIsWalletConnect()) return;
@@ -87,11 +137,72 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
     []
   );
 
-  // const { transfer } = useTransfer(
-  //   walletAddress,
-  //   transferAddress as Address,
-  //   transferModalSelectedBonALICE?.tokenId
-  // );
+  const handleDelegate = (delegateType: string) => {
+    if (!checkIsWalletConnect()) return;
+    if (delegateType === PION.token) {
+      handleDelegateToken();
+    } else {
+      handleDelegateNFT();
+    }
+  };
+
+  const handleDelegateToken = async () => {
+    try {
+      setIsMetamaskLoadingDelegate(true);
+      const result = await writeContract(config, {
+        address: DELEGATION_ADDRESS,
+        abi: Delegation_ABI,
+        functionName: "delegateToken",
+        args: [
+          w3bNumberFromString(pionDelegateAmount!).big,
+          walletAddress,
+          true,
+        ],
+      });
+
+      await waitForTransactionReceipt(config, {
+        hash: result,
+      });
+    } finally {
+      setIsMetamaskLoadingDelegate(false);
+      refetchUserDelegateBalance();
+    }
+  };
+
+  const handleApprove = (delegateType: string) => {
+    if (delegateType === PION.token) {
+      handleApprovePion();
+    } else {
+      handleApproveBonPION();
+    }
+  };
+
+  const handleApprovePion = async () => {
+    try {
+      setIsMetamaskLoadingApprove(true);
+      const result = await writeContract(config, {
+        address: PionContractAddress,
+        abi: PION_ABI,
+        functionName: "approve",
+        args: [
+          DELEGATION_ADDRESS,
+          w3bNumberFromString(pionDelegateAmount!).big,
+        ],
+      });
+      await waitForTransactionReceipt(config, {
+        hash: result,
+      });
+      refetchPionAllowance();
+    } finally {
+      setIsMetamaskLoadingApprove(false);
+    }
+  };
+
+  const handleApproveBonPION = () => {};
+
+  const handleDelegateNFT = () => {
+    console.log("nft");
+  };
 
   const changeTransferModalSelectedBonALICE = useCallback(
     (bonALICE: BonPION) => {
@@ -148,13 +259,19 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
         isSelectedTransferBonALICE,
         handleTransferModalItemClicked,
         pionDelegateAmount,
-        // transfer,
         unselectTransferModalSelectedBonALICE,
         handleChangeDelegateAmount,
         handleCheckboxChange,
         selectedRewardStatus,
         isConnectWalletModalOpen,
         setIsConnectWalletModalOpen,
+        handleDelegate,
+        handleApprove,
+        isMetaMaskLoadingApprove,
+        isMetaMaskLoadingDelegate,
+        PionAllowanceForDelegator,
+        pionAllowance,
+        userDelegateBalances,
       }}
     >
       {children}

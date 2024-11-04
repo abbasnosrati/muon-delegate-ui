@@ -5,15 +5,24 @@ import { UserDetails } from "./UserDetails";
 import { DelegatePion } from "./DelegatePion";
 import { RewardStatusCheckbox } from "./RewardStatusCheckbox";
 import { ConnectWalletModal } from "../common/ConnectWalletModal";
+import useDelegateAction from "../../context/TransferAction/useDelegateAction";
 
 enum Items {
-  Pion = "pion",
-  BonPion = "bonPion",
+  Pion = PION.token as any,
+  BonPion = PION.nft as any,
 }
 
 const Delegate = () => {
-  const [selectedItem, setSelectedItem] = useState<Items>(Items.Pion);
+  const {
+    handleDelegate,
+    handleApprove,
+    pionDelegateAmount,
+    isMetaMaskLoadingApprove,
+    isMetaMaskLoadingDelegate,
+    pionAllowance,
+  } = useDelegateAction();
 
+  const [selectedItem, setSelectedItem] = useState<Items>(Items.Pion);
   const onSelectItem = (item: Items) => {
     setSelectedItem(item);
   };
@@ -50,8 +59,29 @@ const Delegate = () => {
           {selectedItem === Items.Pion ? <DelegatePion /> : <DelegateBonPion />}
           <RewardStatusCheckbox />
           <div className="flex flex-row gap-2 sm:gap-3 absolute bottom-10 ">
-            <button className="responsive-button">Delegate</button>
-            <button className="responsive-button">Claim</button>
+            {!pionAllowance && pionDelegateAmount ? (
+              <button
+                disabled={!pionDelegateAmount}
+                onClick={() => handleApprove(selectedItem as any)}
+                className={`responsive-button ${
+                  !pionDelegateAmount && "opacity-30 cursor-auto"
+                }`}
+              >
+                {isMetaMaskLoadingApprove ? "Approving..." : "Approve"}
+              </button>
+            ) : (
+              <button
+                disabled={!pionDelegateAmount}
+                onClick={() => handleDelegate(selectedItem as any)}
+                className={`responsive-button ${
+                  !pionDelegateAmount && "opacity-30 cursor-auto"
+                }`}
+              >
+                {isMetaMaskLoadingDelegate ? "Delegating..." : "Delegate"}
+              </button>
+            )}
+
+            {/* <button className="responsive-button">Claim</button> */}
           </div>
         </div>
       </div>

@@ -15,10 +15,12 @@ const PionContext = createContext<{
   PionBalanceIsFetched: boolean;
   PionBalanceIsLoading: boolean;
   PionBalance: W3bNumber | null;
+  refetchPionBalance: () => void;
 }>({
   PionBalanceIsFetched: false,
   PionBalanceIsLoading: false,
   PionBalance: null,
+  refetchPionBalance: () => {},
 });
 
 const PIONProvider = ({ children }: { children: ReactNode }) => {
@@ -29,6 +31,7 @@ const PIONProvider = ({ children }: { children: ReactNode }) => {
     data: PionBalanceData,
     isFetched: PionBalanceIsFetched,
     isLoading: PionBalanceIsLoading,
+    refetch: refetchPionBalance,
   } = useBalance({
     address: walletAddress,
     token: PionContractAddress,
@@ -49,6 +52,7 @@ const PIONProvider = ({ children }: { children: ReactNode }) => {
         PionBalanceIsFetched,
         PionBalanceIsLoading,
         PionBalance,
+        refetchPionBalance,
       }}
     >
       {children}

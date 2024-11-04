@@ -1,12 +1,20 @@
+import { useEffect } from "react";
 import { PionContractAddress } from "../../constants/addresses";
 import { PION } from "../../constants/strings";
 import { usePion } from "../../context/PionContext";
 import useDelegateAction from "../../context/TransferAction/useDelegateAction";
 
 export const DelegatePion = () => {
-  const { PionBalance } = usePion();
-  const { handleChangeDelegateAmount, pionDelegateAmount } =
-    useDelegateAction();
+  const { PionBalance, refetchPionBalance } = usePion();
+  const {
+    handleChangeDelegateAmount,
+    pionDelegateAmount,
+    isMetaMaskLoadingDelegate,
+  } = useDelegateAction();
+
+  useEffect(() => {
+    refetchPionBalance();
+  }, [isMetaMaskLoadingDelegate]);
 
   return (
     <div>
