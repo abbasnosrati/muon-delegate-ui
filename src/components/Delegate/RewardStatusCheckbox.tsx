@@ -1,4 +1,3 @@
-import { useState } from "react";
 import useDelegateAction from "../../context/TransferAction/useDelegateAction";
 
 export const RewardStatusCheckbox = () => {
@@ -9,7 +8,7 @@ export const RewardStatusCheckbox = () => {
       <p className="balance flex text-sm max-md:text-sm max-md:font-semibold text-xyz-2 dark:text-alice-gray">
         Select REWARD status
       </p>
-      <div className="mt-2 bg-input-bg rounded-xl px-3 py-2">
+      <div className="mt-2 bg-input-bg rounded-xl px-5 py-4">
         <div className="flex gap-5 text-white text-sm">
           <label className="cursor-pointer">
             <input
@@ -31,7 +30,7 @@ export const RewardStatusCheckbox = () => {
             Transfer
           </label>
         </div>
-        <p className="text-sm mt-5">Selected: {selectedRewardStatus || ""}</p>
+        <p className="text-sm mt-3">Selected: {selectedRewardStatus || ""}</p>
       </div>
     </div>
   );

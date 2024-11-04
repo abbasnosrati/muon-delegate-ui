@@ -4,6 +4,7 @@ import { DelegateBonPion } from "./DelegateBonPion";
 import { UserDetails } from "./UserDetails";
 import { DelegatePion } from "./DelegatePion";
 import { RewardStatusCheckbox } from "./RewardStatusCheckbox";
+import { ConnectWalletModal } from "../common/ConnectWalletModal";
 
 enum Items {
   Pion = "pion",
@@ -19,6 +20,7 @@ const Delegate = () => {
 
   return (
     <div className="w-full flex flex-col items-center justify-center page ">
+      <ConnectWalletModal />
       <UserDetails />
       <div className="w-full max-w-[768px]">
         <div className="sm:text-2xl text-lg font-medium font-tomorrow mb-5 text-white ">

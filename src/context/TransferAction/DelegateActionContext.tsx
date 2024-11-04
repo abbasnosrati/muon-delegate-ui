@@ -23,6 +23,8 @@ const DelegateActionContext = createContext<{
   handleChangeDelegateAmount: (amount: string) => void;
   selectedRewardStatus: null | string | undefined;
   handleCheckboxChange: (checkbox: any) => void;
+  isConnectWalletModalOpen: boolean;
+  setIsConnectWalletModalOpen: (isOpen: boolean) => void;
 }>({
   isTransferModalOpen: false,
   openTransferModal: () => {},
@@ -36,6 +38,8 @@ const DelegateActionContext = createContext<{
   handleChangeDelegateAmount: () => {},
   selectedRewardStatus: null,
   handleCheckboxChange: () => {},
+  isConnectWalletModalOpen: false,
+  setIsConnectWalletModalOpen: () => {},
 });
 
 const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
@@ -43,6 +47,10 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
   const [isTransferModalOpen, setIsTransferModalOpen] = useState(false);
   const [pionDelegateAmount, setPionDelegateAmount] = useState<string | null>(
     null
+  );
+
+  const [isConnectWalletModalOpen, setIsConnectWalletModalOpen] = useState(
+    !walletAddress
   );
 
   const [selectedRewardStatus, setSelectedRewardStatus] = useState(null);
@@ -60,7 +68,13 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
   const [transferModalSelectedBonALICE, setTransferModalSelectedBonALICE] =
     useState<BonPION | null>(null);
 
-  const openTransferModal = useCallback(() => setIsTransferModalOpen(true), []);
+  const openTransferModal = useCallback(() => {
+    if (!walletAddress) {
+      setIsConnectWalletModalOpen(true);
+      return;
+    }
+    setIsTransferModalOpen(true);
+  }, []);
   const closeTransferModal = useCallback(
     () => setIsTransferModalOpen(false),
     []
@@ -132,6 +146,8 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
         handleChangeDelegateAmount,
         handleCheckboxChange,
         selectedRewardStatus,
+        isConnectWalletModalOpen,
+        setIsConnectWalletModalOpen,
       }}
     >
       {children}
