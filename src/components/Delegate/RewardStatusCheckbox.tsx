@@ -6,15 +6,15 @@ export const RewardStatusCheckbox = () => {
   return (
     <div>
       <p className="balance flex text-sm max-md:text-sm max-md:font-semibold text-xyz-2 dark:text-alice-gray">
-        Select REWARD status
+        Select Status
       </p>
       <div className="mt-2 bg-input-bg rounded-xl px-5 py-4">
         <div className="flex gap-5 text-white text-sm">
           <label className="cursor-pointer">
             <input
               type="checkbox"
-              checked={selectedRewardStatus === "ReStake"}
-              onChange={() => handleCheckboxChange("ReStake")}
+              checked={selectedRewardStatus === "ReStake Reward"}
+              onChange={() => handleCheckboxChange("ReStake Reward")}
               className="mr-1"
             />
             ReStake
@@ -23,8 +23,8 @@ export const RewardStatusCheckbox = () => {
           <label className="cursor-pointer">
             <input
               type="checkbox"
-              checked={selectedRewardStatus === "Transfer"}
-              onChange={() => handleCheckboxChange("Transfer")}
+              checked={selectedRewardStatus === "Transfer Reward"}
+              onChange={() => handleCheckboxChange("Transfer Reward")}
               className="mr-1"
             />
             Transfer
