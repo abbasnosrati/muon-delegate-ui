@@ -10,17 +10,19 @@ import { BonPION } from "../../types";
 // import { Address } from "viem";
 import { useAccount } from "wagmi";
 
-const TransferActionContext = createContext<{
+const DelegateActionContext = createContext<{
   isTransferModalOpen: boolean;
   openTransferModal: () => void;
   closeTransferModal: () => void;
   isSelectedTransferBonALICE: (bonALICE: BonPION) => boolean;
   handleTransferModalItemClicked: (bonALICE: BonPION) => void;
   selectedTransferBonALICE: BonPION | null;
-  handleTransferAddressChange: (address: string) => void;
-  transferAddress: string;
   // transfer: () => void;
   unselectTransferModalSelectedBonALICE: () => void;
+  pionDelegateAmount: string | null;
+  handleChangeDelegateAmount: (amount: string) => void;
+  selectedRewardStatus: null | string | undefined;
+  handleCheckboxChange: (checkbox: any) => void;
 }>({
   isTransferModalOpen: false,
   openTransferModal: () => {},
@@ -28,21 +30,35 @@ const TransferActionContext = createContext<{
   isSelectedTransferBonALICE: () => false,
   handleTransferModalItemClicked: () => {},
   selectedTransferBonALICE: null,
-  handleTransferAddressChange: () => {},
-  transferAddress: "",
   // transfer: () => {},
   unselectTransferModalSelectedBonALICE: () => {},
+  pionDelegateAmount: null,
+  handleChangeDelegateAmount: () => {},
+  selectedRewardStatus: null,
+  handleCheckboxChange: () => {},
 });
 
-const TransferActionProvider = ({ children }: { children: ReactNode }) => {
+const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
   const { address: walletAddress } = useAccount();
   const [isTransferModalOpen, setIsTransferModalOpen] = useState(false);
+  const [pionDelegateAmount, setPionDelegateAmount] = useState<string | null>(
+    null
+  );
+
+  const [selectedRewardStatus, setSelectedRewardStatus] = useState(null);
+
+  const handleCheckboxChange = (checkbox: any) => {
+    setSelectedRewardStatus(
+      checkbox === selectedRewardStatus ? null : checkbox
+    );
+  };
+
+  const handleChangeDelegateAmount = (amount: string) => {
+    setPionDelegateAmount(amount);
+  };
+
   const [transferModalSelectedBonALICE, setTransferModalSelectedBonALICE] =
     useState<BonPION | null>(null);
-  const [transferAddress, setTransferAddress] = useState("");
-  const handleTransferAddressChange = useCallback((address: string) => {
-    setTransferAddress(address);
-  }, []);
 
   const openTransferModal = useCallback(() => setIsTransferModalOpen(true), []);
   const closeTransferModal = useCallback(
@@ -99,27 +115,28 @@ const TransferActionProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     setTransferModalSelectedBonALICE(null);
-    setTransferAddress("");
   }, [walletAddress]);
 
   return (
-    <TransferActionContext.Provider
+    <DelegateActionContext.Provider
       value={{
         isTransferModalOpen,
-        transferAddress,
-        handleTransferAddressChange,
         selectedTransferBonALICE: transferModalSelectedBonALICE,
         openTransferModal,
         closeTransferModal,
         isSelectedTransferBonALICE,
         handleTransferModalItemClicked,
+        pionDelegateAmount,
         // transfer,
         unselectTransferModalSelectedBonALICE,
+        handleChangeDelegateAmount,
+        handleCheckboxChange,
+        selectedRewardStatus,
       }}
     >
       {children}
-    </TransferActionContext.Provider>
+    </DelegateActionContext.Provider>
   );
 };
 
-export { TransferActionProvider, TransferActionContext };
+export { DelegateActionProvider, DelegateActionContext };
