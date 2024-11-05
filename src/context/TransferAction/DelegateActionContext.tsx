@@ -26,6 +26,7 @@ import useAllowance from "../../hooks/useAllowance.ts";
 import useDelegateBalances from "../../hooks/useDelegateBalances.ts";
 import useIsApprovedForAll from "../../hooks/useIsApprovedForAll.ts";
 import useReadRewardStatus from "../../hooks/useReadRewardStatus.ts";
+import { SupportedChainId } from "../../web3/chains.ts";
 
 const DelegateActionContext = createContext<{
   isTransferModalOpen: boolean;
@@ -41,6 +42,8 @@ const DelegateActionContext = createContext<{
   handleCheckboxChange: (checkbox: any) => void;
   isConnectWalletModalOpen: boolean;
   setIsConnectWalletModalOpen: (isOpen: boolean) => void;
+  isWrongNetworkModalOpen: boolean;
+  setIsWrongNetworkModalOpen: (isOpen: boolean) => void;
   handleDelegate: (delegateType: string) => void;
   handleApprove: (delegateType: string) => void;
   isMetaMaskLoadingApprove: boolean;
@@ -66,6 +69,8 @@ const DelegateActionContext = createContext<{
   handleCheckboxChange: () => {},
   isConnectWalletModalOpen: false,
   setIsConnectWalletModalOpen: () => {},
+  isWrongNetworkModalOpen: false,
+  setIsWrongNetworkModalOpen: () => {},
   handleDelegate: () => {},
   handleApprove: () => {},
   isMetaMaskLoadingApprove: false,
@@ -80,7 +85,7 @@ const DelegateActionContext = createContext<{
 });
 
 const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
-  const { address: walletAddress } = useAccount();
+  const { address: walletAddress, chainId } = useAccount();
   const [isTransferModalOpen, setIsTransferModalOpen] = useState(false);
   const [pionDelegateAmount, setPionDelegateAmount] = useState<string | null>(
     null
@@ -101,6 +106,18 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
   const [isConnectWalletModalOpen, setIsConnectWalletModalOpen] = useState(
     !walletAddress
   );
+
+  const [isWrongNetworkModalOpen, setIsWrongNetworkModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (chainId)
+      setIsWrongNetworkModalOpen(chainId !== SupportedChainId.bscTestnet);
+  }, [chainId]);
+
+  const checkMetamaskChain = () => {
+    setIsWrongNetworkModalOpen(chainId !== SupportedChainId.bscTestnet);
+    return chainId == SupportedChainId.bscTestnet;
+  };
 
   const [selectedRewardStatus, setSelectedRewardStatus] = useState(null);
 
@@ -157,6 +174,9 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
   );
 
   const handleDelegate = (delegateType: string) => {
+    if (!checkMetamaskChain()) {
+      return;
+    }
     if (!checkIsWalletConnect()) return;
     if (delegateType === PION.token) {
       handleDelegateToken();
@@ -189,6 +209,9 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const handleApprove = (delegateType: string) => {
+    if (!checkMetamaskChain()) {
+      return;
+    }
     if (delegateType === PION.token) {
       handleApprovePion();
     } else {
@@ -300,6 +323,9 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
   );
 
   const handleSwitchRewardStatus = async () => {
+    if (!checkMetamaskChain()) {
+      return;
+    }
     try {
       setIsLoadingMetamaskSwitchReward(true);
       const result = await writeContract(config, {
@@ -337,6 +363,8 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
         selectedRewardStatus,
         isConnectWalletModalOpen,
         setIsConnectWalletModalOpen,
+        isWrongNetworkModalOpen,
+        setIsWrongNetworkModalOpen,
         handleDelegate,
         handleApprove,
         isMetaMaskLoadingApprove,

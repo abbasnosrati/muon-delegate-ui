@@ -6,6 +6,8 @@ import { DelegatePion } from "./DelegatePion";
 import { RewardStatusCheckbox } from "./RewardStatusCheckbox";
 import { ConnectWalletModal } from "../common/ConnectWalletModal";
 import useDelegateAction from "../../context/TransferAction/useDelegateAction";
+import { usePion } from "../../context/PionContext";
+import { WrongNetworkModal } from "../common/WrongNetworkModal";
 
 enum Items {
   Pion = PION.token as any,
@@ -21,6 +23,7 @@ const Delegate = () => {
   return (
     <div className="w-full flex flex-col items-center justify-center page ">
       <ConnectWalletModal />
+      <WrongNetworkModal />
       <UserDetails />
       <div className="w-full max-w-[768px]">
         <div className="sm:text-2xl text-lg font-medium font-tomorrow mb-5 text-white ">
@@ -116,16 +119,19 @@ const DelegatePionButton = () => {
     pionAllowance,
   } = useDelegateAction();
 
+  const { PionBalance } = usePion();
+
   const { selectedRewardStatus, userDelegateBalances } = useDelegateAction();
 
   return (
     <div className="flex flex-row gap-2 sm:gap-3 absolute bottom-10 ">
       {!pionAllowance && pionDelegateAmount ? (
         <button
-          disabled={!pionDelegateAmount}
+          disabled={!pionDelegateAmount || !PionBalance?.dsp}
           onClick={() => handleApprove("PION")}
           className={`responsive-button ${
-            !pionDelegateAmount && "opacity-30 cursor-auto"
+            (!pionDelegateAmount || !PionBalance?.dsp) &&
+            "opacity-30 cursor-auto"
           }`}
         >
           {isMetaMaskLoadingApprove ? "Approving..." : "Approve"}
