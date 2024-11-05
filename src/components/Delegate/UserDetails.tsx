@@ -26,7 +26,7 @@ export const UserDetails = () => {
       </div>
       <div className="flex flex-col gap-5 sm:gap-5 sm:flex-row sm:h-[170px] h-auto mt-5 sm:mt-0">
         <div className="w-full text-xs md:text-sm  transition-all text-white action-sidebar rounded-2xl  flex flex-col justify-center gap-3 px-3 py-3 md:rounded-2xl  bg-so-dark-gray md:px-6 md:py-4">
-          <div className="flex justify-between">
+          <div className="flex justify-between items-center">
             <p>Staked Amount</p>
             <div className="font-semibold sm:text-lg text-md">
               {userDelegateBalances
@@ -34,7 +34,7 @@ export const UserDetails = () => {
                 : "..."}
             </div>
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between items-center">
             <div>Reward</div>
             <div className="font-semibold text-md sm:text-lg">1.215</div>
           </div>
@@ -42,13 +42,13 @@ export const UserDetails = () => {
         <div className="w-full text-xs md:text-sm  transition-all text-white action-sidebar rounded-2xl flex flex-col justify-center gap-3 px-3 py-3 md:rounded-2xl  bg-so-dark-gray md:px-6 md:py-4">
           <div className="flex items-center justify-between">
             <p>Status</p>
-            <span className="text-md sm:text-lg font-semibold">
+            <p className="text-md sm:text-lg font-semibold">
               {userDelegateBalances?.dsp && rewardStatus
                 ? "ReStake"
                 : userDelegateBalances?.dsp && !rewardStatus
                 ? "Transfer"
                 : "..."}
-            </span>
+            </p>
           </div>
           <button
             disabled={!userDelegateBalances?.dsp}
