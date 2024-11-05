@@ -4,33 +4,29 @@ import BONPION_ABI from "../abis/NFT.ts";
 import { BONPION_ADDRESS } from "../constants/addresses.ts";
 import { SupportedChainId } from "../web3/chains.ts";
 
-const useIsApprovedForAll = (
-  contractAddress: `0x${string}`,
-  spenderAddress: `0x${string}`
-) => {
-  const [isApprovedForAll, setIsApprovedForAll] = useState<boolean | null>(
+const useGetApproved = (contractAddress: `0x${string}`, tokenId?: number) => {
+  const [isBonPionApproved, setIsBonPionApproved] = useState<boolean | null>(
     null
   );
 
   const { address: walletAddress } = useAccount();
-
   const { data, isFetched, refetch } = useReadContract({
     abi: BONPION_ABI,
     address: contractAddress,
-    functionName: "isApprovedForAll",
-    args: walletAddress
-      ? [walletAddress, spenderAddress ? spenderAddress : BONPION_ADDRESS]
-      : undefined,
+    functionName: "getApproved",
+    args: walletAddress && tokenId ? [BigInt(tokenId)] : undefined,
     chainId: SupportedChainId.bscTestnet,
   });
 
   useEffect(() => {
     if (isFetched && data !== undefined && data !== null) {
-      setIsApprovedForAll(data);
+      setIsBonPionApproved(
+        data.toLowerCase() == BONPION_ADDRESS.toLocaleLowerCase()
+      );
     }
   }, [isFetched, data]);
 
-  return { isApprovedForAll, refetch };
+  return { isBonPionApproved, refetch };
 };
 
-export default useIsApprovedForAll;
+export default useGetApproved;

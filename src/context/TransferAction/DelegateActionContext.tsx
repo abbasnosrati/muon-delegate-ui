@@ -24,7 +24,7 @@ import { W3bNumber } from "../../types/wagmi.ts";
 import { waitForTransactionReceipt } from "wagmi/actions";
 import useAllowance from "../../hooks/useAllowance.ts";
 import useDelegateBalances from "../../hooks/useDelegateBalances.ts";
-import useIsApprovedForAll from "../../hooks/useIsApprovedForAll.ts";
+import useGetApproved from "../../hooks/useGetApproved.ts";
 import useReadRewardStatus from "../../hooks/useReadRewardStatus.ts";
 import { SupportedChainId } from "../../web3/chains.ts";
 
@@ -51,7 +51,7 @@ const DelegateActionContext = createContext<{
   PionAllowanceForDelegator: W3bNumber | null;
   pionAllowance: boolean;
   userDelegateBalances: W3bNumber | null;
-  isApprovedForAll: boolean | null;
+  isBonPionApproved: boolean | null;
   rewardStatus: boolean | null;
   handleSwitchRewardStatus: () => void;
   isLoadingMetamaskSwitchReward: boolean;
@@ -78,7 +78,7 @@ const DelegateActionContext = createContext<{
   PionAllowanceForDelegator: null,
   pionAllowance: false,
   userDelegateBalances: null,
-  isApprovedForAll: false,
+  isBonPionApproved: false,
   rewardStatus: null,
   handleSwitchRewardStatus: () => {},
   isLoadingMetamaskSwitchReward: false,
@@ -123,13 +123,16 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
 
   const [pionAllowance, setPionAllowance] = useState(false);
 
+  const [transferModalSelectedBonALICE, setTransferModalSelectedBonALICE] =
+    useState<BonPION | null>(null);
+
   const {
     allowance: PionAllowanceForDelegator,
     refetch: refetchPionAllowance,
   } = useAllowance(PionContractAddress, DELEGATION_ADDRESS);
 
-  const { isApprovedForAll, refetch: refetchIsApprovedForAll } =
-    useIsApprovedForAll(BONPION_ADDRESS, DELEGATION_ADDRESS);
+  const { isBonPionApproved, refetch: refetchIsBonPionApproved } =
+    useGetApproved(BONPION_ADDRESS, transferModalSelectedBonALICE?.tokenId);
 
   const { rewardStatus, refetch: refetchRewardStatus } = useReadRewardStatus();
 
@@ -161,9 +164,6 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
     setPionDelegateAmount(amount);
   };
 
-  const [transferModalSelectedBonALICE, setTransferModalSelectedBonALICE] =
-    useState<BonPION | null>(null);
-
   const openTransferModal = useCallback(() => {
     setIsTransferModalOpen(true);
   }, []);
@@ -184,6 +184,12 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
       handleDelegateNFT();
     }
   };
+
+  useEffect(() => {
+    if (transferModalSelectedBonALICE?.tokenId) {
+      refetchIsBonPionApproved();
+    }
+  }, [transferModalSelectedBonALICE]);
 
   const handleDelegateToken = async () => {
     try {
@@ -246,13 +252,13 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
       const result = await writeContract(config, {
         address: BONPION_ADDRESS,
         abi: BONPION_ABI,
-        functionName: "setApprovalForAll",
-        args: [DELEGATION_ADDRESS, true],
+        functionName: "approve",
+        args: [DELEGATION_ADDRESS, transferModalSelectedBonALICE!.tokenId],
       });
       await waitForTransactionReceipt(config, {
         hash: result,
       });
-      refetchIsApprovedForAll();
+      refetchIsBonPionApproved();
     } finally {
       setIsMetamaskLoadingApprove(false);
     }
@@ -372,7 +378,7 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
         PionAllowanceForDelegator,
         pionAllowance,
         userDelegateBalances,
-        isApprovedForAll,
+        isBonPionApproved,
         rewardStatus,
         handleSwitchRewardStatus,
         isLoadingMetamaskSwitchReward,
