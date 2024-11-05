@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PION } from "../../constants/strings";
 import { DelegateBonPion } from "./DelegateBonPion";
 import { UserDetails } from "./UserDetails";
@@ -13,20 +13,11 @@ enum Items {
 }
 
 const Delegate = () => {
-  const {
-    handleDelegate,
-    handleApprove,
-    pionDelegateAmount,
-    isMetaMaskLoadingApprove,
-    isMetaMaskLoadingDelegate,
-    pionAllowance,
-  } = useDelegateAction();
-
   const [selectedItem, setSelectedItem] = useState<Items>(Items.Pion);
   const onSelectItem = (item: Items) => {
     setSelectedItem(item);
   };
-
+  const { userDelegateBalances } = useDelegateAction();
   return (
     <div className="w-full flex flex-col items-center justify-center page ">
       <ConnectWalletModal />
@@ -57,34 +48,106 @@ const Delegate = () => {
             </div>
           </div>
           {selectedItem === Items.Pion ? <DelegatePion /> : <DelegateBonPion />}
-          <RewardStatusCheckbox />
-          <div className="flex flex-row gap-2 sm:gap-3 absolute bottom-10 ">
-            {!pionAllowance && pionDelegateAmount ? (
-              <button
-                disabled={!pionDelegateAmount}
-                onClick={() => handleApprove(selectedItem as any)}
-                className={`responsive-button ${
-                  !pionDelegateAmount && "opacity-30 cursor-auto"
-                }`}
-              >
-                {isMetaMaskLoadingApprove ? "Approving..." : "Approve"}
-              </button>
-            ) : (
-              <button
-                disabled={!pionDelegateAmount}
-                onClick={() => handleDelegate(selectedItem as any)}
-                className={`responsive-button ${
-                  !pionDelegateAmount && "opacity-30 cursor-auto"
-                }`}
-              >
-                {isMetaMaskLoadingDelegate ? "Delegating..." : "Delegate"}
-              </button>
-            )}
-
-            {/* <button className="responsive-button">Claim</button> */}
-          </div>
+          {!userDelegateBalances && <RewardStatusCheckbox />}
+          {selectedItem === Items.Pion ? (
+            <DelegatePionButton />
+          ) : (
+            <DelegateBonPionButton />
+          )}
         </div>
       </div>
+    </div>
+  );
+};
+
+const DelegateBonPionButton = () => {
+  const {
+    handleDelegate,
+    handleApprove,
+    isMetaMaskLoadingApprove,
+    isMetaMaskLoadingDelegate,
+    isApprovedForAll,
+    selectedTransferBonALICE,
+  } = useDelegateAction();
+
+  const { selectedRewardStatus, userDelegateBalances } = useDelegateAction();
+
+  return (
+    <div className="flex flex-row gap-2 sm:gap-3 absolute bottom-10 ">
+      {!isApprovedForAll && selectedTransferBonALICE ? (
+        <button
+          disabled={!selectedTransferBonALICE}
+          onClick={() => handleApprove("bonPION")}
+          className={`responsive-button ${
+            !selectedTransferBonALICE && "opacity-30 cursor-auto"
+          }`}
+        >
+          {isMetaMaskLoadingApprove ? "Approving..." : "Approve"}
+        </button>
+      ) : (
+        <button
+          disabled={
+            !selectedTransferBonALICE ||
+            isMetaMaskLoadingDelegate ||
+            (!!selectedRewardStatus && userDelegateBalances?.dsp == 0)
+          }
+          onClick={() => handleDelegate("bonPION")}
+          className={`responsive-button ${
+            (!selectedTransferBonALICE ||
+              isMetaMaskLoadingDelegate ||
+              (!selectedRewardStatus && userDelegateBalances?.dsp == 0)) &&
+            "opacity-30 cursor-auto"
+          }`}
+        >
+          {isMetaMaskLoadingDelegate ? "Delegating..." : "Delegate"}
+        </button>
+      )}
+    </div>
+  );
+};
+
+const DelegatePionButton = () => {
+  const {
+    handleDelegate,
+    handleApprove,
+    pionDelegateAmount,
+    isMetaMaskLoadingApprove,
+    isMetaMaskLoadingDelegate,
+    pionAllowance,
+  } = useDelegateAction();
+
+  const { selectedRewardStatus, userDelegateBalances } = useDelegateAction();
+
+  return (
+    <div className="flex flex-row gap-2 sm:gap-3 absolute bottom-10 ">
+      {!pionAllowance && pionDelegateAmount ? (
+        <button
+          disabled={!pionDelegateAmount}
+          onClick={() => handleApprove("PION")}
+          className={`responsive-button ${
+            !pionDelegateAmount && "opacity-30 cursor-auto"
+          }`}
+        >
+          {isMetaMaskLoadingApprove ? "Approving..." : "Approve"}
+        </button>
+      ) : (
+        <button
+          disabled={
+            !pionDelegateAmount ||
+            isMetaMaskLoadingDelegate ||
+            (!!selectedRewardStatus && userDelegateBalances?.dsp == 0)
+          }
+          onClick={() => handleDelegate("PION")}
+          className={`responsive-button ${
+            (!pionDelegateAmount ||
+              isMetaMaskLoadingDelegate ||
+              (!selectedRewardStatus && userDelegateBalances?.dsp == 0)) &&
+            "opacity-30 cursor-auto"
+          }`}
+        >
+          {isMetaMaskLoadingDelegate ? "Delegating..." : "Delegate"}
+        </button>
+      )}
     </div>
   );
 };

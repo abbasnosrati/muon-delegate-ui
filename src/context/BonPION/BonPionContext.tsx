@@ -9,6 +9,7 @@ import {
   BONPION_ADDRESS,
   BOOSTER_ADDRESS,
   LP_TOKEN_ADDRESS,
+  DELEGATION_ADDRESS,
 } from "../../constants/addresses.ts";
 import { W3bNumber } from "../../types/wagmi.ts";
 import { USER_BON_PIONS } from "../../apollo/queries.ts";
@@ -23,13 +24,13 @@ import { config } from "../../web3/config.ts";
 
 const BonPIONContext = createContext<{
   bonPIONs: BonPION[];
-  ALICEAllowance: W3bNumber | null;
+  BONPIONAllowance: W3bNumber | null;
   LPTokenAllowanceForBooster: W3bNumber | null;
   ALICEAllowanceForBooster: W3bNumber | null;
   fetchBonALICEIsLoading: boolean;
 }>({
   bonPIONs: [],
-  ALICEAllowance: null,
+  BONPIONAllowance: null,
   LPTokenAllowanceForBooster: null,
   ALICEAllowanceForBooster: null,
   fetchBonALICEIsLoading: false,
@@ -40,7 +41,10 @@ const BonPIONProvider = ({ children }: { children: ReactNode }) => {
   const [bonPIONs, setBonPIONs] = useState<BonPION[]>([]);
   const { LPTokenDecimals } = useLPToken();
 
-  const { allowance: ALICEAllowance } = useAllowance(PionContractAddress);
+  const { allowance: BONPIONAllowance } = useAllowance(
+    BONPION_ADDRESS,
+    DELEGATION_ADDRESS
+  );
 
   const { allowance: LPTokenAllowanceForBooster } = useAllowance(
     LP_TOKEN_ADDRESS,
@@ -98,7 +102,7 @@ const BonPIONProvider = ({ children }: { children: ReactNode }) => {
     <BonPIONContext.Provider
       value={{
         bonPIONs,
-        ALICEAllowance,
+        BONPIONAllowance,
         LPTokenAllowanceForBooster,
         fetchBonALICEIsLoading,
         ALICEAllowanceForBooster,

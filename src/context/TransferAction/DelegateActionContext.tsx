@@ -5,14 +5,16 @@ import {
   useEffect,
   useState,
 } from "react";
-import { BonPION } from "../../types";
+import { BonPION, RewardStatus } from "../../types";
 import { useAccount } from "wagmi";
 import { PION } from "../../constants/strings";
 import Delegation_ABI from "../../abis/Delegation";
 import PION_ABI from "../../abis/Token.ts";
+import BONPION_ABI from "../../abis/NFT.ts";
 
 import { writeContract } from "@wagmi/core";
 import {
+  BONPION_ADDRESS,
   DELEGATION_ADDRESS,
   PionContractAddress,
 } from "../../constants/addresses";
@@ -22,6 +24,8 @@ import { W3bNumber } from "../../types/wagmi.ts";
 import { waitForTransactionReceipt } from "wagmi/actions";
 import useAllowance from "../../hooks/useAllowance.ts";
 import useDelegateBalances from "../../hooks/useDelegateBalances.ts";
+import useIsApprovedForAll from "../../hooks/useIsApprovedForAll.ts";
+import useReadRewardStatus from "../../hooks/useReadRewardStatus.ts";
 
 const DelegateActionContext = createContext<{
   isTransferModalOpen: boolean;
@@ -30,7 +34,6 @@ const DelegateActionContext = createContext<{
   isSelectedTransferBonALICE: (bonALICE: BonPION) => boolean;
   handleTransferModalItemClicked: (bonALICE: BonPION) => void;
   selectedTransferBonALICE: BonPION | null;
-  // transfer: () => void;
   unselectTransferModalSelectedBonALICE: () => void;
   pionDelegateAmount: string | null;
   handleChangeDelegateAmount: (amount: string) => void;
@@ -45,6 +48,10 @@ const DelegateActionContext = createContext<{
   PionAllowanceForDelegator: W3bNumber | null;
   pionAllowance: boolean;
   userDelegateBalances: W3bNumber | null;
+  isApprovedForAll: boolean | null;
+  rewardStatus: boolean | null;
+  handleSwitchRewardStatus: () => void;
+  isLoadingMetamaskSwitchReward: boolean;
 }>({
   isTransferModalOpen: false,
   openTransferModal: () => {},
@@ -66,6 +73,10 @@ const DelegateActionContext = createContext<{
   PionAllowanceForDelegator: null,
   pionAllowance: false,
   userDelegateBalances: null,
+  isApprovedForAll: false,
+  rewardStatus: null,
+  handleSwitchRewardStatus: () => {},
+  isLoadingMetamaskSwitchReward: false,
 });
 
 const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
@@ -74,6 +85,9 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
   const [pionDelegateAmount, setPionDelegateAmount] = useState<string | null>(
     null
   );
+
+  const [isLoadingMetamaskSwitchReward, setIsLoadingMetamaskSwitchReward] =
+    useState(false);
 
   const { userDelegateBalances, refetch: refetchUserDelegateBalance } =
     useDelegateBalances();
@@ -95,7 +109,12 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
   const {
     allowance: PionAllowanceForDelegator,
     refetch: refetchPionAllowance,
-  } = useAllowance(DELEGATION_ADDRESS);
+  } = useAllowance(PionContractAddress, DELEGATION_ADDRESS);
+
+  const { isApprovedForAll, refetch: refetchIsApprovedForAll } =
+    useIsApprovedForAll(BONPION_ADDRESS, DELEGATION_ADDRESS);
+
+  const { rewardStatus, refetch: refetchRewardStatus } = useReadRewardStatus();
 
   useEffect(() => {
     if (PionAllowanceForDelegator && pionDelegateAmount) {
@@ -129,9 +148,9 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
     useState<BonPION | null>(null);
 
   const openTransferModal = useCallback(() => {
-    if (!checkIsWalletConnect()) return;
     setIsTransferModalOpen(true);
   }, []);
+
   const closeTransferModal = useCallback(
     () => setIsTransferModalOpen(false),
     []
@@ -156,7 +175,7 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
         args: [
           w3bNumberFromString(pionDelegateAmount!).big,
           walletAddress,
-          true,
+          selectedRewardStatus == RewardStatus.ReStakeReward,
         ],
       });
 
@@ -198,10 +217,45 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const handleApproveBonPION = () => {};
+  const handleApproveBonPION = async () => {
+    try {
+      setIsMetamaskLoadingApprove(true);
+      const result = await writeContract(config, {
+        address: BONPION_ADDRESS,
+        abi: BONPION_ABI,
+        functionName: "setApprovalForAll",
+        args: [DELEGATION_ADDRESS, true],
+      });
+      await waitForTransactionReceipt(config, {
+        hash: result,
+      });
+      refetchIsApprovedForAll();
+    } finally {
+      setIsMetamaskLoadingApprove(false);
+    }
+  };
 
-  const handleDelegateNFT = () => {
-    console.log("nft");
+  const handleDelegateNFT = async () => {
+    try {
+      setIsMetamaskLoadingDelegate(true);
+      const result = await writeContract(config, {
+        address: DELEGATION_ADDRESS,
+        abi: Delegation_ABI,
+        functionName: "delegateNFT",
+        args: [
+          transferModalSelectedBonALICE!.tokenId,
+          walletAddress,
+          selectedRewardStatus == RewardStatus.ReStakeReward,
+        ],
+      });
+
+      await waitForTransactionReceipt(config, {
+        hash: result,
+      });
+    } finally {
+      setIsMetamaskLoadingDelegate(false);
+      refetchUserDelegateBalance();
+    }
   };
 
   const changeTransferModalSelectedBonALICE = useCallback(
@@ -245,6 +299,24 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
     [transferModalSelectedBonALICE]
   );
 
+  const handleSwitchRewardStatus = async () => {
+    try {
+      setIsLoadingMetamaskSwitchReward(true);
+      const result = await writeContract(config, {
+        address: DELEGATION_ADDRESS,
+        abi: Delegation_ABI,
+        functionName: "setRestake",
+        args: [!rewardStatus],
+      });
+      await waitForTransactionReceipt(config, {
+        hash: result,
+      });
+      refetchRewardStatus();
+    } finally {
+      setIsLoadingMetamaskSwitchReward(false);
+    }
+  };
+
   useEffect(() => {
     setTransferModalSelectedBonALICE(null);
   }, [walletAddress]);
@@ -272,6 +344,10 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
         PionAllowanceForDelegator,
         pionAllowance,
         userDelegateBalances,
+        isApprovedForAll,
+        rewardStatus,
+        handleSwitchRewardStatus,
+        isLoadingMetamaskSwitchReward,
       }}
     >
       {children}

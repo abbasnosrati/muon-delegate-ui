@@ -3,7 +3,12 @@ import { PION } from "../../constants/strings";
 import useDelegateAction from "../../context/TransferAction/useDelegateAction";
 
 export const UserDetails = () => {
-  const { userDelegateBalances } = useDelegateAction();
+  const {
+    userDelegateBalances,
+    rewardStatus,
+    handleSwitchRewardStatus,
+    isLoadingMetamaskSwitchReward,
+  } = useDelegateAction();
   return (
     <div className="max-w-[768px] w-full mt-5 sm:mt-0 mb-5">
       <div
@@ -25,7 +30,7 @@ export const UserDetails = () => {
             <p>Staked Amount</p>
             <div className="font-semibold sm:text-lg text-md">
               {userDelegateBalances
-                ? `${userDelegateBalances?.dsp} PION`
+                ? `${userDelegateBalances.dsp} PION`
                 : "..."}
             </div>
           </div>
@@ -36,10 +41,26 @@ export const UserDetails = () => {
         </div>
         <div className="w-full text-xs md:text-sm  transition-all text-white action-sidebar rounded-2xl flex flex-col justify-center gap-3 px-3 py-3 md:rounded-2xl  bg-so-dark-gray md:px-6 md:py-4">
           <p>
-            Status:{" "}
-            <span className="text-md sm:text-lg font-semibold">Transfer</span>
+            Status:
+            <span className="text-md sm:text-lg font-semibold">
+              {userDelegateBalances?.dsp && rewardStatus
+                ? "ReStake"
+                : userDelegateBalances?.dsp && !rewardStatus
+                ? "Transfer"
+                : "..."}
+            </span>
           </p>
-          <button className="responsive-button">Switch to StakeReward</button>
+
+          <button
+            disabled={!userDelegateBalances?.dsp}
+            onClick={() => handleSwitchRewardStatus()}
+            className={`responsive-button ${
+              !userDelegateBalances?.dsp && "opacity-30 cursor-auto"
+            }`}
+          >
+            {rewardStatus ? "Switch to Transfer" : "Switch to StakeReward"}{" "}
+            {isLoadingMetamaskSwitchReward ? "..." : ""}
+          </button>
         </div>
       </div>
     </div>

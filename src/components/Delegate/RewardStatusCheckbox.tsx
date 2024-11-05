@@ -1,4 +1,5 @@
 import useDelegateAction from "../../context/TransferAction/useDelegateAction";
+import { RewardStatus } from "../../types";
 
 export const RewardStatusCheckbox = () => {
   const { selectedRewardStatus, handleCheckboxChange } = useDelegateAction();
@@ -12,8 +13,8 @@ export const RewardStatusCheckbox = () => {
           <label className="cursor-pointer">
             <input
               type="checkbox"
-              checked={selectedRewardStatus === "ReStake Reward"}
-              onChange={() => handleCheckboxChange("ReStake Reward")}
+              checked={selectedRewardStatus === RewardStatus.ReStakeReward}
+              onChange={() => handleCheckboxChange(RewardStatus.ReStakeReward)}
               className="mr-1"
             />
             ReStake Reward
@@ -22,8 +23,8 @@ export const RewardStatusCheckbox = () => {
           <label className="cursor-pointer">
             <input
               type="checkbox"
-              checked={selectedRewardStatus === "Transfer Reward"}
-              onChange={() => handleCheckboxChange("Transfer Reward")}
+              checked={selectedRewardStatus === RewardStatus.TransferReward}
+              onChange={() => handleCheckboxChange(RewardStatus.TransferReward)}
               className="mr-1"
             />
             Transfer Reward
