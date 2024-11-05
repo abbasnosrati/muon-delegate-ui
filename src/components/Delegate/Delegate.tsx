@@ -141,11 +141,13 @@ const DelegatePionButton = () => {
           disabled={
             !pionDelegateAmount ||
             isMetaMaskLoadingDelegate ||
+            Number(pionDelegateAmount) == 0 ||
             (!!selectedRewardStatus && userDelegateBalances?.dsp == 0)
           }
           onClick={() => handleDelegate("PION")}
           className={`responsive-button ${
             (!pionDelegateAmount ||
+              Number(pionDelegateAmount) == 0 ||
               isMetaMaskLoadingDelegate ||
               (!selectedRewardStatus && userDelegateBalances?.dsp == 0)) &&
             "opacity-30 cursor-auto"
