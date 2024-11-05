@@ -40,8 +40,8 @@ export const UserDetails = () => {
           </div>
         </div>
         <div className="w-full text-xs md:text-sm  transition-all text-white action-sidebar rounded-2xl flex flex-col justify-center gap-3 px-3 py-3 md:rounded-2xl  bg-so-dark-gray md:px-6 md:py-4">
-          <p>
-            Status:
+          <div className="flex items-center justify-between">
+            <p>Status</p>
             <span className="text-md sm:text-lg font-semibold">
               {userDelegateBalances?.dsp && rewardStatus
                 ? "ReStake"
@@ -49,8 +49,7 @@ export const UserDetails = () => {
                 ? "Transfer"
                 : "..."}
             </span>
-          </p>
-
+          </div>
           <button
             disabled={!userDelegateBalances?.dsp}
             onClick={() => handleSwitchRewardStatus()}
