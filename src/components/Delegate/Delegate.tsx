@@ -48,7 +48,7 @@ const Delegate = () => {
             </div>
           </div>
           {selectedItem === Items.Pion ? <DelegatePion /> : <DelegateBonPion />}
-          {!userDelegateBalances && <RewardStatusCheckbox />}
+          {!userDelegateBalances?.dsp && <RewardStatusCheckbox />}
           {selectedItem === Items.Pion ? (
             <DelegatePionButton />
           ) : (
