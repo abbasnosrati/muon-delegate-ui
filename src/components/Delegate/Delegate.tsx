@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { PION } from "../../constants/strings";
 import { DelegateBonPion } from "./DelegateBonPion";
 import { UserDetails } from "./UserDetails";

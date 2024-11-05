@@ -1,4 +1,5 @@
-import { bsc, bscTestnet } from "wagmi/chains";
+import { bscTestnet } from "wagmi/chains";
+// import { bsc } from "wagmi/chains";
 import { Chain } from "wagmi/chains";
 
 export const ChainsLogo = {
