@@ -27,6 +27,8 @@ import useDelegateBalances from "../../hooks/useDelegateBalances.ts";
 import useGetApproved from "../../hooks/useGetApproved.ts";
 import useReadRewardStatus from "../../hooks/useReadRewardStatus.ts";
 import { SupportedChainId } from "../../web3/chains.ts";
+import useGetTotalReward from "../../hooks/useGetTotalReward.ts";
+import useGetTotalDelegated from "../../hooks/useGetTotalDelegate.ts";
 
 const DelegateActionContext = createContext<{
   isTransferModalOpen: boolean;
@@ -55,6 +57,8 @@ const DelegateActionContext = createContext<{
   rewardStatus: boolean | null;
   handleSwitchRewardStatus: () => void;
   isLoadingMetamaskSwitchReward: boolean;
+  totalDelegated: W3bNumber | null;
+  userReward: number | null;
 }>({
   isTransferModalOpen: false,
   openTransferModal: () => {},
@@ -82,6 +86,8 @@ const DelegateActionContext = createContext<{
   rewardStatus: null,
   handleSwitchRewardStatus: () => {},
   isLoadingMetamaskSwitchReward: false,
+  totalDelegated: null,
+  userReward: null,
 });
 
 const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
@@ -123,8 +129,29 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
 
   const [pionAllowance, setPionAllowance] = useState(false);
 
+  const [userReward, setUserReward] = useState<number | null>(null);
+
   const [transferModalSelectedBonALICE, setTransferModalSelectedBonALICE] =
     useState<BonPION | null>(null);
+
+  const { totalReward } = useGetTotalReward();
+
+  const { totalDelegated } = useGetTotalDelegated();
+
+  useEffect(() => {
+    if (
+      (totalReward && totalReward.dsp && totalDelegated && totalDelegated.dsp,
+      userDelegateBalances && userDelegateBalances.dsp)
+    ) {
+      calcUserReward();
+    }
+  }, [totalReward, totalDelegated, userDelegateBalances]);
+
+  const calcUserReward = () => {
+    setUserReward(
+      (totalReward!.dsp * 0.9 * userDelegateBalances!.dsp) / totalDelegated!.dsp
+    );
+  };
 
   const {
     allowance: PionAllowanceForDelegator,
@@ -173,16 +200,18 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
     []
   );
 
-  const handleDelegate = (delegateType: string) => {
+  const handleDelegate = async (delegateType: string) => {
     if (!checkMetamaskChain()) {
       return;
     }
     if (!checkIsWalletConnect()) return;
     if (delegateType === PION.token) {
-      handleDelegateToken();
+      await handleDelegateToken();
     } else {
-      handleDelegateNFT();
+      await handleDelegateNFT();
     }
+
+    refetchRewardStatus();
   };
 
   useEffect(() => {
@@ -211,6 +240,7 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
     } finally {
       setIsMetamaskLoadingDelegate(false);
       refetchUserDelegateBalance();
+      refetchPionAllowance();
     }
   };
 
@@ -382,6 +412,8 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
         rewardStatus,
         handleSwitchRewardStatus,
         isLoadingMetamaskSwitchReward,
+        totalDelegated,
+        userReward,
       }}
     >
       {children}
