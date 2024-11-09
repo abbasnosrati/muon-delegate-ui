@@ -25,7 +25,7 @@ const useGetTotalDelegated = () => {
     functionName: "users",
     args: [DELEGATOR_NODE_STAKER],
 
-    chainId: SupportedChainId.bscTestnet,
+    chainId: SupportedChainId.chainId,
   });
 
   const handleGetTotalDelegated = async () => {
@@ -34,7 +34,7 @@ const useGetTotalDelegated = () => {
       address: BONPION_ADDRESS,
       functionName: "lockedOf",
       args: [tokenId!, PionContractAddress],
-      chainId: SupportedChainId.bscTestnet,
+      chainId: SupportedChainId.chainId,
     });
     setTotalDelegated(w3bNumberFromBigint(result, decimals));
   };

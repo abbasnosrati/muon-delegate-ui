@@ -18,7 +18,7 @@ const useGetTotalReward = () => {
     functionName: "earned",
     args: [DELEGATOR_NODE_STAKER],
 
-    chainId: SupportedChainId.bscTestnet,
+    chainId: SupportedChainId.chainId,
   });
 
   useEffect(() => {

@@ -15,7 +15,7 @@ const useGetApproved = (contractAddress: `0x${string}`, tokenId?: number) => {
     address: contractAddress,
     functionName: "getApproved",
     args: walletAddress && tokenId ? [BigInt(tokenId)] : undefined,
-    chainId: SupportedChainId.bscTestnet,
+    chainId: SupportedChainId.chainId,
   });
 
   useEffect(() => {

@@ -117,12 +117,12 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (chainId)
-      setIsWrongNetworkModalOpen(chainId !== SupportedChainId.bscTestnet);
+      setIsWrongNetworkModalOpen(chainId !== SupportedChainId.chainId);
   }, [chainId]);
 
   const checkMetamaskChain = () => {
-    setIsWrongNetworkModalOpen(chainId !== SupportedChainId.bscTestnet);
-    return chainId == SupportedChainId.bscTestnet;
+    setIsWrongNetworkModalOpen(chainId !== SupportedChainId.chainId);
+    return chainId == SupportedChainId.chainId;
   };
 
   const [selectedRewardStatus, setSelectedRewardStatus] = useState(null);

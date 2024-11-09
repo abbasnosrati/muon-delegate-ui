@@ -16,7 +16,7 @@ const useDelegateBalances = () => {
     address: DELEGATION_ADDRESS,
     functionName: "balances",
     args: walletAddress ? [walletAddress] : undefined,
-    chainId: SupportedChainId.bscTestnet,
+    chainId: SupportedChainId.chainId,
   });
 
   useEffect(() => {

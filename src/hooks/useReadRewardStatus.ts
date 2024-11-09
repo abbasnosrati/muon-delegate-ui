@@ -13,7 +13,7 @@ const useReadRewardStatus = () => {
     address: DELEGATION_ADDRESS,
     functionName: "restake",
     args: walletAddress ? [walletAddress] : undefined,
-    chainId: SupportedChainId.bscTestnet,
+    chainId: SupportedChainId.chainId,
   });
 
   useEffect(() => {

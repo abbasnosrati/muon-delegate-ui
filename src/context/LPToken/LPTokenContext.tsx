@@ -33,7 +33,7 @@ const LPTokenProvider = ({ children }: { children: ReactNode }) => {
     address: LP_TOKEN_ADDRESS,
     functionName: "balanceOf",
     args: walletAddress ? [walletAddress] : undefined,
-    chainId: SupportedChainId.bscTestnet,
+    chainId: SupportedChainId.chainId,
   });
 
   useEffect(() => {

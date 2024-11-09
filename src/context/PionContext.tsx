@@ -35,7 +35,7 @@ const PIONProvider = ({ children }: { children: ReactNode }) => {
   } = useBalance({
     address: walletAddress,
     token: PionContractAddress,
-    chainId: SupportedChainId.bscTestnet,
+    chainId: SupportedChainId.chainId,
   });
 
   useEffect(() => {

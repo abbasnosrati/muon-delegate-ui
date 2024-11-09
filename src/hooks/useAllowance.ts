@@ -21,7 +21,7 @@ const useAllowance = (
     args: walletAddress
       ? [walletAddress, spenderAddress ? spenderAddress : PionContractAddress]
       : undefined,
-    chainId: SupportedChainId.bscTestnet,
+    chainId: SupportedChainId.chainId,
   });
 
   useEffect(() => {

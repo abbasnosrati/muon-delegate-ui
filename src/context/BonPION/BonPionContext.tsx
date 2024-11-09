@@ -75,7 +75,7 @@ const BonPIONProvider = ({ children }: { children: ReactNode }) => {
           address: BONPION_ADDRESS,
           functionName: "getLockedOf",
           args: [bonALICE.tokenId, [PionContractAddress]],
-          chainId: SupportedChainId.bscTestnet,
+          chainId: SupportedChainId.chainId,
           enabled: !!walletAddress && !!bonALICE.tokenId,
         }));
 
