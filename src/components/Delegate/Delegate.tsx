@@ -69,7 +69,7 @@ const DelegateBonPionButton = () => {
     handleApprove,
     isMetaMaskLoadingApprove,
     isMetaMaskLoadingDelegate,
-    isApprovedForAll,
+    isBonPionApproved,
     selectedTransferBonALICE,
   } = useDelegateAction();
 
@@ -77,7 +77,7 @@ const DelegateBonPionButton = () => {
 
   return (
     <div className="flex flex-row gap-2 sm:gap-3 absolute bottom-10 ">
-      {!isApprovedForAll && selectedTransferBonALICE ? (
+      {!isBonPionApproved && selectedTransferBonALICE ? (
         <button
           disabled={!selectedTransferBonALICE}
           onClick={() => handleApprove("bonPION")}
@@ -142,7 +142,7 @@ const DelegatePionButton = () => {
             !pionDelegateAmount ||
             isMetaMaskLoadingDelegate ||
             Number(pionDelegateAmount) == 0 ||
-            (!!selectedRewardStatus && userDelegateBalances?.dsp == 0)
+            (!selectedRewardStatus && userDelegateBalances?.dsp == 0)
           }
           onClick={() => handleDelegate("PION")}
           className={`responsive-button ${

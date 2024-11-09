@@ -1,3 +1,4 @@
+import useDelegateAction from "../../context/TransferAction/useDelegateAction";
 import { ConnectWalletButton } from "../common/ConnectWalletButton";
 
 const Header = () => {
@@ -26,10 +27,14 @@ const Header = () => {
 };
 
 const PriceTVLButton = () => {
+  const { totalDelegated } = useDelegateAction();
   return (
     <button className="btn btn--small !py-[5px] !cursor-default">
-      <img src="/assets/images/pion-token-logo.svg" alt="" className="mr-2.5" />
-      <p className="!text-white text-sm font-medium">{`(TVL: $2.5M)`}</p>
+      {/* <img src="/assets/images/pion-token-logo.svg" alt="" className="mr-2.5" /> */}
+      <p className="!text-white text-sm font-medium">
+        {`Total Delegated: ${totalDelegated?.dsp ? totalDelegated.dsp : "..."}`}{" "}
+        PION
+      </p>
     </button>
   );
 };

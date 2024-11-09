@@ -8,6 +8,7 @@ export const UserDetails = () => {
     rewardStatus,
     handleSwitchRewardStatus,
     isLoadingMetamaskSwitchReward,
+    userReward,
   } = useDelegateAction();
   return (
     <div className="max-w-[768px] w-full mt-5 sm:mt-0 mb-5">
@@ -36,7 +37,7 @@ export const UserDetails = () => {
           </div>
           <div className="flex justify-between items-center">
             <div>Reward</div>
-            <div className="font-semibold text-md sm:text-lg">1.215</div>
+            <div className="font-semibold text-md sm:text-lg">{userReward}</div>
           </div>
         </div>
         <div className="w-full text-xs md:text-sm  transition-all text-white action-sidebar rounded-2xl flex flex-col justify-center gap-3 px-3 py-3 md:rounded-2xl  bg-so-dark-gray md:px-6 md:py-4">
