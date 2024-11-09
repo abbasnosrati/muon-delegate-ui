@@ -6,8 +6,8 @@ export const supportedChains: Chain[] = [bscTestnet];
 // export const supportedChains: Chain[] = [bsc];
 
 export enum SupportedChainId {
-  chainId = 97,
-  // chainId = 56,
+  chainId = bscTestnet.id,
+  // chainId = bsc.id,
 }
 
 export const SUPPORTED_CHAIN_IDS: SupportedChainId[] = Object.values(
