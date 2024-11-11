@@ -76,7 +76,7 @@ const DelegateBonPionButton = () => {
   const { selectedRewardStatus, userDelegateBalances } = useDelegateAction();
 
   return (
-    <div className="flex flex-row gap-2 sm:gap-3 absolute bottom-10 ">
+    <div className="flex flex-row gap-2 sm:gap-3 absolute bottom-6 sm:bottom-10 ">
       {!isBonPionApproved && selectedTransferBonALICE ? (
         <button
           disabled={!selectedTransferBonALICE}
@@ -124,7 +124,7 @@ const DelegatePionButton = () => {
   const { selectedRewardStatus, userDelegateBalances } = useDelegateAction();
 
   return (
-    <div className="flex flex-row gap-2 sm:gap-3 absolute bottom-10 ">
+    <div className="flex flex-row gap-2 sm:gap-3 absolute bottom-6 sm:bottom-10  ">
       {!pionAllowance && pionDelegateAmount ? (
         <button
           disabled={!pionDelegateAmount || !PionBalance?.dsp}
