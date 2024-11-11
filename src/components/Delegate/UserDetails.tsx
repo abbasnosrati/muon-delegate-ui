@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { PION_ADDRESS } from "../../constants/addresses";
 import { PION } from "../../constants/strings";
 import useDelegateAction from "../../context/DelegateAction/useDelegateAction";
