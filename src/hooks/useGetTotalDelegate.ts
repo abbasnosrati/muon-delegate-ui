@@ -7,7 +7,7 @@ import {
   BONPION_ADDRESS,
   DELEGATOR_NODE_STAKER,
   NODE_STAKER_ADDRESS,
-  PionContractAddress,
+  PION_ADDRESS,
 } from "../constants/addresses.ts";
 import { w3bNumberFromBigint } from "../utils/web3.ts";
 import { SupportedChainId } from "../web3/chains.ts";
@@ -33,7 +33,7 @@ const useGetTotalDelegated = () => {
       abi: BONPION_ABI,
       address: BONPION_ADDRESS,
       functionName: "lockedOf",
-      args: [tokenId!, PionContractAddress],
+      args: [tokenId!, PION_ADDRESS],
       chainId: SupportedChainId.chainId,
     });
     setTotalDelegated(w3bNumberFromBigint(result, decimals));

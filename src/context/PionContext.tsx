@@ -7,7 +7,7 @@ import {
 } from "react";
 import { useAccount, useBalance } from "wagmi";
 import { SupportedChainId } from "../web3/chains.ts";
-import { PionContractAddress } from "../constants/addresses";
+import { PION_ADDRESS } from "../constants/addresses";
 import { W3bNumber } from "../types/wagmi.ts";
 import { w3bNumberFromBigint } from "../utils/web3.ts";
 
@@ -34,7 +34,7 @@ const PIONProvider = ({ children }: { children: ReactNode }) => {
     refetch: refetchPionBalance,
   } = useBalance({
     address: walletAddress,
-    token: PionContractAddress,
+    token: PION_ADDRESS,
     chainId: SupportedChainId.chainId,
   });
 

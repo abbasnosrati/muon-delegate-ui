@@ -1,14 +1,14 @@
-import { useContext } from 'react';
-import { LPTokenContext } from './LPTokenContext.tsx';
+// import { useContext } from 'react';
+// import { LPTokenContext } from './LPTokenContext.tsx';
 
-const useLPToken = () => {
-  const context = useContext(LPTokenContext);
+// const useLPToken = () => {
+//   const context = useContext(LPTokenContext);
 
-  if (!context) {
-    throw new Error('useLPToken must be used within a LPTokenProvider');
-  }
+//   if (!context) {
+//     throw new Error('useLPToken must be used within a LPTokenProvider');
+//   }
 
-  return context;
-};
+//   return context;
+// };
 
-export default useLPToken;
+// export default useLPToken;

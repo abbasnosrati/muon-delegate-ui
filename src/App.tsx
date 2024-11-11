@@ -6,7 +6,6 @@ import { ApolloProvider } from "@apollo/client";
 import { PIONProvider } from "./context/PionContext";
 import { pionClient } from "./apollo/client";
 import { RefreshProvider } from "./context/Refresh/RefreshContext";
-import { LPTokenProvider } from "./context/LPToken/LPTokenContext";
 import { BonPIONProvider } from "./context/BonPION/BonPionContext";
 import { DelegateActionProvider } from "./context/DelegateAction/DelegateActionContext";
 function App() {
@@ -18,15 +17,13 @@ function App() {
           <RefreshProvider>
             <PIONProvider>
               <BonPIONProvider>
-                <LPTokenProvider>
-                  <DelegateActionProvider>
-                    <Header />
-                    <div className="w-full">
-                      <Delegate />
-                    </div>
-                    <Footer />
-                  </DelegateActionProvider>
-                </LPTokenProvider>
+                <DelegateActionProvider>
+                  <Header />
+                  <div className="w-full">
+                    <Delegate />
+                  </div>
+                  <Footer />
+                </DelegateActionProvider>
               </BonPIONProvider>
             </PIONProvider>
           </RefreshProvider>

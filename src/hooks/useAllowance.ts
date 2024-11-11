@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { W3bNumber } from "../types/wagmi.ts";
 import { useAccount, useReadContract } from "wagmi";
 import PION_ABI from "../abis/Token.ts";
-import { PionContractAddress } from "../constants/addresses.ts";
+import { PION_ADDRESS } from "../constants/addresses.ts";
 import { w3bNumberFromBigint } from "../utils/web3.ts";
 import { SupportedChainId } from "../web3/chains.ts";
 
@@ -19,7 +19,7 @@ const useAllowance = (
     address: contractAddress,
     functionName: "allowance",
     args: walletAddress
-      ? [walletAddress, spenderAddress ? spenderAddress : PionContractAddress]
+      ? [walletAddress, spenderAddress ? spenderAddress : PION_ADDRESS]
       : undefined,
     chainId: SupportedChainId.chainId,
   });

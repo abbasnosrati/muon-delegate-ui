@@ -1,4 +1,5 @@
-import { PionContractAddress } from "../../constants/addresses";
+import { useEffect } from "react";
+import { PION_ADDRESS } from "../../constants/addresses";
 import { PION } from "../../constants/strings";
 import useDelegateAction from "../../context/DelegateAction/useDelegateAction";
 
@@ -10,13 +11,14 @@ export const UserDetails = () => {
     isLoadingMetamaskSwitchReward,
     userReward,
   } = useDelegateAction();
+
   return (
     <div className="max-w-[768px] w-full mt-5 sm:mt-0 mb-5">
       <div
         className="flex items-center w-full justify-end mb-2 cursor-pointer"
         onClick={() =>
           window.open(
-            `https://thena.fi/swap?inputCurrency=BNB&outputCurrency=${PionContractAddress}&swapType=1`,
+            `https://thena.fi/swap?inputCurrency=BNB&outputCurrency=${PION_ADDRESS}&swapType=1`,
             "_blank"
           )
         }
@@ -37,7 +39,9 @@ export const UserDetails = () => {
           </div>
           <div className="flex justify-between items-center">
             <div>Reward</div>
-            <div className="font-semibold text-md sm:text-lg">{userReward}</div>
+            <div className="font-semibold text-md sm:text-lg">
+              {userReward ? `${userReward} ${PION.token}` : "..."}
+            </div>
           </div>
         </div>
         <div className="w-full text-xs md:text-sm  transition-all text-white action-sidebar rounded-2xl flex flex-col justify-center gap-3 px-3 py-3 md:rounded-2xl  bg-so-dark-gray md:px-6 md:py-4">

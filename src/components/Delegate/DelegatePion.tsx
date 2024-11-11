@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { PionContractAddress } from "../../constants/addresses";
+import { PION_ADDRESS } from "../../constants/addresses";
 import { PION } from "../../constants/strings";
 import { usePion } from "../../context/PionContext";
 import useDelegateAction from "../../context/DelegateAction/useDelegateAction";
@@ -44,7 +44,7 @@ export const DelegatePion = () => {
           <span
             onClick={() =>
               window.open(
-                `https://thena.fi/swap?inputCurrency=BNB&outputCurrency=${PionContractAddress}&swapType=1`,
+                `https://thena.fi/swap?inputCurrency=BNB&outputCurrency=${PION_ADDRESS}&swapType=1`,
                 "_blank"
               )
             }

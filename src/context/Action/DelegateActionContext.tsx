@@ -16,7 +16,7 @@ import { writeContract } from "@wagmi/core";
 import {
   BONPION_ADDRESS,
   DELEGATION_ADDRESS,
-  PionContractAddress,
+  PION_ADDRESS,
 } from "../../constants/addresses.ts";
 import { config } from "../../web3/config.ts";
 import { w3bNumberFromString } from "../../utils/web3.ts";
@@ -156,7 +156,7 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
   const {
     allowance: PionAllowanceForDelegator,
     refetch: refetchPionAllowance,
-  } = useAllowance(PionContractAddress, DELEGATION_ADDRESS);
+  } = useAllowance(PION_ADDRESS, DELEGATION_ADDRESS);
 
   const { isBonPionApproved, refetch: refetchIsBonPionApproved } =
     useGetApproved(BONPION_ADDRESS, transferModalSelectedBonALICE?.tokenId);
@@ -259,7 +259,7 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
     try {
       setIsMetamaskLoadingApprove(true);
       const result = await writeContract(config, {
-        address: PionContractAddress,
+        address: PION_ADDRESS,
         abi: PION_ABI,
         functionName: "approve",
         args: [

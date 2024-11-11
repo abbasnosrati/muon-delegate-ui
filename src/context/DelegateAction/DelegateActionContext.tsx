@@ -16,7 +16,7 @@ import { writeContract } from "@wagmi/core";
 import {
   BONPION_ADDRESS,
   DELEGATION_ADDRESS,
-  PionContractAddress,
+  PION_ADDRESS,
 } from "../../constants/addresses.ts";
 import { config } from "../../web3/config.ts";
 import { w3bNumberFromString } from "../../utils/web3.ts";
@@ -58,7 +58,7 @@ const DelegateActionContext = createContext<{
   handleSwitchRewardStatus: () => void;
   isLoadingMetamaskSwitchReward: boolean;
   totalDelegated: W3bNumber | null;
-  userReward: number | null;
+  userReward: string;
 }>({
   isTransferModalOpen: false,
   openTransferModal: () => {},
@@ -87,7 +87,7 @@ const DelegateActionContext = createContext<{
   handleSwitchRewardStatus: () => {},
   isLoadingMetamaskSwitchReward: false,
   totalDelegated: null,
-  userReward: null,
+  userReward: "0",
 });
 
 const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
@@ -113,6 +113,10 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
     !walletAddress
   );
 
+  useEffect(() => {
+    setIsConnectWalletModalOpen(!walletAddress);
+  }, [walletAddress]);
+
   const [isWrongNetworkModalOpen, setIsWrongNetworkModalOpen] = useState(false);
 
   useEffect(() => {
@@ -129,7 +133,7 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
 
   const [pionAllowance, setPionAllowance] = useState(false);
 
-  const [userReward, setUserReward] = useState<number | null>(null);
+  const [userReward, setUserReward] = useState<string>("0");
 
   const [transferModalSelectedBonALICE, setTransferModalSelectedBonALICE] =
     useState<BonPION | null>(null);
@@ -140,8 +144,12 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (
-      (totalReward && totalReward.dsp && totalDelegated && totalDelegated.dsp,
-      userDelegateBalances && userDelegateBalances.dsp)
+      totalReward &&
+      totalReward.hStr &&
+      totalDelegated &&
+      totalDelegated.dsp &&
+      userDelegateBalances &&
+      userDelegateBalances.dsp
     ) {
       calcUserReward();
     }
@@ -149,14 +157,17 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
 
   const calcUserReward = () => {
     setUserReward(
-      (totalReward!.dsp * 0.9 * userDelegateBalances!.dsp) / totalDelegated!.dsp
+      (
+        (Number(totalReward!.hStr) * 0.9 * userDelegateBalances!.dsp) /
+        totalDelegated!.dsp
+      ).toFixed(6)
     );
   };
 
   const {
     allowance: PionAllowanceForDelegator,
     refetch: refetchPionAllowance,
-  } = useAllowance(PionContractAddress, DELEGATION_ADDRESS);
+  } = useAllowance(PION_ADDRESS, DELEGATION_ADDRESS);
 
   const { isBonPionApproved, refetch: refetchIsBonPionApproved } =
     useGetApproved(BONPION_ADDRESS, transferModalSelectedBonALICE?.tokenId);
@@ -259,7 +270,7 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
     try {
       setIsMetamaskLoadingApprove(true);
       const result = await writeContract(config, {
-        address: PionContractAddress,
+        address: PION_ADDRESS,
         abi: PION_ABI,
         functionName: "approve",
         args: [
