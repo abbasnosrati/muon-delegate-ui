@@ -58,7 +58,7 @@ const DelegateActionContext = createContext<{
   handleSwitchRewardStatus: () => void;
   isLoadingMetamaskSwitchReward: boolean;
   totalDelegated: W3bNumber | null;
-  userReward: string;
+  userReward: string | null;
 }>({
   isTransferModalOpen: false,
   openTransferModal: () => {},
@@ -87,7 +87,7 @@ const DelegateActionContext = createContext<{
   handleSwitchRewardStatus: () => {},
   isLoadingMetamaskSwitchReward: false,
   totalDelegated: null,
-  userReward: "0",
+  userReward: null,
 });
 
 const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
@@ -133,7 +133,7 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
 
   const [pionAllowance, setPionAllowance] = useState(false);
 
-  const [userReward, setUserReward] = useState<string>("0");
+  const [userReward, setUserReward] = useState<string | null>(null);
 
   const [transferModalSelectedBonALICE, setTransferModalSelectedBonALICE] =
     useState<BonPION | null>(null);
