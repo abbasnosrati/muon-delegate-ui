@@ -1,6 +1,6 @@
 import { ConnectWalletButton } from "./ConnectWalletButton.tsx";
 import Modal from "./Modal.tsx";
-import useDelegateAction from "../../context/TransferAction/useDelegateAction.ts";
+import useDelegateAction from "../../context/DelegateAction/useDelegateAction.ts";
 
 export const ConnectWalletModal = () => {
   const { isConnectWalletModalOpen, setIsConnectWalletModalOpen } =

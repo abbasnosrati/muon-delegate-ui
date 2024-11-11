@@ -1,6 +1,6 @@
 import { PionContractAddress } from "../../constants/addresses";
 import { PION } from "../../constants/strings";
-import useDelegateAction from "../../context/TransferAction/useDelegateAction";
+import useDelegateAction from "../../context/DelegateAction/useDelegateAction";
 
 export const UserDetails = () => {
   const {

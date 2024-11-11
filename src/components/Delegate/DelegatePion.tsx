@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { PionContractAddress } from "../../constants/addresses";
 import { PION } from "../../constants/strings";
 import { usePion } from "../../context/PionContext";
-import useDelegateAction from "../../context/TransferAction/useDelegateAction";
+import useDelegateAction from "../../context/DelegateAction/useDelegateAction";
 
 export const DelegatePion = () => {
   const { PionBalance, refetchPionBalance } = usePion();

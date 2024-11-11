@@ -5,7 +5,7 @@ import { UserDetails } from "./UserDetails";
 import { DelegatePion } from "./DelegatePion";
 import { RewardStatusCheckbox } from "./RewardStatusCheckbox";
 import { ConnectWalletModal } from "../common/ConnectWalletModal";
-import useDelegateAction from "../../context/TransferAction/useDelegateAction";
+import useDelegateAction from "../../context/DelegateAction/useDelegateAction";
 import { usePion } from "../../context/PionContext";
 import { WrongNetworkModal } from "../common/WrongNetworkModal";
 

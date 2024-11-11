@@ -1,6 +1,6 @@
 import { PION } from "../../constants/strings";
 import useBonPION from "../../context/BonPION/useBonPION";
-import useDelegateAction from "../../context/TransferAction/useDelegateAction";
+import useDelegateAction from "../../context/DelegateAction/useDelegateAction";
 import BonALICEModalBody from "../common/BonALICEModalBody";
 import SelectButtonWithModal from "../common/SelectButtonWithModal";
 

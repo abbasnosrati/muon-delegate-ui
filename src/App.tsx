@@ -8,7 +8,7 @@ import { pionClient } from "./apollo/client";
 import { RefreshProvider } from "./context/Refresh/RefreshContext";
 import { LPTokenProvider } from "./context/LPToken/LPTokenContext";
 import { BonPIONProvider } from "./context/BonPION/BonPionContext";
-import { DelegateActionProvider } from "./context/TransferAction/DelegateActionContext";
+import { DelegateActionProvider } from "./context/DelegateAction/DelegateActionContext";
 function App() {
   document.getElementsByTagName("body")[0].className = "pion";
   return (

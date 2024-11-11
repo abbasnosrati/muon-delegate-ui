@@ -1,4 +1,4 @@
-import useDelegateAction from "../../context/TransferAction/useDelegateAction";
+import useDelegateAction from "../../context/DelegateAction/useDelegateAction";
 import { ConnectWalletButton } from "../common/ConnectWalletButton";
 
 const Header = () => {
