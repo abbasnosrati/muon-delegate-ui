@@ -61,7 +61,15 @@ export const UserDetails = () => {
               !userDelegateBalances?.dsp && "opacity-30 cursor-auto"
             }`}
           >
-            {rewardStatus ? "Switch to Transfer" : "Switch to StakeReward"}{" "}
+            {rewardStatus ? (
+              <span>
+                Switch to <span className="font-bold">"Transfer"</span>
+              </span>
+            ) : (
+              <span>
+                Switch to <span className="font-bold">"ReStake"</span>
+              </span>
+            )}
             {isLoadingMetamaskSwitchReward ? "..." : ""}
           </button>
         </div>

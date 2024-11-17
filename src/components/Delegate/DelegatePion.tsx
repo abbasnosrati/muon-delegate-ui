@@ -20,7 +20,7 @@ export const DelegatePion = () => {
     <div>
       <div className="mb-2">
         <p className="balance flex text-sm max-md:text-sm max-md:font-semibold text-xyz-2 dark:text-alice-gray">
-          {PION.token} Balance:{" "}
+          Balance:{" "}
           <span className="ml-1 text-xyz-75 dark:text-black dark:font-semibold tracking-[1px]">
             {PionBalance?.dsp}
           </span>

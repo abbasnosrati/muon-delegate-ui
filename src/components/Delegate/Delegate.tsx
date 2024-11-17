@@ -24,10 +24,10 @@ const Delegate = () => {
     <div className="w-full flex flex-col items-center justify-center page ">
       <ConnectWalletModal />
       <WrongNetworkModal />
-      <UserDetails />
+      {userDelegateBalances && userDelegateBalances.dsp && <UserDetails />}
       <div className="w-full max-w-[768px]">
         <div className="sm:text-2xl text-lg font-medium font-tomorrow mb-5 text-white ">
-          Delegate More
+          Delegate
         </div>
         <div className="pion actions-content relative dark:bg-alice-body-background dark:shadow-lg w-full px-4 py-3 max-md:min-w-[90vw] min-h-[400px] md:min-h-[428px] md:max-h-[424px] overflow-hidden md:px-11 rounded-2xl flex flex-col">
           <div className="flex justify-between items-center mb-8">
