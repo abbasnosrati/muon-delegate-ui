@@ -325,6 +325,7 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
     } finally {
       setIsMetamaskLoadingDelegate(false);
       refetchUserDelegateBalance();
+      unselectTransferModalSelectedBonALICE();
     }
   };
 

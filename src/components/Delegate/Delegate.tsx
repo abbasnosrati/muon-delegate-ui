@@ -73,33 +73,32 @@ const DelegateBonPionButton = () => {
     selectedTransferBonALICE,
   } = useDelegateAction();
 
-  const { selectedRewardStatus, userDelegateBalances } = useDelegateAction();
+  const { selectedRewardStatus } = useDelegateAction();
+
+  const isDelegateButtonDisabled =
+    !selectedRewardStatus ||
+    isMetaMaskLoadingDelegate ||
+    !selectedTransferBonALICE;
 
   return (
     <div className="flex flex-row gap-2 sm:gap-3 absolute bottom-6 sm:bottom-10 ">
       {!isBonPionApproved && selectedTransferBonALICE ? (
         <button
-          disabled={!selectedTransferBonALICE}
+          disabled={!selectedTransferBonALICE || isMetaMaskLoadingApprove}
           onClick={() => handleApprove("bonPION")}
           className={`responsive-button ${
-            !selectedTransferBonALICE && "opacity-30 cursor-auto"
+            (!selectedTransferBonALICE || isMetaMaskLoadingApprove) &&
+            "opacity-30 cursor-auto"
           }`}
         >
           {isMetaMaskLoadingApprove ? "Approving..." : "Approve"}
         </button>
       ) : (
         <button
-          disabled={
-            !selectedTransferBonALICE ||
-            isMetaMaskLoadingDelegate ||
-            (!!selectedRewardStatus && userDelegateBalances?.dsp == 0)
-          }
+          disabled={isDelegateButtonDisabled}
           onClick={() => handleDelegate("bonPION")}
           className={`responsive-button ${
-            (!selectedTransferBonALICE ||
-              isMetaMaskLoadingDelegate ||
-              (!selectedRewardStatus && userDelegateBalances?.dsp == 0)) &&
-            "opacity-30 cursor-auto"
+            isDelegateButtonDisabled && "opacity-30 cursor-auto"
           }`}
         >
           {isMetaMaskLoadingDelegate ? "Delegating..." : "Delegate"}

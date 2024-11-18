@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAccount, useReadContract } from "wagmi";
 import BONPION_ABI from "../abis/NFT.ts";
-import { BONPION_ADDRESS } from "../constants/addresses.ts";
+import { DELEGATION_ADDRESS } from "../constants/addresses.ts";
 import { SupportedChainId } from "../web3/chains.ts";
 
 const useGetApproved = (contractAddress: `0x${string}`, tokenId?: number) => {
@@ -21,7 +21,7 @@ const useGetApproved = (contractAddress: `0x${string}`, tokenId?: number) => {
   useEffect(() => {
     if (isFetched && data !== undefined && data !== null) {
       setIsBonPionApproved(
-        data.toLowerCase() == BONPION_ADDRESS.toLocaleLowerCase()
+        data.toLowerCase() == DELEGATION_ADDRESS.toLocaleLowerCase()
       );
     }
   }, [isFetched, data]);
