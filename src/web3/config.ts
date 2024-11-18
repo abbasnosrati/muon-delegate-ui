@@ -14,7 +14,7 @@ for (const chain of supportedChains) {
 }
 
 export const config = getDefaultConfig({
-  appName: "Meta Bridge",
+  appName: "Muon Delegation",
   projectId,
   chains: supportedChains as any,
   transports,
