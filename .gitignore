@@ -190,4 +190,6 @@ fabric.properties
 /src/abis/generated
 /src/abis/types
 
+.env
+
 # End of https://www.toptal.com/developers/gitignore/api/webstorm,visualstudiocode,react,yarn
