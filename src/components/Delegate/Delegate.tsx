@@ -24,7 +24,7 @@ const Delegate = () => {
     <div className="w-full flex flex-col items-center justify-center page ">
       <ConnectWalletModal />
       <WrongNetworkModal />
-      {userDelegateBalances && userDelegateBalances.dsp && <UserDetails />}
+      {userDelegateBalances && userDelegateBalances.dsp ? <UserDetails /> : ""}
       <div className="w-full max-w-[768px]">
         <div className="sm:text-2xl text-lg font-medium font-tomorrow mb-5 text-white ">
           Delegate
