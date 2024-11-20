@@ -19,7 +19,7 @@ import {
   PION_ADDRESS,
 } from "../../constants/addresses.ts";
 import { config } from "../../web3/config.ts";
-import { w3bNumberFromString } from "../../utils/web3.ts";
+// import { w3bNumberFromString } from "../../utils/web3.ts";
 import { W3bNumber } from "../../types/wagmi.ts";
 import { waitForTransactionReceipt } from "wagmi/actions";
 import useAllowance from "../../hooks/useAllowance.ts";
@@ -29,6 +29,7 @@ import useReadRewardStatus from "../../hooks/useReadRewardStatus.ts";
 import { SupportedChainId } from "../../web3/chains.ts";
 import useGetTotalReward from "../../hooks/useGetTotalReward.ts";
 import useGetTotalDelegated from "../../hooks/useGetTotalDelegate.ts";
+import { w3bNumberFromString } from "../../utils/web3.ts";
 
 const DelegateActionContext = createContext<{
   isTransferModalOpen: boolean;
@@ -38,7 +39,7 @@ const DelegateActionContext = createContext<{
   handleTransferModalItemClicked: (bonALICE: BonPION) => void;
   selectedTransferBonALICE: BonPION | null;
   unselectTransferModalSelectedBonALICE: () => void;
-  pionDelegateAmount: string | null;
+  pionDelegateAmount: W3bNumber | null;
   handleChangeDelegateAmount: (amount: string) => void;
   selectedRewardStatus: null | string | undefined;
   handleCheckboxChange: (checkbox: any) => void;
@@ -93,9 +94,8 @@ const DelegateActionContext = createContext<{
 const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
   const { address: walletAddress, chainId } = useAccount();
   const [isTransferModalOpen, setIsTransferModalOpen] = useState(false);
-  const [pionDelegateAmount, setPionDelegateAmount] = useState<string | null>(
-    null
-  );
+  const [pionDelegateAmount, setPionDelegateAmount] =
+    useState<W3bNumber | null>(null);
 
   const [isLoadingMetamaskSwitchReward, setIsLoadingMetamaskSwitchReward] =
     useState(false);
@@ -176,9 +176,7 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (PionAllowanceForDelegator && pionDelegateAmount) {
-      setPionAllowance(
-        PionAllowanceForDelegator.dsp >= Number(pionDelegateAmount)
-      );
+      setPionAllowance(PionAllowanceForDelegator.dsp >= pionDelegateAmount.dsp);
     }
   }, [PionAllowanceForDelegator, pionDelegateAmount]);
 
@@ -199,7 +197,7 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
 
   const handleChangeDelegateAmount = (amount: string) => {
     if (!checkIsWalletConnect()) return;
-    setPionDelegateAmount(amount);
+    setPionDelegateAmount(w3bNumberFromString(amount));
   };
 
   const openTransferModal = useCallback(() => {
@@ -239,7 +237,7 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
         abi: Delegation_ABI,
         functionName: "delegateToken",
         args: [
-          w3bNumberFromString(pionDelegateAmount!).big,
+          pionDelegateAmount!.big,
           walletAddress,
           selectedRewardStatus == RewardStatus.ReStakeReward,
         ],
@@ -273,10 +271,7 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
         address: PION_ADDRESS,
         abi: PION_ABI,
         functionName: "approve",
-        args: [
-          DELEGATION_ADDRESS,
-          w3bNumberFromString(pionDelegateAmount!).big,
-        ],
+        args: [DELEGATION_ADDRESS, pionDelegateAmount!.big],
       });
       await waitForTransactionReceipt(config, {
         hash: result,
