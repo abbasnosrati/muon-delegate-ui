@@ -126,10 +126,14 @@ const DelegatePionButton = () => {
     <div className="flex flex-row gap-2 sm:gap-3 absolute bottom-6 sm:bottom-10  ">
       {!pionAllowance && pionDelegateAmount ? (
         <button
-          disabled={!pionDelegateAmount || !PionBalance?.dsp}
+          disabled={
+            !pionDelegateAmount || !PionBalance?.dsp || isMetaMaskLoadingApprove
+          }
           onClick={() => handleApprove("PION")}
           className={`responsive-button ${
-            (!pionDelegateAmount || !PionBalance?.dsp) &&
+            (!pionDelegateAmount ||
+              !PionBalance?.dsp ||
+              isMetaMaskLoadingApprove) &&
             "opacity-30 cursor-auto"
           }`}
         >
