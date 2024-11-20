@@ -133,7 +133,8 @@ const DelegatePionButton = () => {
           className={`responsive-button ${
             (!pionDelegateAmount ||
               !PionBalance?.dsp ||
-              isMetaMaskLoadingApprove) &&
+              isMetaMaskLoadingApprove ||
+              pionDelegateAmount.dsp == 0) &&
             "opacity-30 cursor-auto"
           }`}
         >
@@ -152,7 +153,8 @@ const DelegatePionButton = () => {
             (!pionDelegateAmount ||
               Number(pionDelegateAmount) == 0 ||
               isMetaMaskLoadingDelegate ||
-              (!selectedRewardStatus && userDelegateBalances?.dsp == 0)) &&
+              (!selectedRewardStatus && userDelegateBalances?.dsp == 0) ||
+              pionDelegateAmount.dsp == 0) &&
             "opacity-30 cursor-auto"
           }`}
         >
