@@ -1,5 +1,6 @@
 import useDelegateAction from "../../context/DelegateAction/useDelegateAction";
 import { ConnectWalletButton } from "../common/ConnectWalletButton";
+import numeral from "numeral";
 
 const Header = () => {
   return (
@@ -28,11 +29,18 @@ const Header = () => {
 
 const PriceTVLButton = () => {
   const { totalDelegated } = useDelegateAction();
+
+  const formatNumber = (num: number): string => {
+    return numeral(num).format("0.00a").toUpperCase();
+  };
+
   return (
     <button className="btn btn--small !py-[5px] !cursor-default">
       {/* <img src="/assets/images/pion-token-logo.svg" alt="" className="mr-2.5" /> */}
       <p className="!text-white text-[10px] font-bold sm:text-sm sm:font-medium">
-        {`Total Delegated: ${totalDelegated?.dsp ? totalDelegated.dsp : "..."}`}{" "}
+        {`Total Delegated: ${
+          totalDelegated?.dsp ? formatNumber(totalDelegated.dsp) : "..."
+        }`}{" "}
         PION
       </p>
     </button>
