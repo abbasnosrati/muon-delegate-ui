@@ -292,6 +292,7 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
       });
       await waitForTransactionReceipt(config, {
         hash: result,
+        confirmations: 2,
       });
       refetchIsBonPionApproved();
     } finally {
