@@ -73,10 +73,10 @@ const DelegateBonPionButton = () => {
     selectedTransferBonALICE,
   } = useDelegateAction();
 
-  const { selectedRewardStatus } = useDelegateAction();
+  const { selectedRewardStatus, userDelegateBalances } = useDelegateAction();
 
   const isDelegateButtonDisabled =
-    !selectedRewardStatus ||
+    (!selectedRewardStatus && userDelegateBalances?.dsp == 0) ||
     isMetaMaskLoadingDelegate ||
     !selectedTransferBonALICE;
 
