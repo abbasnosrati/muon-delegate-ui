@@ -142,26 +142,10 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
   const { totalDelegated } = useGetTotalDelegated();
 
   useEffect(() => {
-    if (
-      totalReward &&
-      totalReward.hStr &&
-      totalDelegated &&
-      totalDelegated.dsp &&
-      userDelegateBalances &&
-      userDelegateBalances.dsp
-    ) {
-      calcUserReward();
+    if (totalReward && totalReward.hStr) {
+      setUserReward(Number(totalReward.hStr).toFixed(6));
     }
-  }, [totalReward, totalDelegated, userDelegateBalances]);
-
-  const calcUserReward = () => {
-    setUserReward(
-      (
-        (Number(totalReward!.hStr) * 0.9 * userDelegateBalances!.dsp) /
-        totalDelegated!.dsp
-      ).toFixed(6)
-    );
-  };
+  }, [totalReward, userDelegateBalances]);
 
   const {
     allowance: PionAllowanceForDelegator,
