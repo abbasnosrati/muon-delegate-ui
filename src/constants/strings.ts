@@ -1,6 +1,4 @@
-export const PION = {
-  token: "PION",
-  nft: "bonPION",
-  tokens: "PIONs",
-  nfts: "bonPIONs",
+export const MUON = {
+  token: "MUON",
+  tokens: "MUONs",
 };

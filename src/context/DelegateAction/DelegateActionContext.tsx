@@ -7,7 +7,7 @@ import {
 } from "react";
 import { BonPION, RewardStatus } from "../../types/index.ts";
 import { useAccount } from "wagmi";
-import { PION } from "../../constants/strings.ts";
+import { MUON } from "../../constants/strings.ts";
 import Delegation_ABI from "../../abis/Delegation.ts";
 import PION_ABI from "../../abis/Token.ts";
 import BONPION_ABI from "../../abis/NFT.ts";
@@ -197,7 +197,7 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
       return;
     }
     if (!checkIsWalletConnect()) return;
-    if (delegateType === PION.token) {
+    if (delegateType === MUON.token) {
       await handleDelegateToken();
     } else {
       await handleDelegateNFT();
@@ -240,7 +240,7 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
     if (!checkMetamaskChain()) {
       return;
     }
-    if (delegateType === PION.token) {
+    if (delegateType === MUON.token) {
       handleApprovePion();
     } else {
       handleApproveBonPION();

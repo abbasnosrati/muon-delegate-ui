@@ -1,6 +1,6 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { usePion } from "../../context/PionContext";
-import { PION } from "../../constants/strings";
+import { MUON } from "../../constants/strings";
 
 export const ConnectWalletButton = ({
   size,
@@ -77,7 +77,7 @@ export const ConnectWalletButton = ({
                       size === "md" ? "" : "btn--small"
                     } btn--secondary`}
                   >
-                    Wrong network
+                    Switch network
                   </button>
                 );
               }
@@ -85,11 +85,11 @@ export const ConnectWalletButton = ({
               return (
                 <button
                   onClick={openAccountModal}
-                  className={`btn btn--dark-primary !text-white dark:btn--white !dark:text-primary ${
+                  className={`btn btn--dark-primary  ${
                     size === "md" ? "" : "btn--small"
                   }`}
                 >
-                  {account.displayName} | {PionBalance?.dsp} {PION.token}
+                  {account.displayName} | {PionBalance?.dsp} {MUON.token}
                 </button>
               );
             })()}

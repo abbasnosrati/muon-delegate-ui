@@ -1,5 +1,5 @@
 import { PION_ADDRESS } from "../../constants/addresses";
-import { PION } from "../../constants/strings";
+import { MUON } from "../../constants/strings";
 import useDelegateAction from "../../context/DelegateAction/useDelegateAction";
 
 export const UserDetails = () => {
@@ -23,7 +23,7 @@ export const UserDetails = () => {
         }
       >
         <p className="text-sm font-medium font-tomorrow underline">
-          Buy ${PION.token}
+          Buy ${MUON.token}
         </p>
       </div>
       <div className="flex flex-col gap-5 sm:gap-5 sm:flex-row sm:h-[170px] h-auto mt-5 sm:mt-0">
@@ -32,14 +32,14 @@ export const UserDetails = () => {
             <p>Staked Amount</p>
             <div className="font-semibold sm:text-lg text-md">
               {userDelegateBalances
-                ? `${userDelegateBalances.dsp} PION`
+                ? `${userDelegateBalances.dsp} MUON`
                 : "..."}
             </div>
           </div>
           <div className="flex justify-between items-center">
             <div>Reward</div>
             <div className="font-semibold text-md sm:text-lg">
-              {userReward ? `${userReward} ${PION.token}` : "..."}
+              {userReward ? `${userReward} ${MUON.token}` : "..."}
             </div>
           </div>
         </div>
@@ -57,7 +57,7 @@ export const UserDetails = () => {
           <button
             disabled={!userDelegateBalances?.dsp}
             onClick={() => handleSwitchRewardStatus()}
-            className={`responsive-button ${
+            className={`btn btn--action ${
               !userDelegateBalances?.dsp && "opacity-30 cursor-auto"
             }`}
           >

@@ -13,6 +13,10 @@ export default {
       colors: {
         primary: "#4D3E9E",
         secondary: "#48427D",
+        sectionBg: "#ECEBEB",
+        textBackGround: "#FBFAFA",
+        lightDarkText: "#242124",
+        errorText: "#740000",
         "primary-L1": "#918EF5",
         "primary-L1-50": "#918EF580",
         "primary-13": "#4D3E9E21",
