@@ -124,7 +124,7 @@ export type RawBonPion = {
   tokenId: any;
 };
 
-export type BonPION = {
+export type BonMUON = {
   __typename?: "AccountTokenId";
   account: any;
   latestTimestamp: any;

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAccount, useReadContract } from "wagmi";
 import DELEGATION_ABI from "../abis/Delegation.ts";
-import { DELEGATION_ADDRESS } from "../constants/addresses.ts";
+import { DELEGATOR_MUON_ADDRESS } from "../constants/addresses.ts";
 import { getCurrentChainId } from "../web3/chains.ts";
 
 const useReadRewardStatus = () => {
@@ -10,7 +10,7 @@ const useReadRewardStatus = () => {
 
   const { data, isFetched, refetch } = useReadContract({
     abi: DELEGATION_ABI,
-    address: DELEGATION_ADDRESS,
+    address: DELEGATOR_MUON_ADDRESS[getCurrentChainId()],
     functionName: "restake",
     args: walletAddress ? [walletAddress] : undefined,
     chainId: getCurrentChainId(),

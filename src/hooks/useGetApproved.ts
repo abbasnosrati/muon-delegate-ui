@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useAccount, useReadContract } from "wagmi";
 import BONPION_ABI from "../abis/NFT.ts";
-import { DELEGATION_ADDRESS } from "../constants/addresses.ts";
+import { DELEGATOR_MUON_ADDRESS } from "../constants/addresses.ts";
 import { getCurrentChainId } from "../web3/chains.ts";
 
 const useGetApproved = (contractAddress: `0x${string}`, tokenId?: number) => {
-  const [isBonPionApproved, setIsBonPionApproved] = useState<boolean | null>(
+  const [isBonMuonApproved, setIsBonMuonApproved] = useState<boolean | null>(
     null
   );
 
@@ -20,13 +20,14 @@ const useGetApproved = (contractAddress: `0x${string}`, tokenId?: number) => {
 
   useEffect(() => {
     if (isFetched && data !== undefined && data !== null) {
-      setIsBonPionApproved(
-        data.toLowerCase() == DELEGATION_ADDRESS.toLocaleLowerCase()
+      setIsBonMuonApproved(
+        data.toLowerCase() ==
+          DELEGATOR_MUON_ADDRESS[getCurrentChainId()].toLocaleLowerCase()
       );
     }
   }, [isFetched, data]);
 
-  return { isBonPionApproved, refetch };
+  return { isBonMuonApproved, refetch };
 };
 
 export default useGetApproved;

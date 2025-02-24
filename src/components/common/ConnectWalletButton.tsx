@@ -1,5 +1,5 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { usePion } from "../../context/PionContext";
+import { useMuon } from "../../context/MuonContext";
 import { MUON } from "../../constants/strings";
 
 export const ConnectWalletButton = ({
@@ -11,7 +11,7 @@ export const ConnectWalletButton = ({
   withIcon?: boolean;
   light?: boolean;
 }) => {
-  const { PionBalance } = usePion();
+  const { muonBalance } = useMuon();
 
   return (
     <ConnectButton.Custom>
@@ -89,7 +89,7 @@ export const ConnectWalletButton = ({
                     size === "md" ? "" : "btn--small"
                   }`}
                 >
-                  {account.displayName} | {PionBalance?.dsp} {MUON.token}
+                  {account.displayName} | {muonBalance?.dsp} {MUON.token}
                 </button>
               );
             })()}

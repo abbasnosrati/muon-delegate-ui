@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { W3bNumber } from "../types/wagmi.ts";
 import { useAccount, useReadContract } from "wagmi";
 import PION_ABI from "../abis/Token.ts";
-import { PION_ADDRESS } from "../constants/addresses.ts";
+import { MUON_TOKEN_ADDRESS } from "../constants/addresses.ts";
 import { w3bNumberFromBigint } from "../utils/web3.ts";
 import { getCurrentChainId } from "../web3/chains.ts";
 
@@ -19,7 +19,12 @@ const useAllowance = (
     address: contractAddress,
     functionName: "allowance",
     args: walletAddress
-      ? [walletAddress, spenderAddress ? spenderAddress : PION_ADDRESS]
+      ? [
+          walletAddress,
+          spenderAddress
+            ? spenderAddress
+            : MUON_TOKEN_ADDRESS[getCurrentChainId()],
+        ]
       : undefined,
     chainId: getCurrentChainId(),
   });

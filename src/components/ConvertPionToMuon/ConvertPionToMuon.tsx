@@ -1,9 +1,7 @@
 import { ConvertPion } from "./ConvertPion";
-
 import { ConnectWalletModal } from "../common/ConnectWalletModal";
-import useDelegateAction from "../../context/DelegateAction/useDelegateAction";
-import { usePion } from "../../context/PionContext";
 import { WrongNetworkModal } from "../common/WrongNetworkModal";
+import { useConvert } from "../../context/ConvertContext";
 
 const ConvertPionToMuon = () => {
   return (
@@ -25,50 +23,39 @@ const ConvertPionToMuon = () => {
 
 const CovertPionButton = () => {
   const {
-    handleDelegate,
+    pionBalance,
+    migrateAmount,
+    isMetamaskLoading,
+    handleConvert,
     handleApprove,
-    pionDelegateAmount,
-    isMetaMaskLoadingApprove,
-    isMetaMaskLoadingDelegate,
-    pionAllowance,
-  } = useDelegateAction();
+    migrateAllowance,
+  } = useConvert();
 
-  const { PionBalance } = usePion();
-
-  const { selectedRewardStatus, userDelegateBalances } = useDelegateAction();
+  const displayAllowance =
+    !migrateAllowance || (migrateAllowance && !migrateAllowance.big);
 
   return (
-    <div className="flex flex-row gap-2 sm:gap-3 absolute bottom-6 sm:bottom-10 w-full justify-center right-0 ">
-      {!pionAllowance && pionDelegateAmount ? (
+    <div className="flex flex-row gap-2 sm:gap-3 absolute bottom-6 sm:bottom-10 w-full justify-center right-0">
+      {displayAllowance && migrateAmount.big ? (
         <button
-          disabled={!pionDelegateAmount || !PionBalance?.dsp}
-          onClick={() => handleApprove("PION")}
+          disabled={!migrateAmount || !pionBalance?.dsp}
+          onClick={() => handleApprove()}
           className={`btn btn--action ${
-            (!pionDelegateAmount || !PionBalance?.dsp) && " cursor-auto"
+            (!migrateAmount || !pionBalance?.dsp) && " cursor-auto"
           }`}
         >
-          {isMetaMaskLoadingApprove ? "Approving..." : "Approve"}
+          {isMetamaskLoading ? "Approving..." : "Approve"}
         </button>
       ) : (
         <button
-          disabled={
-            !pionDelegateAmount ||
-            isMetaMaskLoadingDelegate ||
-            pionDelegateAmount.dsp == 0 ||
-            !PionBalance?.dsp ||
-            (!selectedRewardStatus && userDelegateBalances?.dsp == 0)
-          }
-          onClick={() => handleDelegate("PION")}
+          disabled={isMetamaskLoading || !pionBalance?.dsp}
+          onClick={() => handleConvert()}
           className={`btn btn--action ${
-            (!pionDelegateAmount ||
-              pionDelegateAmount.dsp == 0 ||
-              isMetaMaskLoadingDelegate ||
-              !PionBalance?.dsp ||
-              (!selectedRewardStatus && userDelegateBalances?.dsp == 0)) &&
+            (isMetamaskLoading || !pionBalance?.dsp) &&
             " cursor-auto text-sm md:text-[12px] xl:text-sm"
           }`}
         >
-          {isMetaMaskLoadingDelegate ? "Converting..." : "Convert"}
+          {isMetamaskLoading ? "Converting..." : "Convert"}
         </button>
       )}
     </div>

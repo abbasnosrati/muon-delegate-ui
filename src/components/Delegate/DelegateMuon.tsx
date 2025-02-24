@@ -1,20 +1,20 @@
 import { useEffect } from "react";
-import { PION_ADDRESS } from "../../constants/addresses";
+import { MUON_TOKEN_ADDRESS } from "../../constants/addresses";
 import { MUON } from "../../constants/strings";
-import { usePion } from "../../context/PionContext";
+import { useMuon } from "../../context/MuonContext";
 import useDelegateAction from "../../context/DelegateAction/useDelegateAction";
 import { ethers } from "ethers";
 
-export const DelegatePion = () => {
-  const { PionBalance, refetchPionBalance } = usePion();
+export const DelegateMuon = () => {
+  const { muonBalance, refetchMuonBalance } = useMuon();
   const {
     handleChangeDelegateAmount,
-    pionDelegateAmount,
+    muonDelegateAmount,
     isMetaMaskLoadingDelegate,
   } = useDelegateAction();
 
   useEffect(() => {
-    refetchPionBalance();
+    refetchMuonBalance();
   }, [isMetaMaskLoadingDelegate]);
 
   const onValueChanged = (value: string) => {
@@ -29,7 +29,7 @@ export const DelegatePion = () => {
             Balance:
           </p>
           <span className="text-sm md:text-[12px] xl:text-sm">
-            {PionBalance?.dsp} ${MUON.token}
+            {muonBalance?.dsp} ${MUON.token}
           </span>
         </div>
       </div>
@@ -39,7 +39,7 @@ export const DelegatePion = () => {
           <input
             className="amount-input__input text-lightDarkText bg-boxBg  flex-1  max-w-[200px] w-full pl-2 outline-none text-[10px]"
             type="number"
-            value={pionDelegateAmount?.hStr ?? ""}
+            value={muonDelegateAmount?.hStr ?? ""}
             onChange={(e) => handleChangeDelegateAmount(e.target.value)}
           />
         </div>
@@ -51,8 +51,8 @@ export const DelegatePion = () => {
           <div className="flex gap-1.5 max-md:items-end h-full">
             <button
               onClick={() =>
-                PionBalance && PionBalance.dsp && !!PionBalance
-                  ? onValueChanged(ethers.formatEther(PionBalance.big))
+                muonBalance && muonBalance.dsp && !!muonBalance
+                  ? onValueChanged(ethers.formatEther(muonBalance.big))
                   : null
               }
               className="btn--secondary-tag  !font-normal"
@@ -62,15 +62,15 @@ export const DelegatePion = () => {
           </div>
         </div>
       </div>
-      {PionBalance &&
-        pionDelegateAmount &&
-        PionBalance.big < pionDelegateAmount.big && (
+      {muonBalance &&
+        muonDelegateAmount &&
+        muonBalance.big < muonDelegateAmount.big && (
           <div className="text-errorText  text-[10px] -mt-4 ml-[14px]">
             Insufficient $MUON Balance.
             <span
               onClick={() =>
                 window.open(
-                  `https://thena.fi/swap?inputCurrency=BNB&outputCurrency=${PION_ADDRESS}&swapType=1`,
+                  `https://thena.fi/swap?inputCurrency=BNB&outputCurrency=${MUON_TOKEN_ADDRESS}&swapType=1`,
                   "_blank"
                 )
               }

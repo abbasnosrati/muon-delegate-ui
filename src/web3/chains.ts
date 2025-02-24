@@ -10,6 +10,8 @@ export const CHAIN_IDS_TO_NAMES = {
   [SupportedChainId.BSCTESTNET]: "bsctestnet",
 };
 
+export const supportedChains = [bsc, bscTestnet];
+
 export const SUPPORTED_CHAIN_IDS: SupportedChainId[] = Object.values(
   SupportedChainId
 ).filter((id) => typeof id === "number") as SupportedChainId[];

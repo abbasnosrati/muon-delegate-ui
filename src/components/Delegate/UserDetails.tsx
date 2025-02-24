@@ -1,6 +1,6 @@
 import { MUON } from "../../constants/strings";
 import useDelegateAction from "../../context/DelegateAction/useDelegateAction";
-import { usePion } from "../../context/PionContext";
+import { useMuon } from "../../context/MuonContext";
 
 export const UserDetails = () => {
   const {
@@ -66,33 +66,33 @@ export const UserDetails = () => {
           </div>
         </div>
       </div>
-      <UNdelegateMUON />
+      <UnDelegateMUON />
     </div>
   );
 };
 
-const UNdelegateMUON = () => {
+const UnDelegateMUON = () => {
   const {
     handleDelegate,
     handleApprove,
-    pionDelegateAmount,
+    muonDelegateAmount,
     isMetaMaskLoadingApprove,
     isMetaMaskLoadingDelegate,
-    pionAllowance,
+    muonAllowance,
   } = useDelegateAction();
 
-  const { PionBalance } = usePion();
+  const { muonBalance } = useMuon();
 
   const { selectedRewardStatus, userDelegateBalances } = useDelegateAction();
 
   return (
     <div className="flex flex-row absolute bottom-6 sm:bottom-10 items-center justify-center right-0   w-full">
-      {!pionAllowance && pionDelegateAmount ? (
+      {!muonAllowance && muonDelegateAmount ? (
         <button
-          disabled={!pionDelegateAmount || !PionBalance?.dsp}
+          disabled={!muonDelegateAmount || !muonBalance?.dsp}
           onClick={() => handleApprove("PION")}
           className={`btn btn--action ${
-            (!pionDelegateAmount || !PionBalance?.dsp) && " cursor-auto"
+            (!muonDelegateAmount || !muonBalance?.dsp) && " cursor-auto"
           }`}
         >
           {isMetaMaskLoadingApprove ? "Approving..." : "Approve"}
@@ -100,18 +100,18 @@ const UNdelegateMUON = () => {
       ) : (
         <button
           disabled={
-            !pionDelegateAmount ||
+            !muonDelegateAmount ||
             isMetaMaskLoadingDelegate ||
-            pionDelegateAmount.dsp == 0 ||
-            !PionBalance?.dsp ||
+            muonDelegateAmount.dsp == 0 ||
+            !muonBalance?.dsp ||
             (!selectedRewardStatus && userDelegateBalances?.dsp == 0)
           }
           onClick={() => handleDelegate("PION")}
           className={`btn btn--action ${
-            (!pionDelegateAmount ||
-              pionDelegateAmount.dsp == 0 ||
+            (!muonDelegateAmount ||
+              muonDelegateAmount.dsp == 0 ||
               isMetaMaskLoadingDelegate ||
-              !PionBalance?.dsp ||
+              !muonBalance?.dsp ||
               (!selectedRewardStatus && userDelegateBalances?.dsp == 0)) &&
             " cursor-auto text-sm md:text-[12px] xl:text-sm"
           }`}

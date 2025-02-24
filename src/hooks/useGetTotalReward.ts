@@ -3,9 +3,9 @@ import { W3bNumber } from "../types/wagmi.ts";
 import { useAccount, useReadContract } from "wagmi";
 import STAKING_ABI from "../abis/MuonNodeStaking.ts";
 import {
-  DELEGATOR_NODE_STAKER,
-  NODE_STAKER_ADDRESS,
-  DELEGATION_ADDRESS,
+  DELEGATOR_NODE_STAKER_WALLET_ADDRESS,
+  MUON_NODES_STAKER_ADDRESS,
+  DELEGATOR_MUON_ADDRESS,
 } from "../constants/addresses.ts";
 import { w3bNumberFromBigint } from "../utils/web3.ts";
 import { getCurrentChainId } from "../web3/chains.ts";
@@ -22,9 +22,9 @@ const useGetTotalReward = () => {
   const decimals = 18;
   const { data, isFetched, refetch } = useReadContract({
     abi: STAKING_ABI,
-    address: NODE_STAKER_ADDRESS,
+    address: MUON_NODES_STAKER_ADDRESS[getCurrentChainId()],
     functionName: "earned",
-    args: [DELEGATOR_NODE_STAKER],
+    args: [DELEGATOR_NODE_STAKER_WALLET_ADDRESS[getCurrentChainId()]],
 
     chainId: getCurrentChainId(),
   });
@@ -32,7 +32,7 @@ const useGetTotalReward = () => {
   const handleGetUserIndex = async () => {
     const result = await readContract(config, {
       abi: DELEGATION_ABI,
-      address: DELEGATION_ADDRESS,
+      address: DELEGATOR_MUON_ADDRESS[getCurrentChainId()],
       functionName: "userIndexes",
       args: [walletAddress],
       chainId: getCurrentChainId() as any,
@@ -49,7 +49,7 @@ const useGetTotalReward = () => {
 
     const result: any = await readContract(config, {
       abi: DELEGATION_ABI,
-      address: DELEGATION_ADDRESS,
+      address: DELEGATOR_MUON_ADDRESS[getCurrentChainId()],
       functionName: "calcAmounts",
       args: [res, timestampInSeconds],
       chainId: getCurrentChainId() as any,

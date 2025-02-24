@@ -1,25 +1,19 @@
 import { useEffect } from "react";
-import { PION_ADDRESS } from "../../constants/addresses";
-import { MUON } from "../../constants/strings";
-import { usePion } from "../../context/PionContext";
-import useDelegateAction from "../../context/DelegateAction/useDelegateAction";
-import { ethers } from "ethers";
+import { useConvert } from "../../context/ConvertContext";
+import { w3bNumberFromString } from "../../utils/web3";
 
 export const ConvertPion = () => {
-  const { PionBalance, refetchPionBalance } = usePion();
   const {
-    handleChangeDelegateAmount,
-    pionDelegateAmount,
-    isMetaMaskLoadingDelegate,
-  } = useDelegateAction();
+    pionBalance,
+    refetchPionBalance,
+    isMetamaskLoading,
+    migrateAmount,
+    setMigrateAmount,
+  } = useConvert();
 
   useEffect(() => {
     refetchPionBalance();
-  }, [isMetaMaskLoadingDelegate]);
-
-  const onValueChanged = (value: string) => {
-    handleChangeDelegateAmount(value);
-  };
+  }, [isMetamaskLoading]);
 
   return (
     <div>
@@ -29,7 +23,7 @@ export const ConvertPion = () => {
             Balance:
           </p>
           <span className="text-sm md:text-[12px] xl:text-sm">
-            {PionBalance?.dsp} $PION
+            {pionBalance?.dsp} $PION
           </span>
         </div>
       </div>
@@ -39,8 +33,10 @@ export const ConvertPion = () => {
           <input
             className="amount-input__input text-lightDarkText bg-boxBg flex-1 xl:max-w-[200px] w-full pl-2 outline-none text-[10px]"
             type="number"
-            value={pionDelegateAmount?.hStr ?? ""}
-            onChange={(e) => handleChangeDelegateAmount(e.target.value)}
+            value={migrateAmount?.hStr ?? ""}
+            onChange={(e) =>
+              setMigrateAmount(w3bNumberFromString(e.target.value))
+            }
           />
         </div>
         <div className="amount-input__token-name group font-semibold text-sm md:text-[12px] xl:text-sm min-w-fit">
@@ -51,8 +47,8 @@ export const ConvertPion = () => {
           <div className="flex gap-1.5 max-md:items-end h-full">
             <button
               onClick={() =>
-                PionBalance && PionBalance.dsp && !!PionBalance
-                  ? onValueChanged(ethers.formatEther(PionBalance.big))
+                pionBalance && pionBalance.dsp && !!pionBalance
+                  ? setMigrateAmount(pionBalance)
                   : null
               }
               className="btn--secondary-tag  !font-normal"
@@ -62,13 +58,11 @@ export const ConvertPion = () => {
           </div>
         </div>
       </div>
-      {PionBalance &&
-        pionDelegateAmount &&
-        PionBalance.big < pionDelegateAmount.big && (
-          <div className="text-errorText  text-[10px] -mt-4 ml-[14px]">
-            Insufficient amount.{" "}
-          </div>
-        )}
+      {pionBalance && pionBalance.big < migrateAmount.big && (
+        <div className="text-errorText  text-[10px] -mt-4 ml-[14px]">
+          Insufficient amount.{" "}
+        </div>
+      )}
     </div>
   );
 };

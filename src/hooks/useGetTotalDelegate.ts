@@ -4,10 +4,10 @@ import { useReadContract } from "wagmi";
 import STAKING_ABI from "../abis/MuonNodeStaking.ts";
 import BONPION_ABI from "../abis/NFT.ts";
 import {
-  BONPION_ADDRESS,
-  DELEGATOR_NODE_STAKER,
-  NODE_STAKER_ADDRESS,
-  PION_ADDRESS,
+  BON_MUON_TOKEN_ADDRESS,
+  DELEGATOR_NODE_STAKER_WALLET_ADDRESS,
+  MUON_NODES_STAKER_ADDRESS,
+  MUON_TOKEN_ADDRESS,
 } from "../constants/addresses.ts";
 import { w3bNumberFromBigint } from "../utils/web3.ts";
 import { getCurrentChainId } from "../web3/chains.ts";
@@ -21,18 +21,18 @@ const useGetTotalDelegated = () => {
 
   const { data, isFetched, refetch } = useReadContract({
     abi: STAKING_ABI,
-    address: NODE_STAKER_ADDRESS,
+    address: MUON_NODES_STAKER_ADDRESS[getCurrentChainId()],
     functionName: "users",
-    args: [DELEGATOR_NODE_STAKER],
+    args: [DELEGATOR_NODE_STAKER_WALLET_ADDRESS[getCurrentChainId()]],
     chainId: getCurrentChainId(),
   });
 
   const handleGetTotalDelegated = async () => {
     const result = await readContract(config, {
       abi: BONPION_ABI,
-      address: BONPION_ADDRESS,
+      address: BON_MUON_TOKEN_ADDRESS[getCurrentChainId()],
       functionName: "lockedOf",
-      args: [tokenId!, PION_ADDRESS],
+      args: [tokenId!, MUON_TOKEN_ADDRESS[getCurrentChainId()]],
       chainId: getCurrentChainId() as any,
     });
     setTotalDelegated(w3bNumberFromBigint(result, decimals));
