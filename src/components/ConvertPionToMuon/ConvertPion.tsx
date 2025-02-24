@@ -63,19 +63,8 @@ export const ConvertPion = () => {
       {PionBalance &&
         pionDelegateAmount &&
         PionBalance.big < pionDelegateAmount.big && (
-          <div className="text-errorText  text-[10px] -mt-4">
+          <div className="text-errorText  text-[10px] -mt-4 ml-[14px]">
             Insufficient amount.{" "}
-            <span
-              onClick={() =>
-                window.open(
-                  `https://thena.fi/swap?inputCurrency=BNB&outputCurrency=${PION_ADDRESS}&swapType=1`,
-                  "_blank"
-                )
-              }
-              className="underline cursor-pointer"
-            >
-              Buy ${MUON.token} here.
-            </span>
           </div>
         )}
     </div>

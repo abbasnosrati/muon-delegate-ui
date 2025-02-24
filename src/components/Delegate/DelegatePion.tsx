@@ -65,7 +65,7 @@ export const DelegatePion = () => {
       {PionBalance &&
         pionDelegateAmount &&
         PionBalance.big < pionDelegateAmount.big && (
-          <div className="text-errorText  text-[10px] -mt-4">
+          <div className="text-errorText  text-[10px] -mt-4 ml-[14px]">
             Insufficient $MUON Balance.
             <span
               onClick={() =>
