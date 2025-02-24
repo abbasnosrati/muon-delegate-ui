@@ -8,15 +8,15 @@ import { WrongNetworkModal } from "../common/WrongNetworkModal";
 const Delegate = () => {
   const { userDelegateBalances } = useDelegateAction();
   return (
-    <div className="w-full flex items-center justify-center  ">
+    <div className="w-full flex items-center justify-center  mt-40 md:mt-0">
       <ConnectWalletModal />
       <WrongNetworkModal />
 
       <div className="w-full max-w-[768px] bg-sectionBg relative">
-        <div className="2xl:text-[22px] flex items-center px-4 font-medium font-azeretMono absolute h-[56px] -top-8 bg-textBackGround text-lightDarkText tracking-[2px]">
+        <div className="flex items-center px-4 font-medium font-azeretMono absolute h-[56px] -top-8 bg-textBackGround text-lightDarkText tracking-[2px]">
           Delegate $MUON
         </div>
-        <div className="pion actions-content relative dark:bg-alice-body-background dark:shadow-lg w-full px-4 py-3 max-md:min-w-[90vw] min-h-[400px] md:min-h-[428px] md:max-h-[424px] overflow-hidden md:px-11 rounded-2xl flex flex-col">
+        <div className="pion actions-content relative dark:bg-alice-body-background dark:shadow-lg w-full px-4 py-3  min-h-[400px] md:min-h-[428px] md:max-h-[424px] overflow-hidden flex flex-col">
           <DelegatePion />
           {!userDelegateBalances?.dsp && <RewardStatusCheckbox />}
           <DelegatePionButton />
@@ -41,7 +41,7 @@ const DelegatePionButton = () => {
   const { selectedRewardStatus, userDelegateBalances } = useDelegateAction();
 
   return (
-    <div className="flex flex-row gap-2 sm:gap-3 absolute bottom-6 sm:bottom-10  ">
+    <div className="flex flex-row absolute bottom-6 sm:bottom-10 items-center justify-center right-0   w-full">
       {!pionAllowance && pionDelegateAmount ? (
         <button
           disabled={!pionDelegateAmount || !PionBalance?.dsp}
@@ -68,7 +68,7 @@ const DelegatePionButton = () => {
               isMetaMaskLoadingDelegate ||
               !PionBalance?.dsp ||
               (!selectedRewardStatus && userDelegateBalances?.dsp == 0)) &&
-            " cursor-auto"
+            " cursor-auto text-sm md:text-[12px] xl:text-sm"
           }`}
         >
           {isMetaMaskLoadingDelegate ? "Delegating..." : "Delegate"}

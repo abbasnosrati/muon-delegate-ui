@@ -33,10 +33,8 @@ const Modal: FC<{
               className={`modal-content ${
                 size === "lg" ? "max-w-[466px]" : "max-w-[400px]"
               } w-[90%] px-4 md:px-8 pt-5 pb-4 md:pb-8 relative -z-10 ${
-                size === "sm"
-                  ? "bg-modal-small pb-0"
-                  : "bg-gray-bg-70 dark:bg-alice-gray"
-              } rounded-3xl`}
+                size === "sm" ? "bg-sectionBg pb-0" : ""
+              } `}
             >
               <div
                 onClick={(e) => e.stopPropagation()}

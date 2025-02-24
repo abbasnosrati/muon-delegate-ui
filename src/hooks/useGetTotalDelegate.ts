@@ -10,7 +10,7 @@ import {
   PION_ADDRESS,
 } from "../constants/addresses.ts";
 import { w3bNumberFromBigint } from "../utils/web3.ts";
-import { SupportedChainId } from "../web3/chains.ts";
+import { getCurrentChainId } from "../web3/chains.ts";
 import { readContract } from "wagmi/actions";
 import { config } from "../web3/config.ts";
 
@@ -24,8 +24,7 @@ const useGetTotalDelegated = () => {
     address: NODE_STAKER_ADDRESS,
     functionName: "users",
     args: [DELEGATOR_NODE_STAKER],
-
-    chainId: SupportedChainId.chainId,
+    chainId: getCurrentChainId(),
   });
 
   const handleGetTotalDelegated = async () => {
@@ -34,7 +33,7 @@ const useGetTotalDelegated = () => {
       address: BONPION_ADDRESS,
       functionName: "lockedOf",
       args: [tokenId!, PION_ADDRESS],
-      chainId: SupportedChainId.chainId,
+      chainId: getCurrentChainId() as any,
     });
     setTotalDelegated(w3bNumberFromBigint(result, decimals));
   };

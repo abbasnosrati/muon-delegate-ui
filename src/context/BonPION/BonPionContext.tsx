@@ -10,7 +10,7 @@ import { useQuery } from "@apollo/client";
 import { BonPION, RawBonPion } from "../../types/index.ts";
 import useRefresh from "../Refresh/useRefresh.ts";
 import { w3bNumberFromBigint } from "../../utils/web3.ts";
-import { SupportedChainId } from "../../web3/chains.ts";
+import { getCurrentChainId } from "../../web3/chains.ts";
 import { config } from "../../web3/config.ts";
 
 const BonPIONContext = createContext<{
@@ -37,7 +37,7 @@ const BonPIONProvider = ({ children }: { children: ReactNode }) => {
           address: BONPION_ADDRESS,
           functionName: "getLockedOf",
           args: [bonALICE.tokenId, [PION_ADDRESS]],
-          chainId: SupportedChainId.chainId,
+          chainId: getCurrentChainId(),
           enabled: !!walletAddress && !!bonALICE.tokenId,
         }));
 

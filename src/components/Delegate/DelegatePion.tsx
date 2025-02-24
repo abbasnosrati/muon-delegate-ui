@@ -25,17 +25,17 @@ export const DelegatePion = () => {
     <div>
       <div className=" border-b border-lightDarkText my-10">
         <div className=" px-2 flex justify-between items-center border-t border-l border-r border-lightDarkText max-w-[200px] h-[42px]">
-          <p className="balance flex text-sm max-md:text-sm max-md:font-semibold  items-center">
+          <p className="balance flex text-sm md:text-[12px] xl:text-sm max-md:font-semibold  items-center">
             Balance:
           </p>
-          <span className="">
+          <span className="text-sm md:text-[12px] xl:text-sm">
             {PionBalance?.dsp} ${MUON.token}
           </span>
         </div>
       </div>
       <div className="mb-5 amount-input__input-wrapper relative flex justify-between items-center w-full gap-3 border border-lightDarkText h-12 md:h-14 px-3">
         <div className="flex gap-2">
-          <p className="">Enter amount:</p>
+          <p className="text-sm md:text-[12px] xl:text-sm">Enter amount:</p>
           <input
             className="amount-input__input text-lightDarkText bg-boxBg  flex-1  max-w-[200px] w-full pl-2 outline-none text-[10px]"
             type="number"
@@ -43,7 +43,7 @@ export const DelegatePion = () => {
             onChange={(e) => handleChangeDelegateAmount(e.target.value)}
           />
         </div>
-        <div className="amount-input__token-name group font-semibold max-md:text-sm min-w-fit  mr-5">
+        <div className="amount-input__token-name group font-semibold max-md:text-sm min-w-fit text-sm md:text-[12px] xl:text-sm">
           ${MUON.token}
         </div>
 

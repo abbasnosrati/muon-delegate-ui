@@ -8,7 +8,7 @@ import {
   DELEGATION_ADDRESS,
 } from "../constants/addresses.ts";
 import { w3bNumberFromBigint } from "../utils/web3.ts";
-import { SupportedChainId } from "../web3/chains.ts";
+import { getCurrentChainId } from "../web3/chains.ts";
 import { readContract } from "wagmi/actions";
 import { config } from "../web3/config.ts";
 import DELEGATION_ABI from "../abis/Delegation.ts";
@@ -26,7 +26,7 @@ const useGetTotalReward = () => {
     functionName: "earned",
     args: [DELEGATOR_NODE_STAKER],
 
-    chainId: SupportedChainId.chainId,
+    chainId: getCurrentChainId(),
   });
 
   const handleGetUserIndex = async () => {
@@ -35,7 +35,7 @@ const useGetTotalReward = () => {
       address: DELEGATION_ADDRESS,
       functionName: "userIndexes",
       args: [walletAddress],
-      chainId: SupportedChainId.chainId,
+      chainId: getCurrentChainId() as any,
     });
     if (result) setUserIndex(result as bigint);
   };
@@ -52,7 +52,7 @@ const useGetTotalReward = () => {
       address: DELEGATION_ADDRESS,
       functionName: "calcAmounts",
       args: [res, timestampInSeconds],
-      chainId: SupportedChainId.chainId,
+      chainId: getCurrentChainId() as any,
     });
     setTotalReward(w3bNumberFromBigint(result[Number(userIndex) - 1]));
   };

@@ -26,7 +26,7 @@ import useAllowance from "../../hooks/useAllowance.ts";
 import useDelegateBalances from "../../hooks/useDelegateBalances.ts";
 import useGetApproved from "../../hooks/useGetApproved.ts";
 import useReadRewardStatus from "../../hooks/useReadRewardStatus.ts";
-import { SupportedChainId } from "../../web3/chains.ts";
+import { getCurrentChainId } from "../../web3/chains.ts";
 import useGetTotalReward from "../../hooks/useGetTotalReward.ts";
 import useGetTotalDelegated from "../../hooks/useGetTotalDelegate.ts";
 
@@ -119,13 +119,12 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
   const [isWrongNetworkModalOpen, setIsWrongNetworkModalOpen] = useState(false);
 
   useEffect(() => {
-    if (chainId)
-      setIsWrongNetworkModalOpen(chainId !== SupportedChainId.chainId);
+    if (chainId) setIsWrongNetworkModalOpen(chainId !== getCurrentChainId());
   }, [chainId]);
 
   const checkMetamaskChain = () => {
-    setIsWrongNetworkModalOpen(chainId !== SupportedChainId.chainId);
-    return chainId == SupportedChainId.chainId;
+    setIsWrongNetworkModalOpen(chainId !== getCurrentChainId());
+    return chainId == getCurrentChainId();
   };
 
   const [selectedRewardStatus, setSelectedRewardStatus] = useState(null);

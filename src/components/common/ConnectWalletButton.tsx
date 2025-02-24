@@ -75,9 +75,9 @@ export const ConnectWalletButton = ({
                     onClick={openChainModal}
                     className={`btn ${
                       size === "md" ? "" : "btn--small"
-                    } btn--secondary`}
+                    } btn--primary`}
                   >
-                    Switch network
+                    Switch Network
                   </button>
                 );
               }

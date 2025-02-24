@@ -5,8 +5,8 @@ export const RewardStatusCheckbox = () => {
   const { selectedRewardStatus, handleCheckboxChange } = useDelegateAction();
   return (
     <div>
-      <div className="mt-2 border border-lightDarkText text-lightDarkText px-5 py-4">
-        <div className="flex gap-5  text-sm">
+      <div className="mt-4 border border-lightDarkText text-lightDarkText px-5 py-4">
+        <div className="flex gap-5 text-sm md:text-[10px] xl:text-[12px]">
           <label className="cursor-pointer">
             <input
               type="checkbox"

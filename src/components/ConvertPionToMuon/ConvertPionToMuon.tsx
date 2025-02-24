@@ -11,10 +11,10 @@ const ConvertPionToMuon = () => {
       <ConnectWalletModal />
       <WrongNetworkModal />
       <div className="w-full max-w-[768px] bg-sectionBg relative">
-        <div className="2xl:text-[22px] flex items-center px-4 font-medium font-azeretMono absolute h-[56px] -top-8 bg-textBackGround text-lightDarkText tracking-[2px]">
-          Covert $PION to $MUON
+        <div className="flex items-center px-4 font-medium font-azeretMono absolute h-[56px] -top-8 bg-textBackGround text-lightDarkText tracking-[1px]">
+          Convert $PION to $MUON
         </div>
-        <div className="pion actions-content relative dark:bg-alice-body-background dark:shadow-lg w-full px-4 py-3 max-md:min-w-[90vw] min-h-[400px] md:min-h-[428px] md:max-h-[424px] overflow-hidden md:px-11 rounded-2xl flex flex-col">
+        <div className="pion actions-content relative w-full px-4 py-3 min-h-[400px] md:min-h-[428px] md:max-h-[424px] overflow-hidden flex flex-col">
           <ConvertPion />
           <CovertPionButton />
         </div>
@@ -38,7 +38,7 @@ const CovertPionButton = () => {
   const { selectedRewardStatus, userDelegateBalances } = useDelegateAction();
 
   return (
-    <div className="flex flex-row gap-2 sm:gap-3 absolute bottom-6 sm:bottom-10  ">
+    <div className="flex flex-row gap-2 sm:gap-3 absolute bottom-6 sm:bottom-10 w-full justify-center right-0 ">
       {!pionAllowance && pionDelegateAmount ? (
         <button
           disabled={!pionDelegateAmount || !PionBalance?.dsp}
@@ -65,7 +65,7 @@ const CovertPionButton = () => {
               isMetaMaskLoadingDelegate ||
               !PionBalance?.dsp ||
               (!selectedRewardStatus && userDelegateBalances?.dsp == 0)) &&
-            " cursor-auto"
+            " cursor-auto text-sm md:text-[12px] xl:text-sm"
           }`}
         >
           {isMetaMaskLoadingDelegate ? "Converting..." : "Convert"}

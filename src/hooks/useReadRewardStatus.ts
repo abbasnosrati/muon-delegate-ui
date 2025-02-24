@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAccount, useReadContract } from "wagmi";
 import DELEGATION_ABI from "../abis/Delegation.ts";
 import { DELEGATION_ADDRESS } from "../constants/addresses.ts";
-import { SupportedChainId } from "../web3/chains.ts";
+import { getCurrentChainId } from "../web3/chains.ts";
 
 const useReadRewardStatus = () => {
   const [rewardStatus, setRewardStatus] = useState<boolean | null>(null);
@@ -13,7 +13,7 @@ const useReadRewardStatus = () => {
     address: DELEGATION_ADDRESS,
     functionName: "restake",
     args: walletAddress ? [walletAddress] : undefined,
-    chainId: SupportedChainId.chainId,
+    chainId: getCurrentChainId(),
   });
 
   useEffect(() => {

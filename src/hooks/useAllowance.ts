@@ -4,7 +4,7 @@ import { useAccount, useReadContract } from "wagmi";
 import PION_ABI from "../abis/Token.ts";
 import { PION_ADDRESS } from "../constants/addresses.ts";
 import { w3bNumberFromBigint } from "../utils/web3.ts";
-import { SupportedChainId } from "../web3/chains.ts";
+import { getCurrentChainId } from "../web3/chains.ts";
 
 const useAllowance = (
   contractAddress: `0x${string}`,
@@ -21,7 +21,7 @@ const useAllowance = (
     args: walletAddress
       ? [walletAddress, spenderAddress ? spenderAddress : PION_ADDRESS]
       : undefined,
-    chainId: SupportedChainId.chainId,
+    chainId: getCurrentChainId(),
   });
 
   useEffect(() => {

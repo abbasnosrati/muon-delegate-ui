@@ -4,7 +4,7 @@ import { useAccount, useReadContract } from "wagmi";
 import DELEGATE_ABI from "../abis/Delegation.ts";
 import { DELEGATION_ADDRESS } from "../constants/addresses.ts";
 import { w3bNumberFromBigint } from "../utils/web3.ts";
-import { SupportedChainId } from "../web3/chains.ts";
+import { getCurrentChainId } from "../web3/chains.ts";
 
 const useDelegateBalances = () => {
   const [userDelegateBalances, setUserDelegateBalances] =
@@ -16,7 +16,7 @@ const useDelegateBalances = () => {
     address: DELEGATION_ADDRESS,
     functionName: "balances",
     args: walletAddress ? [walletAddress] : undefined,
-    chainId: SupportedChainId.chainId,
+    chainId: getCurrentChainId(),
   });
 
   useEffect(() => {
