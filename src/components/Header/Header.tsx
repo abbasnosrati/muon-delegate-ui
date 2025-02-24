@@ -11,13 +11,13 @@ const Header = () => {
             <img alt="bonPion" src="/assets/images/muonLogo.svg" />
             {/* <img alt="bonPion" src="/assets/images/logo-text.svg" /> */}
           </div>
-          <div className="absolute top-12 left-3 w-[200px] sm:hidden">
+          <div className="absolute top-12 left-3 w-[200px] md:hidden">
             <PriceTVLButton />
           </div>
         </div>
 
         <div className=" flex flex-col-reverse sm:flex-row gap-4 mr-3 sm:mr-10">
-          <div className="hidden sm:flex">
+          <div className="hidden md:flex">
             <PriceTVLButton />
           </div>
           <ConnectWalletButton />
@@ -37,11 +37,11 @@ const PriceTVLButton = () => {
   return (
     <button className="btn btn--small !py-[5px] !cursor-default">
       {/* <img src="/assets/images/pion-token-logo.svg" alt="" className="mr-2.5" /> */}
-      <p className=" text-[10px] font-bold sm:text-sm sm:font-medium">
+      <p className=" text-[10px] font-bold md:text-sm sm:font-medium text-nowrap">
         {`Total Delegated: ${
           totalDelegated?.dsp ? formatNumber(totalDelegated.dsp) : "..."
         }`}{" "}
-        PION
+        $MUON
       </p>
     </button>
   );

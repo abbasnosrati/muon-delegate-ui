@@ -1,32 +1,29 @@
-import { DelegatePion } from "./DelegatePion";
-import { RewardStatusCheckbox } from "./RewardStatusCheckbox";
+import { ConvertPion } from "./ConvertPion";
+
 import { ConnectWalletModal } from "../common/ConnectWalletModal";
 import useDelegateAction from "../../context/DelegateAction/useDelegateAction";
 import { usePion } from "../../context/PionContext";
 import { WrongNetworkModal } from "../common/WrongNetworkModal";
 
-const Delegate = () => {
-  const { userDelegateBalances } = useDelegateAction();
+const ConvertPionToMuon = () => {
   return (
-    <div className="w-full flex items-center justify-center  ">
+    <div className="w-full flex items-center justify-center">
       <ConnectWalletModal />
       <WrongNetworkModal />
-
       <div className="w-full max-w-[768px] bg-sectionBg relative">
         <div className="2xl:text-[22px] flex items-center px-4 font-medium font-azeretMono absolute h-[56px] -top-8 bg-textBackGround text-lightDarkText tracking-[2px]">
-          Delegate $MUON
+          Covert $PION to $MUON
         </div>
         <div className="pion actions-content relative dark:bg-alice-body-background dark:shadow-lg w-full px-4 py-3 max-md:min-w-[90vw] min-h-[400px] md:min-h-[428px] md:max-h-[424px] overflow-hidden md:px-11 rounded-2xl flex flex-col">
-          <DelegatePion />
-          {!userDelegateBalances?.dsp && <RewardStatusCheckbox />}
-          <DelegatePionButton />
+          <ConvertPion />
+          <CovertPionButton />
         </div>
       </div>
     </div>
   );
 };
 
-const DelegatePionButton = () => {
+const CovertPionButton = () => {
   const {
     handleDelegate,
     handleApprove,
@@ -71,11 +68,11 @@ const DelegatePionButton = () => {
             " cursor-auto"
           }`}
         >
-          {isMetaMaskLoadingDelegate ? "Delegating..." : "Delegate"}
+          {isMetaMaskLoadingDelegate ? "Converting..." : "Convert"}
         </button>
       )}
     </div>
   );
 };
 
-export default Delegate;
+export default ConvertPionToMuon;

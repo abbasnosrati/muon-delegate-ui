@@ -12,29 +12,27 @@ export const UserDetails = () => {
   } = useDelegateAction();
 
   return (
-    <div className="w-full max-w-[768px]  lg:max-w-full mt-16 md:mt-0">
-      <div className="w-full flex  items-end justify-end">
-        <div
-          className=" items-center  justify-end mb-2 cursor-pointer"
-          onClick={() =>
-            window.open(
-              `https://thena.fi/swap?inputCurrency=BNB&outputCurrency=${PION_ADDRESS}&swapType=1`,
-              "_blank"
-            )
-          }
-        >
-          <p className="text-sm font-medium font-azeretMono underline ">
-            Buy ${MUON.token}
-          </p>
-        </div>
+    <div className="max-w-[768px] w-full">
+      <div
+        className="flex items-center w-full justify-end mb-2 cursor-pointer"
+        onClick={() =>
+          window.open(
+            `https://thena.fi/swap?inputCurrency=BNB&outputCurrency=${PION_ADDRESS}&swapType=1`,
+            "_blank"
+          )
+        }
+      >
+        <p className="text-sm w-[150px] font-medium font-azeretMono underline ">
+          Buy ${MUON.token}
+        </p>
       </div>
-      <div className="flex flex-col gap-5 sm:gap-10 sm:flex-row sm:h-[170px] h-auto mt-5 sm:mt-0">
-        <div className="w-full text-xs md:text-sm h-[120px] lg:h-auto transition-all action-sidebar flex flex-col justify-center gap-10 lg:gap-3 px-3 py-3  bg-sectionBg md:px-6 md:py-4">
+      <div className="flex flex-col gap-5 sm:gap-5 sm:flex-row sm:h-[170px] h-auto mt-5 sm:mt-0">
+        <div className="w-full text-xs md:text-sm  transition-all  action-sidebar flex flex-col justify-center gap-3 px-3 py-3  bg-sectionBg md:px-6 md:py-4">
           <div className="flex justify-between items-center">
-            <p>$MUON Staked Amount</p>
+            <p>Staked Amount</p>
             <div className="font-semibold sm:text-lg text-md">
               {userDelegateBalances
-                ? `${userDelegateBalances.dsp} $MUON`
+                ? `${userDelegateBalances.dsp} MUON`
                 : "..."}
             </div>
           </div>
@@ -45,7 +43,7 @@ export const UserDetails = () => {
             </div>
           </div>
         </div>
-        <div className="w-full text-xs md:text-sm h-[120px] lg:h-auto transition-all  action-sidebar  flex flex-col justify-center gap-3 px-3 py-3  bg-sectionBg md:px-6 md:py-4">
+        <div className="w-full text-xs md:text-sm  transition-all  action-sidebar  flex flex-col justify-center gap-3 px-3 py-3  bg-sectionBg md:px-6 md:py-4">
           <div className="flex items-center justify-between">
             <p>Status</p>
             <p className="text-md sm:text-lg font-semibold">

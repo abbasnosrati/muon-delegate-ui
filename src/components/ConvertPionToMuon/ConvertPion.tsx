@@ -5,7 +5,7 @@ import { usePion } from "../../context/PionContext";
 import useDelegateAction from "../../context/DelegateAction/useDelegateAction";
 import { ethers } from "ethers";
 
-export const DelegatePion = () => {
+export const ConvertPion = () => {
   const { PionBalance, refetchPionBalance } = usePion();
   const {
     handleChangeDelegateAmount,
@@ -28,9 +28,7 @@ export const DelegatePion = () => {
           <p className="balance flex text-sm max-md:text-sm max-md:font-semibold  items-center">
             Balance:
           </p>
-          <span className="">
-            {PionBalance?.dsp} ${MUON.token}
-          </span>
+          <span className="">{PionBalance?.dsp} $PION</span>
         </div>
       </div>
       <div className="mb-5 amount-input__input-wrapper relative flex justify-between items-center w-full gap-3 border border-lightDarkText h-12 md:h-14 px-3">
@@ -44,7 +42,7 @@ export const DelegatePion = () => {
           />
         </div>
         <div className="amount-input__token-name group font-semibold max-md:text-sm min-w-fit  mr-5">
-          ${MUON.token}
+          $PION
         </div>
 
         <div className="amount-input__balance-and-actions flex items-center absolute -right-[1px] -bottom-5">
@@ -66,7 +64,7 @@ export const DelegatePion = () => {
         pionDelegateAmount &&
         PionBalance.big < pionDelegateAmount.big && (
           <div className="text-errorText  text-[10px] -mt-4">
-            Insufficient $MUON Balance.
+            Insufficient amount.{" "}
             <span
               onClick={() =>
                 window.open(

@@ -1,13 +1,13 @@
 import Header from "./components/Header/Header";
 import { Web3ModalProvider } from "./web3ModalProvider";
-import Footer from "./components/Footer/Footer";
-import Delegate from "./components/Delegate/Delegate";
+// import Footer from "./components/Footer/Footer";
 // import { ApolloProvider } from "@apollo/client";
 import { PIONProvider } from "./context/PionContext";
 // import { pionClient } from "./apollo/client";
 import { RefreshProvider } from "./context/Refresh/RefreshContext";
 // import { BonPIONProvider } from "./context/BonPION/BonPionContext";
 import { DelegateActionProvider } from "./context/DelegateAction/DelegateActionContext";
+import Home from "./components/Home/Home";
 function App() {
   document.getElementsByTagName("body")[0].className = "pion";
   return (
@@ -20,9 +20,9 @@ function App() {
             <DelegateActionProvider>
               <Header />
               <div className="w-full">
-                <Delegate />
+                <Home />
               </div>
-              <Footer />
+              {/* <Footer /> */}
             </DelegateActionProvider>
             {/* </BonPIONProvider> */}
           </PIONProvider>

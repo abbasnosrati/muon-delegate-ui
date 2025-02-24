@@ -9,6 +9,7 @@ export default {
         tomorrow: ["Tomorrow", "sans-serif"],
         tourney: ["Tourney", "sans-serif"],
         montserrat: ["Montserrat"],
+        azeretMono: ["AzeretMono"],
       },
       colors: {
         primary: "#4D3E9E",
