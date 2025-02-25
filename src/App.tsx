@@ -6,6 +6,7 @@ import { RefreshProvider } from "./context/Refresh/RefreshContext";
 import { DelegateActionProvider } from "./context/DelegateAction/DelegateActionContext";
 import Home from "./components/Home/Home";
 import { ConvertProvider } from "./context/ConvertContext";
+import { Footer } from "./components/Footer/Footer";
 function App() {
   document.getElementsByTagName("body")[0].className = "pion";
   return (
@@ -24,6 +25,7 @@ function App() {
           </MUONProvider>
         </RefreshProvider>
       </Web3ModalProvider>
+      <Footer />
     </div>
   );
 }

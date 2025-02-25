@@ -97,6 +97,14 @@ export const UserDetails = () => {
               </div>
             </div>
           </div>
+
+          {userDelegateBalances &&
+            unDelegateAmount &&
+            userDelegateBalances.big < unDelegateAmount.big && (
+              <div className="text-errorText  text-[10px] -mt-4 ml-[14px]">
+                Insufficient Staked Balance.
+              </div>
+            )}
         </div>
       </div>
       <UnDelegateMUON />

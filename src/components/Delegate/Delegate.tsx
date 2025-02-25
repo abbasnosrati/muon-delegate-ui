@@ -8,7 +8,7 @@ import { WrongNetworkModal } from "../common/WrongNetworkModal";
 const Delegate = () => {
   const { userDelegateBalances } = useDelegateAction();
   return (
-    <div className="w-full flex items-center justify-center  mt-40 md:mt-0">
+    <div className="w-full flex items-center justify-center mt-40  md:mt-14 lg:mt-0">
       <ConnectWalletModal />
       <WrongNetworkModal />
 

@@ -23,7 +23,7 @@ export const ConvertPion = () => {
             Balance:
           </p>
           <span className="text-sm md:text-[12px] xl:text-sm">
-            {pionBalance?.dsp} $PION
+            {pionBalance?.dsp ?? 0} $PION
           </span>
         </div>
       </div>

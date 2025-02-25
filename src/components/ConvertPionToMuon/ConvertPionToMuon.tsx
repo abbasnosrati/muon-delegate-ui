@@ -2,6 +2,7 @@ import { ConvertPion } from "./ConvertPion";
 import { ConnectWalletModal } from "../common/ConnectWalletModal";
 import { WrongNetworkModal } from "../common/WrongNetworkModal";
 import { useConvert } from "../../context/ConvertContext";
+import { useEffect } from "react";
 
 const ConvertPionToMuon = () => {
   return (
@@ -31,12 +32,16 @@ const CovertPionButton = () => {
     migrateAllowance,
   } = useConvert();
 
+  useEffect(() => {
+    console.log(migrateAllowance);
+  }, [migrateAllowance]);
+
   const displayAllowance =
     !migrateAllowance || (migrateAllowance && !migrateAllowance.big);
 
   return (
     <div className="flex flex-row gap-2 sm:gap-3 absolute bottom-6 sm:bottom-10 w-full justify-center right-0">
-      {displayAllowance && migrateAmount.big ? (
+      {displayAllowance && migrateAmount.big && pionBalance ? (
         <button
           disabled={!migrateAmount || !pionBalance?.dsp}
           onClick={() => handleApprove()}
@@ -48,10 +53,12 @@ const CovertPionButton = () => {
         </button>
       ) : (
         <button
-          disabled={isMetamaskLoading || !pionBalance?.dsp}
+          disabled={
+            isMetamaskLoading || !pionBalance?.dsp || !migrateAmount.big
+          }
           onClick={() => handleConvert()}
           className={`btn btn--action ${
-            (isMetamaskLoading || !pionBalance?.dsp) &&
+            (isMetamaskLoading || !pionBalance?.dsp || !migrateAmount) &&
             " cursor-auto text-sm md:text-[12px] xl:text-sm"
           }`}
         >

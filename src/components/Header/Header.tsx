@@ -1,23 +1,38 @@
 import useDelegateAction from "../../context/DelegateAction/useDelegateAction";
 import { ConnectWalletButton } from "../common/ConnectWalletButton";
 import numeral from "numeral";
+const menuItems = [
+  { id: 0, title: "GitHub", scr: "" },
+  { id: 1, title: "Docs", scr: "" },
+  { id: 2, title: "Run a Node", scr: "" },
+  { id: 3, title: "Buy $MUON", scr: "" },
+];
 
 const Header = () => {
   return (
     <div>
-      <div className="  absolute w-full navbar justify-between items-center flex px-2 sm:px-4 sm:pt-10 ">
+      <div className="  absolute w-full navbar justify-between items-center lg:flex px-2 sm:px-4 sm:pt-10 ">
         <div className="flex flex-col gap-5 relative">
-          <div className="flex items-center gap-2 pl-5 lg:pl-14">
-            <img alt="bonPion" src="/assets/images/muonLogo.svg" />
-            {/* <img alt="bonPion" src="/assets/images/logo-text.svg" /> */}
+          <div className="flex items-center gap-[18px] pl-5 lg:pl-10">
+            <img src="/assets/images/muonLogo.svg" />
+            <div className="flex gap-[15px] sm:gap-[32px] border-b pb-1">
+              {menuItems.map((item, index) => (
+                <div
+                  key={index}
+                  className="custom-1110:text-[12px] text-sm cursor-pointer"
+                >
+                  {item.title}
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="absolute top-12 left-3 w-[200px] md:hidden">
+          {/* <div className="absolute top-12 left-3 w-[200px] md:hidden">
             <PriceTVLButton />
-          </div>
+          </div> */}
         </div>
 
-        <div className=" flex flex-col-reverse sm:flex-row gap-4 mr-3 sm:mr-10">
-          <div className="hidden md:flex">
+        <div className=" flex flex-col-reverse sm:flex-row gap-4 mr-5 sm:mr-10 mt-4 lg:mt-0 ml-5 lg:ml-0">
+          <div className="">
             <PriceTVLButton />
           </div>
           <ConnectWalletButton />
@@ -39,7 +54,7 @@ const PriceTVLButton = () => {
       {/* <img src="/assets/images/pion-token-logo.svg" alt="" className="mr-2.5" /> */}
       <p className=" text-[10px] font-bold md:text-sm sm:font-medium text-nowrap">
         {`Total Delegated: ${
-          totalDelegated?.dsp ? formatNumber(totalDelegated.dsp) : "..."
+          totalDelegated?.dsp ? formatNumber(totalDelegated.dsp) : "0"
         }`}{" "}
         $MUON
       </p>

@@ -29,7 +29,7 @@ export const DelegateMuon = () => {
             Balance:
           </p>
           <span className="text-sm md:text-[12px] xl:text-sm">
-            {muonBalance?.dsp} ${MUON.token}
+            {muonBalance?.dsp ?? 0} ${MUON.token}
           </span>
         </div>
       </div>

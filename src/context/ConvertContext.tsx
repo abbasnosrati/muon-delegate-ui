@@ -95,7 +95,7 @@ const ConvertProvider = ({ children }: { children: ReactNode }) => {
     try {
       setIsMetamaskLoading(true);
       const result = await writeContract(config, {
-        address: MUON_TOKEN_ADDRESS[getCurrentChainId()],
+        address: PION_TOKEN_ADDRESS[getCurrentChainId()],
         abi: PION_ABI,
         functionName: "approve",
         args: [MIGRATION_PION_ADDRESS[getCurrentChainId()], migrateAmount!.big],
