@@ -2,7 +2,6 @@ import { ConvertPion } from "./ConvertPion";
 import { ConnectWalletModal } from "../common/ConnectWalletModal";
 import { WrongNetworkModal } from "../common/WrongNetworkModal";
 import { useConvert } from "../../context/ConvertContext";
-import { useEffect } from "react";
 
 const ConvertPionToMuon = () => {
   return (
@@ -32,16 +31,21 @@ const CovertPionButton = () => {
     migrateAllowance,
   } = useConvert();
 
-  useEffect(() => {
-    console.log(migrateAllowance);
-  }, [migrateAllowance]);
-
   const displayAllowance =
-    !migrateAllowance || (migrateAllowance && !migrateAllowance.big);
+    !migrateAllowance ||
+    (migrateAllowance && migrateAllowance.big < migrateAmount.big);
 
   return (
     <div className="flex flex-row gap-2 sm:gap-3 absolute bottom-6 sm:bottom-10 w-full justify-center right-0">
-      {displayAllowance && migrateAmount.big && pionBalance ? (
+      {migrateAmount && pionBalance && migrateAmount.big > pionBalance.big ? (
+        <button
+          disabled={true}
+          onClick={() => handleApprove()}
+          className={`btn btn--action text-[12px]`}
+        >
+          Insufficient Funds
+        </button>
+      ) : displayAllowance && migrateAmount.big && pionBalance ? (
         <button
           disabled={!migrateAmount || !pionBalance?.dsp}
           onClick={() => handleApprove()}
@@ -58,7 +62,7 @@ const CovertPionButton = () => {
           }
           onClick={() => handleConvert()}
           className={`btn btn--action ${
-            (isMetamaskLoading || !pionBalance?.dsp || !migrateAmount) &&
+            (isMetamaskLoading || !pionBalance?.dsp || !migrateAmount.big) &&
             " cursor-auto text-sm md:text-[12px] xl:text-sm"
           }`}
         >

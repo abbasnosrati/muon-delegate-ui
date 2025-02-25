@@ -39,8 +39,8 @@ const DelegateActionContext = createContext<{
   handleTransferModalItemClicked: (bonALICE: BonMUON) => void;
   selectedTransferBonALICE: BonMUON | null;
   unselectTransferModalSelectedBonALICE: () => void;
-  muonDelegateAmount: W3bNumber | null;
-  handleChangeDelegateAmount: (amount: string) => void;
+  muonDelegateAmount: W3bNumber;
+  setMuonDelegateAmount: (amount: W3bNumber) => void;
   selectedRewardStatus: null | string | undefined;
   handleCheckboxChange: (checkbox: any) => void;
   isConnectWalletModalOpen: boolean;
@@ -61,8 +61,8 @@ const DelegateActionContext = createContext<{
   isLoadingMetamaskSwitchReward: boolean;
   totalDelegated: W3bNumber | null;
   userReward: W3bNumber | null;
-  unDelegateAmount: W3bNumber | null;
-  setUnDelegateAmount: (amount: W3bNumber | null) => void;
+  unDelegateAmount: W3bNumber;
+  setUnDelegateAmount: (amount: W3bNumber) => void;
   handleUnDelegate: () => void;
 }>({
   isTransferModalOpen: false,
@@ -72,8 +72,8 @@ const DelegateActionContext = createContext<{
   handleTransferModalItemClicked: () => {},
   selectedTransferBonALICE: null,
   unselectTransferModalSelectedBonALICE: () => {},
-  muonDelegateAmount: null,
-  handleChangeDelegateAmount: () => {},
+  muonDelegateAmount: w3bNumberFromString(""),
+  setMuonDelegateAmount: () => {},
   selectedRewardStatus: null,
   handleCheckboxChange: () => {},
   isConnectWalletModalOpen: false,
@@ -94,7 +94,7 @@ const DelegateActionContext = createContext<{
   isLoadingMetamaskSwitchReward: false,
   totalDelegated: null,
   userReward: null,
-  unDelegateAmount: null,
+  unDelegateAmount: w3bNumberFromString(""),
   setUnDelegateAmount: () => {},
   handleUnDelegate: () => {},
 });
@@ -102,8 +102,9 @@ const DelegateActionContext = createContext<{
 const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
   const { address: walletAddress, chainId } = useAccount();
   const [isTransferModalOpen, setIsTransferModalOpen] = useState(false);
-  const [muonDelegateAmount, setMuonDelegateAmount] =
-    useState<W3bNumber | null>(null);
+  const [muonDelegateAmount, setMuonDelegateAmount] = useState<W3bNumber>(
+    w3bNumberFromString("")
+  );
 
   const [isLoadingMetamaskSwitchReward, setIsLoadingMetamaskSwitchReward] =
     useState(false);
@@ -124,8 +125,8 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
     !walletAddress
   );
 
-  const [unDelegateAmount, setUnDelegateAmount] = useState<W3bNumber | null>(
-    null
+  const [unDelegateAmount, setUnDelegateAmount] = useState<W3bNumber>(
+    w3bNumberFromString("")
   );
 
   useEffect(() => {
@@ -179,7 +180,7 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (MuonAllowanceForDelegator && muonDelegateAmount) {
-      setMuonAllowance(MuonAllowanceForDelegator.dsp >= muonDelegateAmount.dsp);
+      setMuonAllowance(MuonAllowanceForDelegator.big < muonDelegateAmount.big);
     }
   }, [MuonAllowanceForDelegator, muonDelegateAmount]);
 
@@ -198,10 +199,11 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
     return true;
   };
 
-  const handleChangeDelegateAmount = (amount: string) => {
-    if (!checkIsWalletConnect()) return;
-    setMuonDelegateAmount(w3bNumberFromString(amount));
-  };
+  // const handleChangeDelegateAmount = (amount: string) => {
+  //   if (!checkIsWalletConnect()) return;
+  //   console.log(amount);
+  //   setMuonDelegateAmount(w3bNumberFromString(amount));
+  // };
 
   const openTransferModal = useCallback(() => {
     setIsTransferModalOpen(true);
@@ -258,6 +260,7 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
       setIsMetamaskLoadingDelegate(false);
       refetchUserDelegateBalance();
       refetchMuonAllowance();
+      setMuonDelegateAmount(w3bNumberFromString(""));
     }
   };
 
@@ -280,6 +283,7 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
       refetchUserDelegateBalance();
       refetchMuonAllowance();
       refetchTotalReward();
+      setUnDelegateAmount(w3bNumberFromString(""));
     }
   };
 
@@ -439,7 +443,7 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
         handleTransferModalItemClicked,
         muonDelegateAmount,
         unselectTransferModalSelectedBonALICE,
-        handleChangeDelegateAmount,
+        setMuonDelegateAmount,
         handleCheckboxChange,
         selectedRewardStatus,
         isConnectWalletModalOpen,

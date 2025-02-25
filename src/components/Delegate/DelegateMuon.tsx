@@ -3,12 +3,12 @@ import { MUON_TOKEN_ADDRESS } from "../../constants/addresses";
 import { MUON } from "../../constants/strings";
 import { useMuon } from "../../context/MuonContext";
 import useDelegateAction from "../../context/DelegateAction/useDelegateAction";
-import { ethers } from "ethers";
+import { w3bNumberFromString } from "../../utils/web3";
 
 export const DelegateMuon = () => {
   const { muonBalance, refetchMuonBalance } = useMuon();
   const {
-    handleChangeDelegateAmount,
+    setMuonDelegateAmount,
     muonDelegateAmount,
     isMetaMaskLoadingDelegate,
   } = useDelegateAction();
@@ -16,10 +16,6 @@ export const DelegateMuon = () => {
   useEffect(() => {
     refetchMuonBalance();
   }, [isMetaMaskLoadingDelegate]);
-
-  const onValueChanged = (value: string) => {
-    handleChangeDelegateAmount(value);
-  };
 
   return (
     <div>
@@ -39,8 +35,10 @@ export const DelegateMuon = () => {
           <input
             className="amount-input__input text-lightDarkText bg-boxBg  flex-1  max-w-[200px] w-full pl-2 outline-none text-[10px]"
             type="number"
-            value={!!muonDelegateAmount?.dsp ? muonDelegateAmount?.dsp : ""}
-            onChange={(e) => handleChangeDelegateAmount(e.target.value)}
+            value={muonDelegateAmount?.hStr ?? ""}
+            onChange={(e) =>
+              setMuonDelegateAmount(w3bNumberFromString(e.target.value))
+            }
           />
         </div>
         <div className="amount-input__token-name group font-semibold max-md:text-sm min-w-fit text-sm md:text-[12px] xl:text-sm">
@@ -52,7 +50,7 @@ export const DelegateMuon = () => {
             <button
               onClick={() =>
                 muonBalance && muonBalance.dsp && !!muonBalance
-                  ? onValueChanged(ethers.formatEther(muonBalance.big))
+                  ? setMuonDelegateAmount(muonBalance)
                   : null
               }
               className="btn--secondary-tag  !font-normal"

@@ -9,7 +9,6 @@ import { W3bNumber } from "../types/wagmi";
 import { useAccount, useBalance } from "wagmi";
 import {
   MIGRATION_PION_ADDRESS,
-  MUON_TOKEN_ADDRESS,
   PION_TOKEN_ADDRESS,
 } from "../constants/addresses";
 import { getCurrentChainId } from "../web3/chains";
@@ -19,6 +18,7 @@ import { config } from "../web3/config";
 import MIGRATION_ABI from "../abis/Migration";
 import useAllowance from "../hooks/useAllowance";
 import PION_ABI from "../abis/Token.ts";
+import { useMuon } from "./MuonContext.tsx";
 
 const ConvertContext = createContext<{
   pionBalance: W3bNumber | null;
@@ -45,6 +45,8 @@ const ConvertProvider = ({ children }: { children: ReactNode }) => {
   const [pionBalance, setPionBalance] = useState<W3bNumber | null>(null);
   const [isMetamaskLoading, setIsMetamaskLoading] = useState(false);
   const [migrateAmount, setMigrateAmount] = useState(w3bNumberFromString(""));
+
+  const { refetchMuonBalance } = useMuon();
 
   const { allowance: migrateAllowance, refetch: refetchMigrateAllowance } =
     useAllowance(
@@ -88,6 +90,8 @@ const ConvertProvider = ({ children }: { children: ReactNode }) => {
       setIsMetamaskLoading(false);
       refetchPionBalance();
       refetchMigrateAllowance();
+      refetchMuonBalance();
+      setMigrateAmount(w3bNumberFromString(""));
     }
   };
 

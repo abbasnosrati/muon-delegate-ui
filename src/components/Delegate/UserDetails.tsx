@@ -1,6 +1,5 @@
 import { MUON } from "../../constants/strings";
 import useDelegateAction from "../../context/DelegateAction/useDelegateAction";
-import { useMuon } from "../../context/MuonContext";
 import { w3bNumberFromString } from "../../utils/web3";
 
 export const UserDetails = () => {
@@ -24,7 +23,7 @@ export const UserDetails = () => {
           <div className="w-full border-b border-lightDarkText text-xs md:text-sm transition-all  action-sidebar  flex flex-col justify-center gap-3 px-3 py-3  bg-sectionBg  md:py-4">
             <div className="flex items-center justify-between">
               <p>Status</p>
-              <p className="text-sm 2xl:text-lg font-semibold">
+              <p className="text-sm md:text-[12px] xl:text-sm font-semibold">
                 {userDelegateBalances?.dsp && rewardStatus
                   ? "ReStake"
                   : userDelegateBalances?.dsp && !rewardStatus
@@ -41,11 +40,11 @@ export const UserDetails = () => {
             >
               {rewardStatus ? (
                 <span className="">
-                  Switch to <span className="font-bold">"Transfer"</span>
+                  Switch to <span className="font-medium">"Transfer"</span>
                 </span>
               ) : (
                 <span>
-                  Switch to <span className="font-bold">"ReStake"</span>
+                  Switch to <span className="font-medium">"ReStake"</span>
                 </span>
               )}
               {isLoadingMetamaskSwitchReward ? "..." : ""}
@@ -57,13 +56,13 @@ export const UserDetails = () => {
               <div className="font-semibold ">
                 {userDelegateBalances
                   ? `${userDelegateBalances.dsp} $MUON`
-                  : "..."}
+                  : "0"}
               </div>
             </div>
             <div className="flex justify-between py-4 items-center  px-3">
               <div>Reward</div>
               <div className="font-semibold ">
-                {userReward ? `${userReward} ${MUON.token}` : "..."}
+                {userReward ? `${userReward.dsp} ` : "0"} ${MUON.token}
               </div>
             </div>
           </div>
@@ -81,14 +80,16 @@ export const UserDetails = () => {
               />
             </div>
             <div className="amount-input__token-name group font-semibold text-sm md:text-[12px] xl:text-sm min-w-fit">
-              $PION
+              $MUON
             </div>
 
             <div className="amount-input__balance-and-actions flex items-center absolute -right-[1px] -bottom-5">
               <div className="flex gap-1.5 max-md:items-end h-full">
                 <button
                   onClick={() =>
-                    userReward ? setUnDelegateAmount(userReward) : null
+                    userDelegateBalances
+                      ? setUnDelegateAmount(userDelegateBalances)
+                      : null
                   }
                   className="btn--secondary-tag  !font-normal"
                 >
@@ -115,23 +116,39 @@ export const UserDetails = () => {
 const UnDelegateMUON = () => {
   const {
     isMetaMaskLoadingUnDelegate,
-    userReward,
     unDelegateAmount,
     handleUnDelegate,
+    userDelegateBalances,
   } = useDelegateAction();
 
   return (
-    <div className="flex flex-row absolute bottom-6 sm:bottom-10 items-center justify-center right-0   w-full">
-      <button
-        disabled={!unDelegateAmount || !userReward || unDelegateAmount.dsp == 0}
-        onClick={() => handleUnDelegate()}
-        className={`btn btn--action ${
-          (!unDelegateAmount || unDelegateAmount.dsp == 0 || !userReward) &&
-          " cursor-auto text-sm md:text-[12px] xl:text-sm"
-        }`}
-      >
-        {isMetaMaskLoadingUnDelegate ? "Un Delegating..." : "Un Delegating"}
-      </button>
+    <div className="flex flex-row absolute bottom-6 sm:bottom-10 items-center justify-center right-0 w-full">
+      {userDelegateBalances &&
+      unDelegateAmount &&
+      userDelegateBalances.big < unDelegateAmount.big ? (
+        <button
+          disabled={true}
+          onClick={() => handleUnDelegate()}
+          className={`btn btn--action text-[12px]`}
+        >
+          Insufficient Funds
+        </button>
+      ) : (
+        <button
+          disabled={
+            !unDelegateAmount.big ||
+            !userDelegateBalances ||
+            userDelegateBalances.big < unDelegateAmount.big
+          }
+          onClick={() => handleUnDelegate()}
+          className={`btn btn--action ${
+            (!unDelegateAmount.big || !userDelegateBalances) &&
+            " cursor-auto text-sm md:text-[12px] xl:text-sm"
+          }`}
+        >
+          {isMetaMaskLoadingUnDelegate ? "Un Delegating..." : "Un Delegate"}
+        </button>
+      )}
     </div>
   );
 };
