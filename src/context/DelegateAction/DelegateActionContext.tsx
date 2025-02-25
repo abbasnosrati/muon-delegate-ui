@@ -11,7 +11,7 @@ import { useAccount } from "wagmi";
 import { MUON } from "../../constants/strings.ts";
 import Delegation_ABI from "../../abis/Delegation.ts";
 import PION_ABI from "../../abis/Token.ts";
-import BONPION_ABI from "../../abis/NFT.ts";
+// import BONPION_ABI from "../../abis/NFT.ts";
 
 import { writeContract } from "@wagmi/core";
 import {
@@ -51,6 +51,7 @@ const DelegateActionContext = createContext<{
   handleApprove: (delegateType: string) => void;
   isMetaMaskLoadingApprove: boolean;
   isMetaMaskLoadingDelegate: boolean;
+  isMetaMaskLoadingUnDelegate: boolean;
   MuonAllowanceForDelegator: W3bNumber | null;
   muonAllowance: boolean;
   userDelegateBalances: W3bNumber | null;
@@ -59,7 +60,10 @@ const DelegateActionContext = createContext<{
   handleSwitchRewardStatus: () => void;
   isLoadingMetamaskSwitchReward: boolean;
   totalDelegated: W3bNumber | null;
-  userReward: string | null;
+  userReward: W3bNumber | null;
+  unDelegateAmount: W3bNumber | null;
+  setUnDelegateAmount: (amount: W3bNumber | null) => void;
+  handleUnDelegate: () => void;
 }>({
   isTransferModalOpen: false,
   openTransferModal: () => {},
@@ -80,6 +84,7 @@ const DelegateActionContext = createContext<{
   handleApprove: () => {},
   isMetaMaskLoadingApprove: false,
   isMetaMaskLoadingDelegate: false,
+  isMetaMaskLoadingUnDelegate: false,
   MuonAllowanceForDelegator: null,
   muonAllowance: false,
   userDelegateBalances: null,
@@ -89,6 +94,9 @@ const DelegateActionContext = createContext<{
   isLoadingMetamaskSwitchReward: false,
   totalDelegated: null,
   userReward: null,
+  unDelegateAmount: null,
+  setUnDelegateAmount: () => {},
+  handleUnDelegate: () => {},
 });
 
 const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
@@ -109,8 +117,15 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
   const [isMetaMaskLoadingDelegate, setIsMetamaskLoadingDelegate] =
     useState(false);
 
+  const [isMetaMaskLoadingUnDelegate, setIsMetamaskLoadingUnDelegate] =
+    useState(false);
+
   const [isConnectWalletModalOpen, setIsConnectWalletModalOpen] = useState(
     !walletAddress
+  );
+
+  const [unDelegateAmount, setUnDelegateAmount] = useState<W3bNumber | null>(
+    null
   );
 
   useEffect(() => {
@@ -132,18 +147,18 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
 
   const [muonAllowance, setMuonAllowance] = useState(false);
 
-  const [userReward, setUserReward] = useState<string | null>(null);
+  const [userReward, setUserReward] = useState<W3bNumber | null>(null);
 
   const [transferModalSelectedBonALICE, setTransferModalSelectedBonALICE] =
     useState<BonMUON | null>(null);
 
-  const { totalReward } = useGetTotalReward();
+  const { totalReward, refetchTotalReward } = useGetTotalReward();
 
   const { totalDelegated } = useGetTotalDelegated();
 
   useEffect(() => {
     if (totalReward && totalReward.hStr) {
-      setUserReward(Number(totalReward.hStr).toFixed(6));
+      setUserReward(totalReward);
     }
   }, [totalReward, userDelegateBalances]);
 
@@ -246,15 +261,38 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const handleUnDelegate = async () => {
+    try {
+      setIsMetamaskLoadingUnDelegate(true);
+      const result = await writeContract(config, {
+        address: DELEGATOR_MUON_ADDRESS[getCurrentChainId()],
+        abi: Delegation_ABI,
+        functionName: "unstake",
+        args: [unDelegateAmount!.big],
+        chainId: getCurrentChainId() as any,
+      });
+
+      await waitForTransactionReceipt(config, {
+        hash: result,
+      });
+    } finally {
+      setIsMetamaskLoadingUnDelegate(false);
+      refetchUserDelegateBalance();
+      refetchMuonAllowance();
+      refetchTotalReward();
+    }
+  };
+
   const handleApprove = (delegateType: string) => {
     if (!checkMetamaskChain()) {
       return;
     }
     if (delegateType === MUON.token) {
       handleApproveMuon();
-    } else {
-      handleApproveBonMuon();
     }
+    // else {
+    //   handleApproveBonMuon();
+    // }
   };
 
   const handleApproveMuon = async () => {
@@ -278,27 +316,27 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const handleApproveBonMuon = async () => {
-    try {
-      setIsMetamaskLoadingApprove(true);
-      const result = await writeContract(config, {
-        address: BON_MUON_TOKEN_ADDRESS[getCurrentChainId()],
-        abi: BONPION_ABI,
-        functionName: "approve",
-        args: [
-          DELEGATOR_MUON_ADDRESS[getCurrentChainId()],
-          transferModalSelectedBonALICE!.tokenId,
-        ],
-      });
-      await waitForTransactionReceipt(config, {
-        hash: result,
-        confirmations: 2,
-      });
-      refetchIsBonApproved();
-    } finally {
-      setIsMetamaskLoadingApprove(false);
-    }
-  };
+  // const handleApproveBonMuon = async () => {
+  //   try {
+  //     setIsMetamaskLoadingApprove(true);
+  //     const result = await writeContract(config, {
+  //       address: BON_MUON_TOKEN_ADDRESS[getCurrentChainId()],
+  //       abi: BONPION_ABI,
+  //       functionName: "approve",
+  //       args: [
+  //         DELEGATOR_MUON_ADDRESS[getCurrentChainId()],
+  //         transferModalSelectedBonALICE!.tokenId,
+  //       ],
+  //     });
+  //     await waitForTransactionReceipt(config, {
+  //       hash: result,
+  //       confirmations: 2,
+  //     });
+  //     refetchIsBonApproved();
+  //   } finally {
+  //     setIsMetamaskLoadingApprove(false);
+  //   }
+  // };
 
   // const handleDelegateNFT = async () => {
   //   try {
@@ -421,6 +459,10 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
         isLoadingMetamaskSwitchReward,
         totalDelegated,
         userReward,
+        unDelegateAmount,
+        setUnDelegateAmount,
+        handleUnDelegate,
+        isMetaMaskLoadingUnDelegate,
       }}
     >
       {children}

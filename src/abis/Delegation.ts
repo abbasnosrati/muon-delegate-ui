@@ -6,6 +6,20 @@ export default [
       {
         indexed: false,
         internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "ClaimUnstake",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "address", name: "user", type: "address" },
+      {
+        indexed: false,
+        internalType: "uint256",
         name: "nftId",
         type: "uint256",
       },
@@ -95,6 +109,26 @@ export default [
     type: "event",
   },
   {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "address", name: "user", type: "address" },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "balance",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "Unstake",
+    type: "event",
+  },
+  {
     inputs: [
       { internalType: "uint256", name: "amount", type: "uint256" },
       { internalType: "address", name: "_to", type: "address" },
@@ -115,6 +149,13 @@ export default [
   {
     inputs: [{ internalType: "address", name: "", type: "address" }],
     name: "balances",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "bonTokenId",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
@@ -163,6 +204,13 @@ export default [
     type: "function",
   },
   {
+    inputs: [],
+    name: "claimUnstake",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [
       { internalType: "uint256", name: "_nftID", type: "uint256" },
       { internalType: "address", name: "_user", type: "address" },
@@ -202,6 +250,45 @@ export default [
     type: "function",
   },
   {
+    inputs: [],
+    name: "exitPendingPeriod",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "user", type: "address" },
+      { internalType: "uint256", name: "index", type: "uint256" },
+    ],
+    name: "fixUserIndex",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "fromIndex", type: "uint256" },
+      { internalType: "uint256", name: "toIndex", type: "uint256" },
+    ],
+    name: "getUsers",
+    outputs: [
+      { internalType: "address[]", name: "_addrs", type: "address[]" },
+      { internalType: "uint256[]", name: "_balances", type: "uint256[]" },
+      { internalType: "uint256[]", name: "_startDates", type: "uint256[]" },
+      { internalType: "bool[]", name: "_restakes", type: "bool[]" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getUsersLength",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       { internalType: "address", name: "_muonTokenAddress", type: "address" },
       { internalType: "address", name: "_bondedTokenAddress", type: "address" },
@@ -228,9 +315,35 @@ export default [
     type: "function",
   },
   {
+    inputs: [
+      { internalType: "address", name: "", type: "address" },
+      { internalType: "address", name: "", type: "address" },
+      { internalType: "uint256", name: "", type: "uint256" },
+      { internalType: "bytes", name: "", type: "bytes" },
+    ],
+    name: "onERC721Received",
+    outputs: [{ internalType: "bytes4", name: "", type: "bytes4" }],
+    stateMutability: "pure",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "owner",
     outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "pendingRewards",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "pendingUnstakes",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
@@ -256,8 +369,22 @@ export default [
     type: "function",
   },
   {
+    inputs: [{ internalType: "uint256", name: "_tokenId", type: "uint256" }],
+    name: "setBonToken",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [{ internalType: "uint256", name: "time", type: "uint256" }],
     name: "setLastDisTime",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "_staking", type: "address" }],
+    name: "setNodeStaking",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -294,10 +421,31 @@ export default [
     type: "function",
   },
   {
+    inputs: [{ internalType: "uint256", name: "_amount", type: "uint256" }],
+    name: "unstake",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "unstakeReqTimes",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [{ internalType: "address", name: "", type: "address" }],
     name: "userIndexes",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "_to", type: "address" }],
+    name: "withdrawBonToken",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
 ] as const;

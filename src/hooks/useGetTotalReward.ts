@@ -12,6 +12,7 @@ import { getCurrentChainId } from "../web3/chains.ts";
 import { readContract } from "wagmi/actions";
 import { config } from "../web3/config.ts";
 import DELEGATION_ABI from "../abis/Delegation.ts";
+import { Address } from "viem";
 
 const useGetTotalReward = () => {
   const { address: walletAddress } = useAccount();
@@ -20,7 +21,11 @@ const useGetTotalReward = () => {
   const [userIndex, setUserIndex] = useState<bigint | null>(null);
 
   const decimals = 18;
-  const { data, isFetched, refetch } = useReadContract({
+  const {
+    data,
+    isFetched,
+    refetch: refetchTotalReward,
+  } = useReadContract({
     abi: STAKING_ABI,
     address: MUON_NODES_STAKER_ADDRESS[getCurrentChainId()],
     functionName: "earned",
@@ -34,7 +39,7 @@ const useGetTotalReward = () => {
       abi: DELEGATION_ABI,
       address: DELEGATOR_MUON_ADDRESS[getCurrentChainId()],
       functionName: "userIndexes",
-      args: [walletAddress],
+      args: [walletAddress as Address],
       chainId: getCurrentChainId() as any,
     });
     if (result) setUserIndex(result as bigint);
@@ -51,7 +56,7 @@ const useGetTotalReward = () => {
       abi: DELEGATION_ABI,
       address: DELEGATOR_MUON_ADDRESS[getCurrentChainId()],
       functionName: "calcAmounts",
-      args: [res, timestampInSeconds],
+      args: [BigInt(res), BigInt(timestampInSeconds)],
       chainId: getCurrentChainId() as any,
     });
     setTotalReward(w3bNumberFromBigint(result[Number(userIndex) - 1]));
@@ -68,7 +73,7 @@ const useGetTotalReward = () => {
     if (userIndex) handleCalcAmount();
   }, [userIndex]);
 
-  return { totalReward, refetch };
+  return { totalReward, refetchTotalReward };
 };
 
 export default useGetTotalReward;

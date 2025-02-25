@@ -39,7 +39,7 @@ export const DelegateMuon = () => {
           <input
             className="amount-input__input text-lightDarkText bg-boxBg  flex-1  max-w-[200px] w-full pl-2 outline-none text-[10px]"
             type="number"
-            value={muonDelegateAmount?.hStr ?? ""}
+            value={!!muonDelegateAmount?.dsp ? muonDelegateAmount?.dsp : ""}
             onChange={(e) => handleChangeDelegateAmount(e.target.value)}
           />
         </div>
