@@ -20,7 +20,7 @@ const menuItems = [
 const Header = () => {
   return (
     <div>
-      <div className="  absolute w-full navbar justify-between items-center lg:flex px-2 sm:px-4 sm:pt-10 ">
+      <div className=" z-[2000] absolute w-full navbar justify-between items-center lg:flex px-2 sm:px-4 sm:pt-10 ">
         <div className="flex flex-col gap-5 relative">
           <div className="flex items-center gap-[18px] pl-5 lg:pl-10">
             <img
@@ -65,7 +65,7 @@ const PriceTVLButton = () => {
   return (
     <button className="btn btn--small !py-[5px] !cursor-default">
       {/* <img src="/assets/images/pion-token-logo.svg" alt="" className="mr-2.5" /> */}
-      <p className=" text-[10px] font-bold md:text-sm sm:font-medium text-nowrap">
+      <p className=" text-[10px] font-normal md:text-sm text-nowrap">
         {`Total Delegated: ${
           totalDelegated?.dsp ? formatNumber(totalDelegated.dsp) : "0"
         }`}{" "}

@@ -30,6 +30,7 @@ import useReadRewardStatus from "../../hooks/useReadRewardStatus.ts";
 import { getCurrentChainId } from "../../web3/chains.ts";
 import useGetTotalReward from "../../hooks/useGetTotalReward.ts";
 import useGetTotalDelegated from "../../hooks/useGetTotalDelegate.ts";
+import { useMuon } from "../MuonContext.tsx";
 
 const DelegateActionContext = createContext<{
   isTransferModalOpen: boolean;
@@ -129,6 +130,8 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
     w3bNumberFromString("")
   );
 
+  const { refetchMuonBalance, muonBalance } = useMuon();
+
   useEffect(() => {
     setIsConnectWalletModalOpen(!walletAddress);
   }, [walletAddress]);
@@ -136,12 +139,15 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
   const [isWrongNetworkModalOpen, setIsWrongNetworkModalOpen] = useState(false);
 
   useEffect(() => {
-    if (chainId) setIsWrongNetworkModalOpen(chainId !== getCurrentChainId());
+    if (chainId && walletAddress)
+      setIsWrongNetworkModalOpen(chainId !== getCurrentChainId());
   }, [chainId]);
 
   const checkMetamaskChain = () => {
-    setIsWrongNetworkModalOpen(chainId !== getCurrentChainId());
-    return chainId == getCurrentChainId();
+    if (walletAddress) {
+      setIsWrongNetworkModalOpen(chainId !== getCurrentChainId());
+      return chainId == getCurrentChainId();
+    }
   };
 
   const [selectedRewardStatus, setSelectedRewardStatus] = useState(null);
@@ -155,7 +161,11 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
 
   const { totalReward, refetchTotalReward } = useGetTotalReward();
 
-  const { totalDelegated } = useGetTotalDelegated();
+  const {
+    totalDelegated,
+
+    handleGetTotalDelegated,
+  } = useGetTotalDelegated();
 
   useEffect(() => {
     if (totalReward && totalReward.hStr) {
@@ -233,12 +243,6 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
   }, [transferModalSelectedBonALICE]);
 
   const handleDelegateToken = async () => {
-    console.log(
-      DELEGATOR_MUON_ADDRESS[getCurrentChainId()],
-      muonDelegateAmount!.big,
-      walletAddress,
-      selectedRewardStatus == RewardStatus.ReStakeReward
-    );
     try {
       setIsMetamaskLoadingDelegate(true);
       const result = await writeContract(config, {
@@ -261,6 +265,7 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
       refetchUserDelegateBalance();
       refetchMuonAllowance();
       setMuonDelegateAmount(w3bNumberFromString(""));
+      handleGetTotalDelegated();
     }
   };
 
@@ -280,9 +285,11 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
       });
     } finally {
       setIsMetamaskLoadingUnDelegate(false);
+      handleGetTotalDelegated();
       refetchUserDelegateBalance();
       refetchMuonAllowance();
       refetchTotalReward();
+      refetchMuonBalance();
       setUnDelegateAmount(w3bNumberFromString(""));
     }
   };

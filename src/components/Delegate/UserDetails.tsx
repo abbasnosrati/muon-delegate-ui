@@ -1,6 +1,10 @@
+import { useEffect } from "react";
 import { MUON } from "../../constants/strings";
 import useDelegateAction from "../../context/DelegateAction/useDelegateAction";
 import { w3bNumberFromString } from "../../utils/web3";
+import { getCurrentChainId } from "../../web3/chains";
+import { useSwitchChain, useChainId, useChains, useAccount } from "wagmi";
+import { config } from "../../web3/config";
 
 export const UserDetails = () => {
   const {
@@ -50,10 +54,10 @@ export const UserDetails = () => {
               {isLoadingMetamaskSwitchReward ? "..." : ""}
             </button>
           </div>
-          <div className="w-full text-xs xl:text-sm transition-all action-sidebar flex flex-col justify-center  bg-sectionBg  ">
+          <div className="w-full text-xs xl:text-sm transition-all action-sidebar flex flex-col justify-center text-lightDarkText bg-sectionBg  ">
             <div className="flex justify-between items-center py-4 border-b border-lightDarkText px-3">
               <p>$MUON Staked Amount</p>
-              <div className="font-medium ">
+              <div className="font-normal ">
                 {userDelegateBalances
                   ? `${userDelegateBalances.dsp} $MUON`
                   : "0"}
@@ -61,7 +65,7 @@ export const UserDetails = () => {
             </div>
             <div className="flex justify-between py-4 items-center  px-3">
               <div>Reward</div>
-              <div className="font-medium ">
+              <div className="font-normal ">
                 {userReward ? `${userReward.dsp} ` : "0"} ${MUON.token}
               </div>
             </div>
@@ -121,6 +125,9 @@ const UnDelegateMUON = () => {
     userDelegateBalances,
   } = useDelegateAction();
 
+  const { chainId } = useAccount({ config });
+  const { switchChain } = useSwitchChain();
+
   return (
     <div className="flex flex-row absolute bottom-6 sm:bottom-10 items-center justify-center right-0 w-full">
       {userDelegateBalances &&
@@ -132,6 +139,13 @@ const UnDelegateMUON = () => {
           className={`btn btn--action text-[12px]`}
         >
           Insufficient Funds
+        </button>
+      ) : chainId != getCurrentChainId() ? (
+        <button
+          onClick={() => switchChain({ chainId: getCurrentChainId() })}
+          className="btn btn--action  cursor-auto text-sm md:text-[12px] xl:text-sm"
+        >
+          Switch Network
         </button>
       ) : (
         <button

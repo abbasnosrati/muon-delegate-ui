@@ -2,6 +2,9 @@ import { ConvertPion } from "./ConvertPion";
 import { ConnectWalletModal } from "../common/ConnectWalletModal";
 import { WrongNetworkModal } from "../common/WrongNetworkModal";
 import { useConvert } from "../../context/ConvertContext";
+import { useAccount, useSwitchChain } from "wagmi";
+import { config } from "../../web3/config";
+import { getCurrentChainId } from "../../web3/chains";
 
 const ConvertPionToMuon = () => {
   return (
@@ -31,6 +34,9 @@ const CovertPionButton = () => {
     migrateAllowance,
   } = useConvert();
 
+  const { chainId } = useAccount({ config });
+  const { switchChain } = useSwitchChain();
+
   const displayAllowance =
     !migrateAllowance ||
     (migrateAllowance && migrateAllowance.big < migrateAmount.big);
@@ -44,6 +50,13 @@ const CovertPionButton = () => {
           className={`btn btn--action text-[12px]`}
         >
           Insufficient Funds
+        </button>
+      ) : chainId != getCurrentChainId() ? (
+        <button
+          onClick={() => switchChain({ chainId: getCurrentChainId() })}
+          className="btn btn--action  cursor-auto text-sm md:text-[12px] xl:text-sm"
+        >
+          Switch Network
         </button>
       ) : displayAllowance && migrateAmount.big && pionBalance ? (
         <button

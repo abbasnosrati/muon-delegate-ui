@@ -42,7 +42,7 @@ const useGetTotalDelegated = () => {
     if (isFetched && data !== undefined && data !== null) {
       setTokenId(data[4]);
     }
-  }, [isFetched, data]);
+  }, [isFetched, data, refetch]);
 
   useEffect(() => {
     if (tokenId) {
@@ -50,9 +50,9 @@ const useGetTotalDelegated = () => {
     } else {
       setTotalDelegated(w3bNumberFromBigint(0n, decimals));
     }
-  }, [tokenId, isFetched]);
+  }, [tokenId, isFetched, refetch, data]);
 
-  return { totalDelegated, refetch };
+  return { totalDelegated, refetch, handleGetTotalDelegated };
 };
 
 export default useGetTotalDelegated;

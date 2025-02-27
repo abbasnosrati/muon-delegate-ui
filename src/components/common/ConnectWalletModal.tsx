@@ -18,9 +18,9 @@ export const ConnectWalletModal = () => {
           src="/assets/images/connect-wallet-modal-icon.svg"
           alt=""
         />
-        <p className="text-center mb-6 text-black">
+        {/* <p className="text-center mb-6 text-black">
           please connect your wallet to continue.
-        </p>
+        </p> */}
         <ConnectWalletButton size="md" />
       </div>
     </Modal>

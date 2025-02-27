@@ -77,7 +77,7 @@ export const ConnectWalletButton = ({
                       size === "md" ? "" : "btn--small"
                     } btn--primary`}
                   >
-                    Switch Network
+                    Wrong Network
                   </button>
                 );
               }

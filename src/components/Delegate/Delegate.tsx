@@ -4,6 +4,9 @@ import { ConnectWalletModal } from "../common/ConnectWalletModal";
 import useDelegateAction from "../../context/DelegateAction/useDelegateAction";
 import { useMuon } from "../../context/MuonContext";
 import { WrongNetworkModal } from "../common/WrongNetworkModal";
+import { useAccount, useSwitchChain } from "wagmi";
+import { config } from "../../web3/config";
+import { getCurrentChainId } from "../../web3/chains";
 
 const Delegate = () => {
   const { userDelegateBalances } = useDelegateAction();
@@ -40,6 +43,9 @@ const DelegateMuonButton = () => {
 
   const { selectedRewardStatus, userDelegateBalances } = useDelegateAction();
 
+  const { chainId } = useAccount({ config });
+  const { switchChain } = useSwitchChain();
+
   return (
     <div className="flex flex-row absolute bottom-6 sm:bottom-10 items-center justify-center right-0  w-full">
       {muonDelegateAmount &&
@@ -47,6 +53,13 @@ const DelegateMuonButton = () => {
       muonDelegateAmount.big > muonBalance?.big ? (
         <button disabled={true} className={`btn btn--action text-[12px]`}>
           Insufficient Funds
+        </button>
+      ) : chainId != getCurrentChainId() ? (
+        <button
+          onClick={() => switchChain({ chainId: getCurrentChainId() })}
+          className="btn btn--action  cursor-auto text-sm md:text-[12px] xl:text-sm"
+        >
+          Switch Network
         </button>
       ) : muonAllowance && muonDelegateAmount.big ? (
         <button
