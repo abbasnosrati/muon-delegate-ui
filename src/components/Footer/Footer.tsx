@@ -1,8 +1,8 @@
 const footerItems = [
-  { id: 0, title: "X", src: "" },
-  { id: 1, title: "Discord", src: "" },
-  { id: 2, title: "Medium", src: "" },
-  { id: 3, title: "Telegram", src: "" },
+  { id: 0, title: "X", src: "https://x.com/muon_net" },
+  { id: 1, title: "Discord", src: "https://discord.gg/muonnetwork" },
+  { id: 2, title: "Medium", src: "https://docs.muon.net/muon-network" },
+  { id: 3, title: "Telegram", src: "https://t.me/muon_net" },
 ];
 
 export const Footer = () => {
@@ -11,6 +11,7 @@ export const Footer = () => {
       <div className="flex w-full justify-between gap-4 max-w-[245px]">
         {footerItems.map((item, index) => (
           <div
+            onClick={() => window.open(item.src, "_blank")}
             key={index}
             className="custom-1110:text-[12px] text-sm cursor-pointer text-lightDarkText"
           >
@@ -26,6 +27,7 @@ export const Footer = () => {
           src="./assets/images/footer/logo.svg"
           alt=""
           className="opacity-70 "
+          onClick={() => window.open("https://www.muon.net/", "_blank")}
         />
       </div>
     </footer>
