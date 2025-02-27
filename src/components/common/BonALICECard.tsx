@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC } from "react";
 
 const BonALICECard: FC<{
   title: string;
@@ -32,22 +32,22 @@ const BonALICECard: FC<{
         ${className} ${
         !inverted
           ? selected
-            ? 'bg-primary-dark text-gray10 dark:bg-alice-primary-g2 dark:text-white'
+            ? "bg-primary-dark text-gray10 dark:bg-alice-primary-g2 dark:text-white"
             : onClick
-            ? 'bg-primary-10-solid text-black hover:bg-primary-dark-500 dark:hover:bg-alice-primary-g dark:hover:text-white'
-            : 'bg-primary-10-solid text-black'
-          : 'bg-so-dark-gray-2 text-white'
+            ? "bg-primary-10-solid text-black hover:bg-primary-dark-500 dark:hover:bg-alice-primary-g dark:hover:text-white"
+            : "bg-primary-10-solid text-black"
+          : "bg-so-dark-gray-2 text-white"
       }`}
     >
       <div
-        className={`text-inherit font-semibold flex w-full justify-between gap-1.5 items-center ${
-          compact ? 'md:mb-3' : 'mb-4 md:mb-6'
+        className={`text-inherit font-medium flex w-full justify-between gap-1.5 items-center ${
+          compact ? "md:mb-3" : "mb-4 md:mb-6"
         } 
         `}
       >
         <p className="text-inherit dark:text-inherit">{title}</p>
         <p className="text-inherit dark:text-inherit text-xs pt-[3px] font-medium">
-          {isNodeBonALICE && '(Active Node)'}
+          {isNodeBonALICE && "(Active Node)"}
         </p>
       </div>
       <span className="text-sm flex mb-0.5 md:mb-2 justify-between">

@@ -4,7 +4,6 @@ import { ConnectWalletModal } from "../common/ConnectWalletModal";
 import useDelegateAction from "../../context/DelegateAction/useDelegateAction";
 import { useMuon } from "../../context/MuonContext";
 import { WrongNetworkModal } from "../common/WrongNetworkModal";
-import { useEffect } from "react";
 
 const Delegate = () => {
   const { userDelegateBalances } = useDelegateAction();

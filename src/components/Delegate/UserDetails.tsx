@@ -23,7 +23,7 @@ export const UserDetails = () => {
           <div className="w-full border-b border-lightDarkText text-xs md:text-sm transition-all  action-sidebar  flex flex-col justify-center gap-3 px-3 py-3  bg-sectionBg  md:py-4">
             <div className="flex items-center justify-between">
               <p>Status</p>
-              <p className="text-sm md:text-[12px] xl:text-sm font-semibold">
+              <p className="text-sm md:text-[12px] xl:text-sm font-medium">
                 {userDelegateBalances?.dsp && rewardStatus
                   ? "ReStake"
                   : userDelegateBalances?.dsp && !rewardStatus
@@ -53,7 +53,7 @@ export const UserDetails = () => {
           <div className="w-full text-xs xl:text-sm transition-all action-sidebar flex flex-col justify-center  bg-sectionBg  ">
             <div className="flex justify-between items-center py-4 border-b border-lightDarkText px-3">
               <p>$MUON Staked Amount</p>
-              <div className="font-semibold ">
+              <div className="font-medium ">
                 {userDelegateBalances
                   ? `${userDelegateBalances.dsp} $MUON`
                   : "0"}
@@ -61,7 +61,7 @@ export const UserDetails = () => {
             </div>
             <div className="flex justify-between py-4 items-center  px-3">
               <div>Reward</div>
-              <div className="font-semibold ">
+              <div className="font-medium ">
                 {userReward ? `${userReward.dsp} ` : "0"} ${MUON.token}
               </div>
             </div>
@@ -79,7 +79,7 @@ export const UserDetails = () => {
                 }
               />
             </div>
-            <div className="amount-input__token-name group font-semibold text-sm md:text-[12px] xl:text-sm min-w-fit">
+            <div className="amount-input__token-name group font-medium text-sm md:text-[12px] xl:text-sm min-w-fit">
               $MUON
             </div>
 
