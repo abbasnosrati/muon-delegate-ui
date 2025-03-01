@@ -51,7 +51,7 @@ const CovertPionButton = () => {
         >
           Insufficient Funds
         </button>
-      ) : chainId != getCurrentChainId() ? (
+      ) : chainId && chainId != getCurrentChainId() ? (
         <button
           onClick={() => switchChain({ chainId: getCurrentChainId() })}
           className="btn btn--action  cursor-auto text-sm md:text-[12px] xl:text-sm"
