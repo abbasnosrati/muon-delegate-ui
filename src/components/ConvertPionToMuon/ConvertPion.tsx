@@ -27,7 +27,7 @@ export const ConvertPion = () => {
             {pionBalance?.dsp ?? 0} $PION
           </span>
         </div>
-        <div className="ext-sm md:text-[12px] xl:text-sm">
+        <div className="text-[10px] text-nowrap pl-2">
           Convert rate:{" "}
           <mark className="bg-textBackGround p-[2px] ">
             {multiplier ? w3bNumberFromBigint(multiplier).dsp : "..."}
