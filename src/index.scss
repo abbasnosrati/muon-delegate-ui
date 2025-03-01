@@ -190,7 +190,7 @@ html {
 
 .page {
   // Todo: Refactor this and use tailwind spacing classes
-  @apply max-w-[90vw] py-12 pb-24 md:px-4 md:max-w-[1280px] md:pb-[148px] md:pt-[160px] mx-auto;
+  @apply max-w-[95vw] py-12 pb-24 md:px-2 2xl:px-10 2xl:max-w-[1920px] md:pb-[148px] md:pt-[160px] mx-auto;
   min-height: calc(100vh);
 
   &--centered {

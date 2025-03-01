@@ -20,7 +20,7 @@ const menuItems = [
 const Header = () => {
   return (
     <div>
-      <div className=" z-[2000] absolute w-full navbar justify-between items-center lg:flex px-2 sm:px-4 sm:pt-10 ">
+      <div className=" z-[2000] absolute w-full navbar justify-between items-center xl:flex px-2 sm:px-0 sm:pt-10 ">
         <div className="flex flex-col gap-5 relative">
           <div className="flex items-center gap-[18px] pl-5 lg:pl-10">
             <img
@@ -44,7 +44,7 @@ const Header = () => {
           </div> */}
         </div>
 
-        <div className=" flex flex-col-reverse sm:flex-row gap-4 mr-5 sm:mr-10 mt-4 lg:mt-0 ml-5 lg:ml-0">
+        <div className=" flex flex-col-reverse sm:flex-row gap-4 mr-5 sm:mr-10 mt-4 xl:mt-0 ml-10 xl:ml-0">
           <div className="">
             <PriceTVLButton />
           </div>

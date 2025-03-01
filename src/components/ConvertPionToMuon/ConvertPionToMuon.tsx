@@ -11,11 +11,11 @@ const ConvertPionToMuon = () => {
     <div className="w-full flex items-center justify-center">
       <ConnectWalletModal />
       <WrongNetworkModal />
-      <div className="w-full max-w-[768px] bg-sectionBg relative">
+      <div className="w-full max-w-[510px] bg-sectionBg relative 2xl:min-h-[510px]">
         <div className="flex items-center px-4 font-medium font-azeretMono absolute h-[56px] -top-8 bg-textBackGround text-lightDarkText tracking-[1px]">
           Convert $PION to $MUON
         </div>
-        <div className="pion actions-content relative w-full px-4 py-3 min-h-[400px] md:min-h-[428px] md:max-h-[424px] overflow-hidden flex flex-col">
+        <div className="pion actions-content  w-full px-4 py-8 min-h-[400px] md:min-h-[428px] md:max-h-[424px] overflow-hidden flex flex-col">
           <ConvertPion />
           <CovertPionButton />
         </div>
