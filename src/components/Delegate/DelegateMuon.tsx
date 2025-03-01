@@ -74,7 +74,7 @@ export const DelegateMuon = () => {
               }
               className="underline cursor-pointer"
             >
-              Buy ${MUON.token} here.
+              Buy here.
             </span>
           </div>
         )}

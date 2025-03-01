@@ -60,7 +60,7 @@ export const ConvertPion = () => {
       </div>
       {pionBalance && pionBalance.big < migrateAmount.big && (
         <div className="text-errorText  text-[10px] -mt-4 ml-[14px]">
-          Insufficient amount.{" "}
+          Insufficient $PION amount.{" "}
         </div>
       )}
     </div>
