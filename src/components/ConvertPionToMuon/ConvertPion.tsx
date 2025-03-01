@@ -16,10 +16,6 @@ export const ConvertPion = () => {
     refetchPionBalance();
   }, [isMetamaskLoading]);
 
-  useEffect(() => {
-    console.log(multiplier);
-  }, [multiplier]);
-
   return (
     <div>
       <div className=" flex items-center justify-between border-b border-lightDarkText my-10">

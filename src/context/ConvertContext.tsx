@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import { W3bNumber } from "../types/wagmi";
-import { useAccount, useBalance } from "wagmi";
+import { useAccount, useBalance, useReadContract } from "wagmi";
 import {
   MIGRATION_PION_ADDRESS,
   PION_TOKEN_ADDRESS,
@@ -29,6 +29,7 @@ const ConvertContext = createContext<{
   setMigrateAmount: (amount: W3bNumber) => void;
   handleApprove: () => void;
   migrateAllowance: W3bNumber | null;
+  multiplier: bigint | undefined;
 }>({
   pionBalance: null,
   refetchPionBalance: () => {},
@@ -38,6 +39,7 @@ const ConvertContext = createContext<{
   setMigrateAmount: () => {},
   handleApprove: () => {},
   migrateAllowance: null,
+  multiplier: 0n,
 });
 
 const ConvertProvider = ({ children }: { children: ReactNode }) => {
@@ -113,6 +115,13 @@ const ConvertProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const { data: multiplier } = useReadContract({
+    abi: MIGRATION_ABI,
+    address: MIGRATION_PION_ADDRESS[getCurrentChainId()],
+    functionName: "multiplier",
+    chainId: getCurrentChainId(),
+  });
+
   return (
     <ConvertContext.Provider
       value={{
@@ -124,6 +133,7 @@ const ConvertProvider = ({ children }: { children: ReactNode }) => {
         setMigrateAmount,
         handleApprove,
         migrateAllowance,
+        multiplier,
       }}
     >
       {children}
