@@ -3,6 +3,7 @@ export default [
     inputs: [
       { internalType: "address", name: "_baseToken", type: "address" },
       { internalType: "address", name: "_escrow", type: "address" },
+      { internalType: "uint256", name: "_multiplier", type: "uint256" },
     ],
     stateMutability: "nonpayable",
     type: "constructor",
@@ -14,7 +15,13 @@ export default [
       {
         indexed: false,
         internalType: "uint256",
-        name: "amount",
+        name: "fromAmount",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "toAmount",
         type: "uint256",
       },
     ],
@@ -63,6 +70,13 @@ export default [
   },
   {
     inputs: [],
+    name: "multiplier",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "owner",
     outputs: [{ internalType: "address", name: "", type: "address" }],
     stateMutability: "view",
@@ -78,6 +92,13 @@ export default [
   {
     inputs: [{ internalType: "address", name: "_escrow", type: "address" }],
     name: "setEscrow",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "_multiplier", type: "uint256" }],
+    name: "setMultiplier",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

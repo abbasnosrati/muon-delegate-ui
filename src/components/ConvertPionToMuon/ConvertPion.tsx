@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useConvert } from "../../context/ConvertContext";
-import { w3bNumberFromString } from "../../utils/web3";
+import { w3bNumberFromBigint, w3bNumberFromString } from "../../utils/web3";
 
 export const ConvertPion = () => {
   const {
@@ -9,16 +9,21 @@ export const ConvertPion = () => {
     isMetamaskLoading,
     migrateAmount,
     setMigrateAmount,
+    multiplier,
   } = useConvert();
 
   useEffect(() => {
     refetchPionBalance();
   }, [isMetamaskLoading]);
 
+  useEffect(() => {
+    console.log(multiplier);
+  }, [multiplier]);
+
   return (
     <div>
-      <div className=" border-b border-lightDarkText my-10">
-        <div className=" px-2 flex justify-between items-center border-t border-l border-r border-lightDarkText max-w-[200px] h-[42px]">
+      <div className=" flex items-center justify-between border-b border-lightDarkText my-10">
+        <div className=" px-2 flex justify-between items-center border-t border-l border-r border-lightDarkText w-full max-w-[200px] h-[42px]">
           <p className="balance flex text-sm md:text-[12px] xl:text-sm  items-center">
             Balance:
           </p>
@@ -26,7 +31,14 @@ export const ConvertPion = () => {
             {pionBalance?.dsp ?? 0} $PION
           </span>
         </div>
+        <div className="ext-sm md:text-[12px] xl:text-sm">
+          Convert rate:{" "}
+          <mark className="bg-textBackGround p-[2px] ">
+            {multiplier ? w3bNumberFromBigint(multiplier).dsp : "..."}
+          </mark>
+        </div>
       </div>
+
       <div className="mb-5 amount-input__input-wrapper relative flex justify-between items-center w-full gap-3 border border-lightDarkText h-12 md:h-14 px-3">
         <div className="flex gap-2">
           <p className="text-sm md:text-[12px] xl:text-sm">Enter amount:</p>
