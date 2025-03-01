@@ -130,7 +130,7 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
     w3bNumberFromString("")
   );
 
-  const { refetchMuonBalance, muonBalance } = useMuon();
+  const { refetchMuonBalance } = useMuon();
 
   useEffect(() => {
     setIsConnectWalletModalOpen(!walletAddress);

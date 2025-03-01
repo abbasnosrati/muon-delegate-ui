@@ -1,9 +1,8 @@
-import { useEffect } from "react";
 import { MUON } from "../../constants/strings";
 import useDelegateAction from "../../context/DelegateAction/useDelegateAction";
 import { w3bNumberFromString } from "../../utils/web3";
 import { getCurrentChainId } from "../../web3/chains";
-import { useSwitchChain, useChainId, useChains, useAccount } from "wagmi";
+import { useSwitchChain, useAccount } from "wagmi";
 import { config } from "../../web3/config";
 
 export const UserDetails = () => {
