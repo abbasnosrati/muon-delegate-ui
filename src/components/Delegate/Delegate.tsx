@@ -47,7 +47,7 @@ const DelegateMuonButton = () => {
   const { switchChain } = useSwitchChain();
 
   return (
-    <div className="flex flex-row absolute bottom-1 sm:bottom-10 items-center justify-center right-0  w-full">
+    <div className="flex flex-row absolute bottom-6 sm:bottom-10 items-center justify-center right-0  w-full">
       {muonDelegateAmount &&
       muonBalance &&
       muonDelegateAmount.big > muonBalance?.big ? (
