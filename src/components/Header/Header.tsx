@@ -26,6 +26,7 @@ const Header = () => {
             <img
               onClick={() => window.open("https://www.muon.net/", "_blank")}
               src="/assets/images/muonLogo.svg"
+              className="cursor-pointer"
             />
             <div className="flex gap-[15px] sm:gap-[32px] border-b pb-1">
               {menuItems.map((item, index) => (
@@ -44,7 +45,7 @@ const Header = () => {
           </div> */}
         </div>
 
-        <div className=" flex flex-col-reverse sm:flex-row gap-4  mt-4 ">
+        <div className=" flex flex-col-reverse sm:flex-row gap-4 mt-4 ">
           <div className="">
             <PriceTVLButton />
           </div>
@@ -63,9 +64,9 @@ const PriceTVLButton = () => {
   };
 
   return (
-    <button className="btn btn--small !py-[5px] !cursor-default">
+    <button className="btn btn--small sm:btn--action  !cursor-default">
       {/* <img src="/assets/images/pion-token-logo.svg" alt="" className="mr-2.5" /> */}
-      <p className=" text-[10px] font-normal md:text-sm text-nowrap">
+      <p className=" text-sm font-normal md:text-base text-nowrap">
         {`Total Delegated: ${
           totalDelegated?.dsp ? formatNumber(totalDelegated.dsp) : "0"
         }`}{" "}

@@ -26,7 +26,7 @@ export const Footer = () => {
         <img
           src="./assets/images/footer/logo.svg"
           alt=""
-          className="opacity-70 "
+          className="opacity-70 cursor-pointer"
           onClick={() => window.open("https://www.muon.net/", "_blank")}
         />
       </div>

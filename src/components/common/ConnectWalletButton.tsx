@@ -42,9 +42,7 @@ export const ConnectWalletButton = ({
                 if (withIcon) {
                   return (
                     <button
-                      className={`btn btn--with-icon  ${
-                        light ? "btn--white" : "btn--primary"
-                      } `}
+                      className="btn btn--small"
                       onClick={openConnectModal}
                     >
                       <img
@@ -59,9 +57,7 @@ export const ConnectWalletButton = ({
                   return (
                     <button
                       onClick={openConnectModal}
-                      className={`btn   ${
-                        size === "md" ? "" : "btn--small"
-                      } btn--primary`}
+                      className="btn btn--small"
                     >
                       Connect Wallet
                     </button>
@@ -71,12 +67,7 @@ export const ConnectWalletButton = ({
 
               if (chain.unsupported) {
                 return (
-                  <button
-                    onClick={openChainModal}
-                    className={`btn ${
-                      size === "md" ? "" : "btn--small"
-                    } btn--primary`}
-                  >
+                  <button onClick={openChainModal} className="btn btn--small">
                     Wrong Network
                   </button>
                 );
@@ -85,9 +76,7 @@ export const ConnectWalletButton = ({
               return (
                 <button
                   onClick={openAccountModal}
-                  className={`btn btn btn--white ${
-                    size === "md" ? "" : "btn--small"
-                  }`}
+                  className={`btn  btn--action}`}
                 >
                   {account.displayName} | {muonBalance?.dsp} {MUON.token}
                 </button>
