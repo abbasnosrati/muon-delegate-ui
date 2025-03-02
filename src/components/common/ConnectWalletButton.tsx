@@ -42,7 +42,7 @@ export const ConnectWalletButton = ({
                 if (withIcon) {
                   return (
                     <button
-                      className="btn btn--small"
+                      className={`btn btn--small ${size} ${light}`}
                       onClick={openConnectModal}
                     >
                       <img
