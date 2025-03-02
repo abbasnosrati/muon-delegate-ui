@@ -19,10 +19,10 @@ const menuItems = [
 
 const Header = () => {
   return (
-    <div>
-      <div className=" z-[2000] absolute w-full navbar justify-between items-center xl:flex px-2 sm:px-0 sm:pt-10 ">
+    <div className="sm:pt-10 z-[2000] relative px-4 md:px-10 mt-5 sm:mt-0">
+      <div className=" z-[2000] w-full navbar justify-between items-center xl:flex ">
         <div className="flex flex-col gap-5 relative">
-          <div className="flex items-center gap-[18px] pl-5 lg:pl-10">
+          <div className="flex items-center gap-[18px] ">
             <img
               onClick={() => window.open("https://www.muon.net/", "_blank")}
               src="/assets/images/muonLogo.svg"
@@ -31,7 +31,7 @@ const Header = () => {
               {menuItems.map((item, index) => (
                 <div
                   key={index}
-                  className="custom-1110:text-[12px] text-sm cursor-pointer"
+                  className=" text-[10px] sm:text-sm cursor-pointer text-nowrap"
                   onClick={() => window.open(item.src, "_blank")}
                 >
                   {item.title}
@@ -44,7 +44,7 @@ const Header = () => {
           </div> */}
         </div>
 
-        <div className=" flex flex-col-reverse sm:flex-row gap-4 mr-5 sm:mr-10 mt-4 xl:mt-0 ml-10 xl:ml-0">
+        <div className=" flex flex-col-reverse sm:flex-row gap-4  mt-4 ">
           <div className="">
             <PriceTVLButton />
           </div>

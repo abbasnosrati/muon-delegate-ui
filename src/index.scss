@@ -165,9 +165,9 @@ html {
 }
 
 @media (max-width: 768px) {
-  .page {
-    min-height: calc(100vh) !important;
-  }
+  // .page {
+  //   min-height: calc(100vh) !important;
+  // }
 }
 
 // .pion {
@@ -190,8 +190,8 @@ html {
 
 .page {
   // Todo: Refactor this and use tailwind spacing classes
-  @apply max-w-[95vw] py-12 pb-24 md:px-2 2xl:px-10 2xl:max-w-[1920px] md:pb-[148px] md:pt-[160px] mx-auto;
-  min-height: calc(100vh);
+  @apply 2xl:max-w-[1920px] mx-auto;
+  // min-height: calc(100vh);
 
   &--centered {
     //@apply flex items-center justify-center;

@@ -10,23 +10,24 @@ import { Footer } from "./components/Footer/Footer";
 function App() {
   document.getElementsByTagName("body")[0].className = "pion";
   return (
-    <div className="app relative overflow-x-hidden max-md:pt-[calc(5*4px)] no-scrollbar page__bg">
-      <Web3ModalProvider>
-        <RefreshProvider>
-          <MUONProvider>
-            <ConvertProvider>
-              <DelegateActionProvider>
+    <Web3ModalProvider>
+      <RefreshProvider>
+        <MUONProvider>
+          <ConvertProvider>
+            <DelegateActionProvider>
+              <div className="app relative overflow-x-hidden  flex flex-col no-scrollbar page__bg">
                 <Header />
-                <div className="w-full">
+
+                <div className="flex-1 flex py-20 px-5">
                   <Home />
                 </div>
-              </DelegateActionProvider>
-            </ConvertProvider>
-          </MUONProvider>
-        </RefreshProvider>
-      </Web3ModalProvider>
-      <Footer />
-    </div>
+                <Footer />
+              </div>
+            </DelegateActionProvider>
+          </ConvertProvider>
+        </MUONProvider>
+      </RefreshProvider>
+    </Web3ModalProvider>
   );
 }
 

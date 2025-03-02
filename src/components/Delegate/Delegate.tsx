@@ -11,7 +11,7 @@ import { getCurrentChainId } from "../../web3/chains";
 const Delegate = () => {
   const { userDelegateBalances } = useDelegateAction();
   return (
-    <div className="w-full flex items-center justify-center ">
+    <div className="w-full flex">
       <ConnectWalletModal />
       <WrongNetworkModal />
 
