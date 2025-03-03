@@ -76,7 +76,7 @@ export const ConnectWalletButton = ({
               return (
                 <button
                   onClick={openAccountModal}
-                  className={`btn  btn--action}`}
+                  className={`btn  btn--action text-nowrap`}
                 >
                   {account.displayName} | {muonBalance?.dsp} {MUON.token}
                 </button>

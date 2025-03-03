@@ -7,7 +7,7 @@ const footerItems = [
 
 export const Footer = () => {
   return (
-    <footer className="content footer z-[3000] flex flex-col md:flex-row w-full items-center gap-3 px-14 font-azeretMono bottom-8 pb-10 xl:pb-5  text-lightDarkText">
+    <footer className="content footer z-[3000] flex flex-col md:flex-row w-full items-end gap-3 px-14 font-azeretMono bottom-8 pb-10 xl:pb-5  text-lightDarkText">
       <div className="flex w-full justify-between gap-4 max-w-[245px]">
         {footerItems.map((item, index) => (
           <div
@@ -19,16 +19,20 @@ export const Footer = () => {
           </div>
         ))}
       </div>
-      <div className="w-full  h-[1px] mt-[11px] hidden md:flex items-end  bg-black"></div>
+      <div className="w-full h-[1px] mb-[4px] hidden md:flex   bg-black"></div>
 
-      <div className="flex w-full items-end max-w-[200px] gap-[6px]">
-        <span className="text-sm text-lightDarkText flex ">Powered By</span>
-        <img
-          src="./assets/images/footer/logo.svg"
-          alt=""
-          className="opacity-70 cursor-pointer"
-          onClick={() => window.open("https://www.muon.net/", "_blank")}
-        />
+      <div className="flex items-end gap-2">
+        <span className="text-sm text-lightDarkText flex text-nowrap">
+          Powered By
+        </span>
+        <div className="flex w-[120px] mb-[2px]">
+          <img
+            src="./assets/images/footer/logo.svg"
+            alt=""
+            className="opacity-70 cursor-pointer w-full h-full"
+            onClick={() => window.open("https://www.muon.net/", "_blank")}
+          />
+        </div>
       </div>
     </footer>
   );
