@@ -57,7 +57,7 @@ export const ConnectWalletButton = ({
                   return (
                     <button
                       onClick={openConnectModal}
-                      className="btn btn--small"
+                      className="btn btn--action"
                     >
                       Connect Wallet
                     </button>
@@ -67,7 +67,7 @@ export const ConnectWalletButton = ({
 
               if (chain.unsupported) {
                 return (
-                  <button onClick={openChainModal} className="btn btn--small">
+                  <button onClick={openChainModal} className="btn btn--action">
                     Wrong Network
                   </button>
                 );

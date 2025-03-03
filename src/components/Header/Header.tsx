@@ -64,8 +64,7 @@ const PriceTVLButton = () => {
   };
 
   return (
-    <button className="btn btn--small sm:btn--action  !cursor-default">
-      {/* <img src="/assets/images/pion-token-logo.svg" alt="" className="mr-2.5" /> */}
+    <button className="btn btn--action sm:btn--action  !cursor-default">
       <p className=" text-sm font-normal md:text-base text-nowrap">
         {`Total Delegated: ${
           totalDelegated?.dsp ? formatNumber(totalDelegated.dsp) : "0"
