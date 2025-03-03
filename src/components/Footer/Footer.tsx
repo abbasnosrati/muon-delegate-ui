@@ -1,7 +1,7 @@
 const footerItems = [
   { id: 0, title: "X", src: "https://x.com/muon_net" },
   { id: 1, title: "Discord", src: "https://discord.gg/muonnetwork" },
-  { id: 2, title: "Medium", src: "https://docs.muon.net/muon-network" },
+  { id: 2, title: "Medium", src: "https://medium.com/muon" },
   { id: 3, title: "Telegram", src: "https://t.me/muon_net" },
 ];
 
