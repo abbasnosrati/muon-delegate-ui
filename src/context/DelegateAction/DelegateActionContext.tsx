@@ -30,7 +30,6 @@ import useGetTotalReward from "../../hooks/useGetTotalReward.ts";
 import useGetTotalDelegated from "../../hooks/useGetTotalDelegate.ts";
 import { useMuon } from "../MuonContext.tsx";
 import toast from "react-hot-toast";
-import { useConvert } from "../ConvertContext.tsx";
 
 const DelegateActionContext = createContext<{
   isTransferModalOpen: boolean;
@@ -65,6 +64,8 @@ const DelegateActionContext = createContext<{
   unDelegateAmount: W3bNumber;
   setUnDelegateAmount: (amount: W3bNumber) => void;
   handleUnDelegate: () => void;
+  isApproveModalOpen: boolean;
+  setIsApproveModalOpen: (isOpen: boolean) => void;
 }>({
   isTransferModalOpen: false,
   openTransferModal: () => {},
@@ -98,6 +99,8 @@ const DelegateActionContext = createContext<{
   unDelegateAmount: w3bNumberFromString(""),
   setUnDelegateAmount: () => {},
   handleUnDelegate: () => {},
+  isApproveModalOpen: false,
+  setIsApproveModalOpen: () => {},
 });
 
 const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
@@ -107,7 +110,7 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
     w3bNumberFromString("")
   );
 
-  const { setIsApproveModalOpen } = useConvert();
+  const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
 
   const [isLoadingMetamaskSwitchReward, setIsLoadingMetamaskSwitchReward] =
     useState(false);
@@ -318,8 +321,9 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
 
   const handleApproveMuon = async () => {
     try {
-      setIsApproveModalOpen(true);
       setIsMetamaskLoadingApprove(true);
+      setIsApproveModalOpen(true);
+
       const result = await writeContract(config, {
         address: MUON_TOKEN_ADDRESS[getCurrentChainId()],
         abi: PION_ABI,
@@ -329,66 +333,23 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
           muonDelegateAmount!.big,
         ],
       });
+
       const ts = waitForTransactionReceipt(config, {
         hash: result,
       });
+
       await toast.promise(ts, {
         loading: "Approving...",
         success: "Approved!",
         error: "Failed to Approve.",
       });
+
       refetchMuonAllowance();
     } finally {
       setIsApproveModalOpen(false);
       setIsMetamaskLoadingApprove(false);
     }
   };
-
-  // const handleApproveBonMuon = async () => {
-  //   try {
-  //     setIsMetamaskLoadingApprove(true);
-  //     const result = await writeContract(config, {
-  //       address: BON_MUON_TOKEN_ADDRESS[getCurrentChainId()],
-  //       abi: BONPION_ABI,
-  //       functionName: "approve",
-  //       args: [
-  //         DELEGATOR_MUON_ADDRESS[getCurrentChainId()],
-  //         transferModalSelectedBonALICE!.tokenId,
-  //       ],
-  //     });
-  //     await waitForTransactionReceipt(config, {
-  //       hash: result,
-  //       confirmations: 2,
-  //     });
-  //     refetchIsBonApproved();
-  //   } finally {
-  //     setIsMetamaskLoadingApprove(false);
-  //   }
-  // };
-
-  // const handleDelegateNFT = async () => {
-  //   try {
-  //     setIsMetamaskLoadingDelegate(true);
-  //     const result = await writeContract(config, {
-  //       address: DELEGATOR_MUON_ADDRESS[getCurrentChainId()],
-  //       abi: Delegation_ABI,
-  //       functionName: "delegateNFT",
-  //       args: [
-  //         transferModalSelectedBonALICE!.tokenId,
-  //         walletAddress!,
-  //         selectedRewardStatus == RewardStatus.ReStakeReward,
-  //       ],
-  //     });
-
-  //     await waitForTransactionReceipt(config, {
-  //       hash: result,
-  //     });
-  //   } finally {
-  //     setIsMetamaskLoadingDelegate(false);
-  //     refetchUserDelegateBalance();
-  //     unselectTransferModalSelectedBonALICE();
-  //   }
-  // };
 
   const changeTransferModalSelectedBonALICE = useCallback(
     (bonALICE: BonMUON) => {
@@ -491,6 +452,8 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
         setUnDelegateAmount,
         handleUnDelegate,
         isMetaMaskLoadingUnDelegate,
+        isApproveModalOpen,
+        setIsApproveModalOpen,
       }}
     >
       {children}

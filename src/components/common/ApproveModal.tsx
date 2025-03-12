@@ -1,8 +1,8 @@
-import { useConvert } from "../../context/ConvertContext.tsx";
+import useDelegateAction from "../../context/DelegateAction/useDelegateAction.ts";
 import Modal from "./Modal.tsx";
 
 export const ApproveModal = () => {
-  const { isApproveModalOpen, setIsApproveModalOpen } = useConvert();
+  const { isApproveModalOpen, setIsApproveModalOpen } = useDelegateAction();
 
   return (
     <Modal

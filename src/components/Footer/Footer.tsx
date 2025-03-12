@@ -7,7 +7,7 @@ const footerItems = [
 
 export const Footer = () => {
   return (
-    <footer className="content footer z-[3000] flex flex-col md:flex-row w-full items-end gap-3 px-14 font-azeretMono bottom-8 pb-10 xl:pb-5  text-lightDarkText">
+    <footer className="content footer z-[3000] flex flex-col md:flex-row w-full items-center md:items-end gap-3 px-14 font-azeretMono bottom-8 pb-10 xl:pb-5  text-lightDarkText">
       <div className="flex w-full justify-between gap-4 max-w-[245px]">
         {footerItems.map((item, index) => (
           <div
