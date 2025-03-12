@@ -8,10 +8,10 @@ import {
 import { W3bNumber } from "../types/wagmi";
 import { useAccount, useBalance, useReadContract } from "wagmi";
 import {
-  MIGRATION_PION_ADDRESS,
+  MIGRATION_PION_SRC_ADDRESS,
   PION_TOKEN_ADDRESS,
 } from "../constants/addresses";
-import { getCurrentChainId } from "../web3/chains";
+import { getConvertChainId, getCurrentChainId } from "../web3/chains";
 import { w3bNumberFromBigint, w3bNumberFromString } from "../utils/web3";
 import { waitForTransactionReceipt, writeContract } from "wagmi/actions";
 import { config } from "../web3/config";
@@ -19,6 +19,7 @@ import MIGRATION_ABI from "../abis/Migration";
 import useAllowance from "../hooks/useAllowance";
 import PION_ABI from "../abis/Token.ts";
 import { useMuon } from "./MuonContext.tsx";
+import toast from "react-hot-toast";
 
 const ConvertContext = createContext<{
   pionBalance: W3bNumber | null;
@@ -30,6 +31,8 @@ const ConvertContext = createContext<{
   handleApprove: () => void;
   migrateAllowance: W3bNumber | null;
   multiplier: bigint | undefined;
+  isApproveModalOpen: boolean;
+  setIsApproveModalOpen: (isOpen: boolean) => void;
 }>({
   pionBalance: null,
   refetchPionBalance: () => {},
@@ -40,6 +43,8 @@ const ConvertContext = createContext<{
   handleApprove: () => {},
   migrateAllowance: null,
   multiplier: 0n,
+  isApproveModalOpen: false,
+  setIsApproveModalOpen: () => {},
 });
 
 const ConvertProvider = ({ children }: { children: ReactNode }) => {
@@ -47,13 +52,14 @@ const ConvertProvider = ({ children }: { children: ReactNode }) => {
   const [pionBalance, setPionBalance] = useState<W3bNumber | null>(null);
   const [isMetamaskLoading, setIsMetamaskLoading] = useState(false);
   const [migrateAmount, setMigrateAmount] = useState(w3bNumberFromString(""));
+  const [isApproveModalOpen, setIsApproveModalOpen] = useState<boolean>(false);
 
   const { refetchMuonBalance } = useMuon();
 
   const { allowance: migrateAllowance, refetch: refetchMigrateAllowance } =
     useAllowance(
-      PION_TOKEN_ADDRESS[getCurrentChainId()],
-      MIGRATION_PION_ADDRESS[getCurrentChainId()]
+      PION_TOKEN_ADDRESS[getConvertChainId()],
+      MIGRATION_PION_SRC_ADDRESS[getConvertChainId()]
     );
 
   const {
@@ -62,8 +68,8 @@ const ConvertProvider = ({ children }: { children: ReactNode }) => {
     refetch: refetchPionBalance,
   } = useBalance({
     address: walletAddress,
-    token: PION_TOKEN_ADDRESS[getCurrentChainId()],
-    chainId: getCurrentChainId(),
+    token: PION_TOKEN_ADDRESS[getConvertChainId()],
+    chainId: getConvertChainId(),
   });
 
   useEffect(() => {
@@ -78,15 +84,21 @@ const ConvertProvider = ({ children }: { children: ReactNode }) => {
     try {
       setIsMetamaskLoading(true);
       const result = await writeContract(config, {
-        address: MIGRATION_PION_ADDRESS[getCurrentChainId()],
+        address: MIGRATION_PION_SRC_ADDRESS[getCurrentChainId()],
         abi: MIGRATION_ABI,
         functionName: "migrate",
         args: [migrateAmount.big],
         chainId: getCurrentChainId() as any,
       });
 
-      await waitForTransactionReceipt(config, {
+      const ts = waitForTransactionReceipt(config, {
         hash: result,
+      });
+
+      await toast.promise(ts, {
+        loading: "Converting...",
+        success: "Converted!",
+        error: "Failed to Convert.",
       });
     } finally {
       setIsMetamaskLoading(false);
@@ -99,16 +111,27 @@ const ConvertProvider = ({ children }: { children: ReactNode }) => {
 
   const handleApprove = async () => {
     try {
+      setIsApproveModalOpen(true);
       setIsMetamaskLoading(true);
       const result = await writeContract(config, {
-        address: PION_TOKEN_ADDRESS[getCurrentChainId()],
+        address: PION_TOKEN_ADDRESS[getConvertChainId()],
         abi: PION_ABI,
         functionName: "approve",
-        args: [MIGRATION_PION_ADDRESS[getCurrentChainId()], migrateAmount!.big],
+        args: [
+          MIGRATION_PION_SRC_ADDRESS[getConvertChainId()],
+          migrateAmount!.big,
+        ],
       });
-      await waitForTransactionReceipt(config, {
+      const ts = waitForTransactionReceipt(config, {
         hash: result,
       });
+
+      await toast.promise(ts, {
+        loading: "Approving...",
+        success: "Approved!",
+        error: "Failed to Approve.",
+      });
+
       refetchMigrateAllowance();
     } finally {
       setIsMetamaskLoading(false);
@@ -117,9 +140,9 @@ const ConvertProvider = ({ children }: { children: ReactNode }) => {
 
   const { data: multiplier } = useReadContract({
     abi: MIGRATION_ABI,
-    address: MIGRATION_PION_ADDRESS[getCurrentChainId()],
+    address: MIGRATION_PION_SRC_ADDRESS[getConvertChainId()],
     functionName: "multiplier",
-    chainId: getCurrentChainId(),
+    chainId: getConvertChainId(),
   });
 
   return (
@@ -134,6 +157,8 @@ const ConvertProvider = ({ children }: { children: ReactNode }) => {
         handleApprove,
         migrateAllowance,
         multiplier,
+        isApproveModalOpen,
+        setIsApproveModalOpen,
       }}
     >
       {children}

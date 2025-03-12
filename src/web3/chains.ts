@@ -1,13 +1,17 @@
-import { bsc, bscTestnet } from "wagmi/chains";
+import { bsc, bscTestnet, avalanche, avalancheFuji } from "wagmi/chains";
 
 export enum SupportedChainId {
   BSCMAINNET = bsc.id,
   BSCTESTNET = bscTestnet.id,
+  AVALANCHFUJI = avalancheFuji.id,
+  AVALANCH = avalanche.id,
 }
 
 export const CHAIN_IDS_TO_NAMES = {
   [SupportedChainId.BSCMAINNET]: "bscmainnet",
   [SupportedChainId.BSCTESTNET]: "bsctestnet",
+  [SupportedChainId.AVALANCHFUJI]: "avalancheFuji",
+  [SupportedChainId.AVALANCH]: "avalanche",
 };
 
 export const supportedChains = [bsc, bscTestnet];
@@ -24,4 +28,8 @@ export function isSupportedChain(
 
 export function getCurrentChainId(): SupportedChainId {
   return Number(import.meta.env.VITE_APP_CHAIN_ID) as SupportedChainId;
+}
+
+export function getConvertChainId(): SupportedChainId {
+  return Number(import.meta.env.VITE_APP_CONVERT_CHAIN_ID) as SupportedChainId;
 }

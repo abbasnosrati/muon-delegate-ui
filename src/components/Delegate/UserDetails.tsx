@@ -18,11 +18,22 @@ export const UserDetails = () => {
 
   return (
     <div className="flex items-center justify-center relative w-full ">
-      <div className="flex flex-col gap-5 sm:gap-10 relative w-full mt-5  sm:mt-0 bg-sectionBg max-w-[510px] 2xl:min-h-[510px] min-h-[400px] md:min-h-[428px] md:max-h-[424px]">
-        <div className="flex items-center px-4 font-medium font-azeretMono absolute h-[56px] -top-8 bg-textBackGround text-lightDarkText tracking-[2px]">
+      <div className="flex flex-col gap-5 sm:gap-10 relative w-full mt-5 sm:mt-0 bg-sectionBg max-w-[510px] 2xl:min-h-[510px] min-h-[400px] md:min-h-[428px] md:max-h-[424px]">
+        <div className="flex items-center z-[200] px-4 font-medium font-azeretMono absolute h-[56px] -top-8 bg-textBackGround text-lightDarkText tracking-[2px]">
           Delegate Status
         </div>
-        <div className="my-12 px-4">
+        <div
+          className={`${
+            !userDelegateBalances ||
+            (!userDelegateBalances.dsp &&
+              "bg-gray absolute top-0 bottom-0 right-0 left-0 z-[100] opacity-80")
+          }`}
+        ></div>
+        <div
+          className={`my-12 px-4 ${
+            !userDelegateBalances || (!userDelegateBalances.dsp && "")
+          }`}
+        >
           <div className="w-full border-b border-lightDarkText text-xs md:text-sm transition-all  action-sidebar  flex flex-col justify-center gap-3 px-3 py-3  bg-sectionBg  md:py-4">
             <div className="flex items-center justify-between">
               <p>Status</p>

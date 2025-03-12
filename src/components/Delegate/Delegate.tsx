@@ -7,6 +7,7 @@ import { WrongNetworkModal } from "../common/WrongNetworkModal";
 import { useAccount, useSwitchChain } from "wagmi";
 import { config } from "../../web3/config";
 import { getCurrentChainId } from "../../web3/chains";
+import { ApproveModal } from "../common/ApproveModal";
 
 const Delegate = () => {
   const { userDelegateBalances } = useDelegateAction();
@@ -95,6 +96,7 @@ const DelegateMuonButton = () => {
           {isMetaMaskLoadingDelegate ? "Delegating..." : "Delegate"}
         </button>
       )}
+      <ApproveModal />
     </div>
   );
 };

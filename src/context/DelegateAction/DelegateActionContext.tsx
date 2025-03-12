@@ -11,8 +11,6 @@ import { useAccount } from "wagmi";
 import { MUON } from "../../constants/strings.ts";
 import Delegation_ABI from "../../abis/Delegation.ts";
 import PION_ABI from "../../abis/Token.ts";
-// import BONPION_ABI from "../../abis/NFT.ts";
-
 import { writeContract } from "@wagmi/core";
 import {
   BON_MUON_TOKEN_ADDRESS,
@@ -31,6 +29,8 @@ import { getCurrentChainId } from "../../web3/chains.ts";
 import useGetTotalReward from "../../hooks/useGetTotalReward.ts";
 import useGetTotalDelegated from "../../hooks/useGetTotalDelegate.ts";
 import { useMuon } from "../MuonContext.tsx";
+import toast from "react-hot-toast";
+import { useConvert } from "../ConvertContext.tsx";
 
 const DelegateActionContext = createContext<{
   isTransferModalOpen: boolean;
@@ -106,6 +106,8 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
   const [muonDelegateAmount, setMuonDelegateAmount] = useState<W3bNumber>(
     w3bNumberFromString("")
   );
+
+  const { setIsApproveModalOpen } = useConvert();
 
   const [isLoadingMetamaskSwitchReward, setIsLoadingMetamaskSwitchReward] =
     useState(false);
@@ -257,8 +259,14 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
         chainId: getCurrentChainId() as any,
       });
 
-      await waitForTransactionReceipt(config, {
+      const ts = waitForTransactionReceipt(config, {
         hash: result,
+      });
+
+      await toast.promise(ts, {
+        loading: "Delegating...",
+        success: "Delegated!",
+        error: "Failed to Delegate.",
       });
     } finally {
       setIsMetamaskLoadingDelegate(false);
@@ -280,8 +288,13 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
         chainId: getCurrentChainId() as any,
       });
 
-      await waitForTransactionReceipt(config, {
+      const ts = waitForTransactionReceipt(config, {
         hash: result,
+      });
+      await toast.promise(ts, {
+        loading: "Un delegating...",
+        success: "Un delegated!",
+        error: "Failed to Un delegate.",
       });
     } finally {
       setIsMetamaskLoadingUnDelegate(false);
@@ -301,13 +314,11 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
     if (delegateType === MUON.token) {
       handleApproveMuon();
     }
-    // else {
-    //   handleApproveBonMuon();
-    // }
   };
 
   const handleApproveMuon = async () => {
     try {
+      setIsApproveModalOpen(true);
       setIsMetamaskLoadingApprove(true);
       const result = await writeContract(config, {
         address: MUON_TOKEN_ADDRESS[getCurrentChainId()],
@@ -318,11 +329,17 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
           muonDelegateAmount!.big,
         ],
       });
-      await waitForTransactionReceipt(config, {
+      const ts = waitForTransactionReceipt(config, {
         hash: result,
+      });
+      await toast.promise(ts, {
+        loading: "Approving...",
+        success: "Approved!",
+        error: "Failed to Approve.",
       });
       refetchMuonAllowance();
     } finally {
+      setIsApproveModalOpen(false);
       setIsMetamaskLoadingApprove(false);
     }
   };

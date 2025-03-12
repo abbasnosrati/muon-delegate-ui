@@ -1,12 +1,13 @@
 import Header from "./components/Header/Header";
 import { Web3ModalProvider } from "./web3ModalProvider";
-
 import { MUONProvider } from "./context/MuonContext";
 import { RefreshProvider } from "./context/Refresh/RefreshContext";
 import { DelegateActionProvider } from "./context/DelegateAction/DelegateActionContext";
 import Home from "./components/Home/Home";
 import { ConvertProvider } from "./context/ConvertContext";
 import { Footer } from "./components/Footer/Footer";
+import { Toaster } from "react-hot-toast";
+
 function App() {
   document.getElementsByTagName("body")[0].className = "pion";
   return (
@@ -23,6 +24,7 @@ function App() {
                 </div>
                 <Footer />
               </div>
+              <Toaster position="bottom-right" />
             </DelegateActionProvider>
           </ConvertProvider>
         </MUONProvider>

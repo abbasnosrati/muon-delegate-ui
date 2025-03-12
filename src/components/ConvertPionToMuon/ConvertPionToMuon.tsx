@@ -5,6 +5,7 @@ import { useConvert } from "../../context/ConvertContext";
 import { useAccount, useSwitchChain } from "wagmi";
 import { config } from "../../web3/config";
 import { getCurrentChainId } from "../../web3/chains";
+import { ApproveModal } from "../common/ApproveModal";
 
 const ConvertPionToMuon = () => {
   return (
@@ -82,6 +83,7 @@ const CovertPionButton = () => {
           {isMetamaskLoading ? "Converting..." : "Convert"}
         </button>
       )}
+      <ApproveModal />
     </div>
   );
 };
