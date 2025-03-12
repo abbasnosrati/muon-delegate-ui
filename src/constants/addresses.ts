@@ -1,18 +1,3 @@
-// export const PION_ADDRESS = "0x39f2914690547694c8668ae07061179bd70A66f4";
-// export const BONPION_ADDRESS = "0x8A916bEa7441d2297DE1d7e5F5404FBf8Abc0355";
-// export const DELEGATION_ADDRESS = "0xc644dE58719d0E7E52C3F851a6e5f47d471605fa";
-// export const NODE_STAKER_ADDRESS = "0xeb1AD80D6d93D8B7b691b306c4b48453EBAB542D";
-// export const DELEGATOR_NODE_STAKER =
-//   "0xAa1EA50d282753b114D3bAFdc74d9F3191a7580e";
-
-//mainnet
-// export const PION_ADDRESS = "0xb8067235c9b71FeeC069Af151Fdf0975dfBDFBA5";
-// export const BONPION_ADDRESS = "0xbBcB37DAB4602026e67f2c46714C3197F3ba39c4";
-// export const DELEGATION_ADDRESS = "0x9f9E2f5a562ac6fB579DeF0F1cC783CD1e0023C4";
-// export const DELEGATOR_NODE_STAKER =
-//   "0x7Da0355397aA56ec7121d8dADCcc04550217a188"; this is wallet
-// export const NODE_STAKER_ADDRESS = "0xCf5093AACC4Aa9fff703C365727309aDb5e81A0d";
-
 import { SupportedChainId } from "../web3/chains";
 
 export type AddressMap = { [chainId: number]: `0x${string}` };
@@ -20,8 +5,6 @@ export let MUON_TOKEN_ADDRESS: AddressMap;
 export let BON_MUON_TOKEN_ADDRESS: AddressMap;
 export let PION_TOKEN_ADDRESS: AddressMap;
 export let DELEGATOR_MUON_ADDRESS: AddressMap;
-export let MIGRATION_PION_SRC_ADDRESS: AddressMap;
-export let MIGRATION_PION_DST_ADDRESS: AddressMap;
 export let DELEGATOR_NODE_STAKER_WALLET_ADDRESS: AddressMap;
 export let MUON_NODES_STAKER_ADDRESS: AddressMap;
 
@@ -63,14 +46,4 @@ DELEGATOR_NODE_STAKER_WALLET_ADDRESS = {
   [SupportedChainId.BSCMAINNET]: "0xb8067235c9b71FeeC069Af151Fdf0975dfBDFBA5", //fake
   [SupportedChainId.AVALANCH]: "0x002bcf5c6c2b39f73995bCa68A1A0B48606CAdf5", //fake
   [SupportedChainId.AVALANCHFUJI]: "0x002bcf5c6c2b39f73995bCa68A1A0B48606CAdf5", //fixed
-};
-
-MIGRATION_PION_SRC_ADDRESS = {
-  [SupportedChainId.BSCTESTNET]: "0x204E0da74ED81a10f4ed7bEF55CA04e1BC668A14", //fixed
-  [SupportedChainId.BSCMAINNET]: "0xb8067235c9b71FeeC069Af151Fdf0975dfBDFBA5", //fake
-};
-
-MIGRATION_PION_DST_ADDRESS = {
-  [SupportedChainId.AVALANCH]: "0x002bcf5c6c2b39f73995bCa68A1A0B48606CAdf5", //fake
-  [SupportedChainId.AVALANCHFUJI]: "0x002bcf5c6c2b39f73995bCa68A1A0B48606CAdf5", //fake
 };
