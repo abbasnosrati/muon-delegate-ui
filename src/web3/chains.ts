@@ -29,7 +29,3 @@ export function isSupportedChain(
 export function getCurrentChainId(): SupportedChainId {
   return Number(import.meta.env.VITE_APP_CHAIN_ID) as SupportedChainId;
 }
-
-export function getConvertChainId(): SupportedChainId {
-  return Number(import.meta.env.VITE_APP_CONVERT_CHAIN_ID) as SupportedChainId;
-}
