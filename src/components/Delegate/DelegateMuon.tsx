@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { MUON_TOKEN_ADDRESS } from "../../constants/addresses";
+// import { MUON_TOKEN_ADDRESS } from "../../constants/addresses";
 import { MUON } from "../../constants/strings";
 import { useMuon } from "../../context/MuonContext";
 import useDelegateAction from "../../context/DelegateAction/useDelegateAction";
@@ -65,7 +65,7 @@ export const DelegateMuon = () => {
         muonBalance.big < muonDelegateAmount.big && (
           <div className="text-errorText  text-[10px] -mt-4 ml-[14px]">
             Insufficient $MUON Balance.
-            <span
+            {/* <span
               onClick={() =>
                 window.open(
                   `https://thena.fi/swap?inputCurrency=BNB&outputCurrency=${MUON_TOKEN_ADDRESS}&swapType=1`,
@@ -75,7 +75,7 @@ export const DelegateMuon = () => {
               className="underline cursor-pointer"
             >
               Buy here.
-            </span>
+            </span> */}
           </div>
         )}
     </div>

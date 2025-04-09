@@ -1,20 +1,20 @@
-import { MUON_TOKEN_ADDRESS } from "../../constants/addresses";
+// import { MUON_TOKEN_ADDRESS } from "../../constants/addresses";
 import useDelegateAction from "../../context/DelegateAction/useDelegateAction";
 import { ConnectWalletButton } from "../common/ConnectWalletButton";
 import numeral from "numeral";
 const menuItems = [
   { id: 0, title: "GitHub", src: "https://Github.com/muon-protocol" },
-  { id: 1, title: "Docs", src: "" },
+  { id: 1, title: "Docs", src: "https://docs.muon.net/muon-protocol" },
   {
     id: 2,
     title: "Run a Node",
-    src: "https://docs.muon.net/muon-network/muon-nodes/pion",
+    src: "https://docs.muon.net/muon-protocol/running-a-muon-node",
   },
-  {
-    id: 3,
-    title: "Buy $MUON",
-    src: `https://thena.fi/swap?inputCurrency=BNB&outputCurrency=${MUON_TOKEN_ADDRESS}&swapType=1`,
-  },
+  // {
+  //   id: 3,
+  //   title: "Buy $MUON",
+  //   src: `https://thena.fi/swap?inputCurrency=BNB&outputCurrency=${MUON_TOKEN_ADDRESS}&swapType=1`,
+  // },
 ];
 
 const Header = () => {
