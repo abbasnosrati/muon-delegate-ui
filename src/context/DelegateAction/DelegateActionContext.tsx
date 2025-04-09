@@ -66,6 +66,8 @@ const DelegateActionContext = createContext<{
   handleUnDelegate: () => void;
   isApproveModalOpen: boolean;
   setIsApproveModalOpen: (isOpen: boolean) => void;
+  isMetamaskLoadingForClaim: boolean;
+  handleClaimPendingUnstakeAmount: () => void;
 }>({
   isTransferModalOpen: false,
   openTransferModal: () => {},
@@ -101,6 +103,9 @@ const DelegateActionContext = createContext<{
   handleUnDelegate: () => {},
   isApproveModalOpen: false,
   setIsApproveModalOpen: () => {},
+  isMetamaskLoadingForClaim: false,
+
+  handleClaimPendingUnstakeAmount: () => {},
 });
 
 const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
@@ -136,6 +141,9 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
   );
 
   const { refetchMuonBalance } = useMuon();
+
+  const [isMetamaskLoadingForClaim, setIsMetamaskLoadingForClaim] =
+    useState<boolean>(false);
 
   useEffect(() => {
     setIsConnectWalletModalOpen(!walletAddress);
@@ -322,7 +330,7 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
   const handleApproveMuon = async () => {
     try {
       setIsMetamaskLoadingApprove(true);
-      setIsApproveModalOpen(true);
+      // setIsApproveModalOpen(true);
 
       const result = await writeContract(config, {
         address: MUON_TOKEN_ADDRESS[getCurrentChainId()],
@@ -413,6 +421,35 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const handleClaimPendingUnstakeAmount = async () => {
+    try {
+      setIsMetamaskLoadingForClaim(true);
+      const result = await writeContract(config, {
+        address: DELEGATOR_MUON_ADDRESS[getCurrentChainId()],
+        abi: Delegation_ABI,
+        functionName: "claimUnstake",
+        args: [],
+        chainId: getCurrentChainId() as any,
+      });
+
+      const ts = waitForTransactionReceipt(config, {
+        hash: result,
+      });
+
+      await toast.promise(ts, {
+        loading: "Claiming...",
+        success: "Claimed!",
+        error: "Failed to Claim.",
+      });
+    } finally {
+      setIsMetamaskLoadingForClaim(false);
+      refetchUserDelegateBalance();
+      refetchMuonAllowance();
+      setMuonDelegateAmount(w3bNumberFromString(""));
+      handleGetTotalDelegated();
+    }
+  };
+
   useEffect(() => {
     setTransferModalSelectedBonALICE(null);
   }, [walletAddress]);
@@ -454,6 +491,8 @@ const DelegateActionProvider = ({ children }: { children: ReactNode }) => {
         isMetaMaskLoadingUnDelegate,
         isApproveModalOpen,
         setIsApproveModalOpen,
+        handleClaimPendingUnstakeAmount,
+        isMetamaskLoadingForClaim,
       }}
     >
       {children}
