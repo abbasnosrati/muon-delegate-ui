@@ -108,7 +108,7 @@ export const UserDetails = () => {
               {isLoadingMetamaskSwitchReward ? "..." : ""}
             </button>
           </div>
-          {pendingUnstakes || pendingUnstakes == 0n ? (
+          {pendingUnstakes ? (
             <div className="border-b pb-2 font-azeretMono px-2">
               <div className="h-[40px] flex justify-between text-sm mt-2">
                 <p>Requested Un Delegate:</p>{" "}
