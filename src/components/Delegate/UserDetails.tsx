@@ -6,6 +6,7 @@ import { useSwitchChain, useAccount } from "wagmi";
 import { config } from "../../web3/config";
 import useUnDelegateDuration from "../../hooks/useUnDelegateDuration";
 import { useEffect, useState } from "react";
+import useVestedMuon from "../../hooks/useVesting";
 
 export const UserDetails = () => {
   const {
@@ -19,6 +20,8 @@ export const UserDetails = () => {
     isMetamaskLoadingForClaim,
     handleClaimPendingUnstakeAmount,
   } = useDelegateAction();
+
+  const { vestedAmount } = useVestedMuon();
 
   const { exitPeriodTime, userUnStakeReqTime, pendingUnstakes } =
     useUnDelegateDuration();
@@ -62,7 +65,7 @@ export const UserDetails = () => {
 
   return (
     <div className="flex items-center justify-center relative w-full ">
-      <div className="flex flex-col gap-5 sm:gap-10 relative w-full mt-2 sm:mt-0 bg-sectionBg max-w-[510px] 2xl:min-h-[510px] min-h-[500px] md:min-h-[528px] md:max-h-[528px]">
+      <div className="flex flex-col gap-5 sm:gap-10 relative w-full mt-2 sm:mt-0 bg-sectionBg  2xl:min-h-[570px] min-h-[500px] md:min-h-[580px] md:max-h-[528px]">
         <div className="flex items-center z-[200] px-4 font-medium font-azeretMono absolute h-[56px] -top-8 bg-textBackGround text-lightDarkText tracking-[2px]">
           Delegate Status
         </div>
@@ -117,7 +120,7 @@ export const UserDetails = () => {
 
               <div className="flex items-center w-full justify-end">
                 {!canClaim ? (
-                  <p className="text-[12px] sm:text-sm w-full">
+                  <p className="text-[12px] sm:text-[12px] w-full">
                     Un Delegate Time: {userClaimTime}
                   </p>
                 ) : (
@@ -151,11 +154,17 @@ export const UserDetails = () => {
           )}
           <div className="w-full text-xs xl:text-sm transition-all action-sidebar flex flex-col justify-center text-lightDarkText bg-sectionBg  ">
             <div className="flex justify-between items-center py-4 border-b border-lightDarkText px-3">
-              <p>$MUON Staked Amount</p>
+              <p>Staked Amount</p>
               <div className="font-normal ">
                 {userDelegateBalances
                   ? `${userDelegateBalances.dsp} $MUON`
                   : "0"}
+              </div>
+            </div>
+            <div className="flex justify-between items-center py-4 border-b border-lightDarkText px-3">
+              <p>Vested Amount</p>
+              <div className="font-normal ">
+                {vestedAmount ? `${vestedAmount} $MUON` : "0"}
               </div>
             </div>
             <div className="flex justify-between py-4 items-center  px-3">

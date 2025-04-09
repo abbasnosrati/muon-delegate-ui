@@ -20,6 +20,7 @@ const Delegate = () => {
         <div className="flex items-center px-4 font-medium font-azeretMono absolute h-[56px] -top-8 bg-textBackGround text-lightDarkText tracking-[2px]">
           Delegate $MUON
         </div>
+
         <div className="pion actions-content  dark:bg-alice-body-background dark:shadow-lg w-full px-4 py-8  min-h-[400px] md:min-h-[428px] md:max-h-[424px] overflow-hidden flex flex-col">
           <DelegateMuon />
           {!userDelegateBalances?.dsp && <RewardStatusCheckbox />}
