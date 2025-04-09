@@ -109,15 +109,15 @@ export const UserDetails = () => {
             </button>
           </div>
           {pendingUnstakes || pendingUnstakes == 0n ? (
-            <div className="border-b pb-2">
-              <div className="h-[40px] flex justify-between text-[12px] mt-2">
+            <div className="border-b pb-2 font-azeretMono px-2">
+              <div className="h-[40px] flex justify-between text-sm mt-2">
                 <p>Requested Un Delegate:</p>{" "}
                 <p>{w3bNumberFromBigint(pendingUnstakes!).dsp}</p>
               </div>
 
               <div className="flex items-center w-full justify-between">
                 {!userClaimTime ? (
-                  <p className="text-[12px] w-full">
+                  <p className="text-[12px] sm:text-sm w-full">
                     Un Delegate Time: {userClaimTime}
                   </p>
                 ) : (
