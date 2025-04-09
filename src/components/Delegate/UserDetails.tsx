@@ -115,8 +115,8 @@ export const UserDetails = () => {
                 <p>{w3bNumberFromBigint(pendingUnstakes!).dsp}</p>
               </div>
 
-              <div className="flex items-center w-full justify-between">
-                {!userClaimTime ? (
+              <div className="flex items-center w-full justify-end">
+                {!canClaim ? (
                   <p className="text-[12px] sm:text-sm w-full">
                     Un Delegate Time: {userClaimTime}
                   </p>
@@ -124,7 +124,7 @@ export const UserDetails = () => {
                   ""
                 )}
 
-                <div className="flex justify-end  w-full">
+                <div className="flex justify-end  ">
                   {isMetamaskLoadingForClaim ? (
                     <button
                       className="btn btn--action text-[10px] 3xl:text-base text-nowrap "
