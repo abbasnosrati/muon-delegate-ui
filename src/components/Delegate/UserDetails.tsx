@@ -161,12 +161,16 @@ export const UserDetails = () => {
                   : "0"}
               </div>
             </div>
-            <div className="flex justify-between items-center py-4 border-b border-lightDarkText px-3">
-              <p>Vested Amount</p>
-              <div className="font-normal ">
-                {vestedAmount ? `${vestedAmount} $MUON` : "0"}
+            {userDelegateBalances && vestedAmount ? (
+              <div className="flex justify-between items-center py-4 border-b border-lightDarkText px-3">
+                <p>Vested Amount</p>
+                <div className="font-normal ">
+                  {vestedAmount ? `${vestedAmount} $MUON` : "0"}
+                </div>
               </div>
-            </div>
+            ) : (
+              ""
+            )}
             <div className="flex justify-between py-4 items-center  px-3">
               <div>Reward</div>
               <div className="font-normal ">
