@@ -1,8 +1,9 @@
 const footerItems = [
-  { id: 0, title: "X", src: "https://x.com/muon_net" },
-  { id: 1, title: "Discord", src: "https://discord.gg/muonnetwork" },
-  { id: 2, title: "Medium", src: "https://medium.com/muon" },
-  { id: 3, title: "Telegram", src: "https://t.me/muon_net" },
+  { id: 0, title: "Github", src: "https://Github.com/muon-protocol" },
+  { id: 1, title: "Medium", src: "https://medium.com/muon" },
+  { id: 2, title: "Discord", src: "https://discord.gg/muonnetwork" },
+  { id: 3, title: "X", src: "https://x.com/muon_net" },
+  // { id: 3, title: 'Telegram', src: 'https://t.me/muon_net' },
 ];
 
 export const Footer = () => {

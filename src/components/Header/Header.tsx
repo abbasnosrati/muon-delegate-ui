@@ -1,20 +1,30 @@
 // import { MUON_TOKEN_ADDRESS } from "../../constants/addresses";
+import { MUON_TOKEN_ADDRESS } from "../../constants/addresses";
 import useDelegateAction from "../../context/DelegateAction/useDelegateAction";
+import { getCurrentChainId } from "../../web3/chains";
 import { ConnectWalletButton } from "../common/ConnectWalletButton";
 import numeral from "numeral";
 const menuItems = [
-  { id: 0, title: "GitHub", src: "https://Github.com/muon-protocol" },
-  { id: 1, title: "Docs", src: "https://docs.muon.net/muon-protocol" },
   {
-    id: 2,
+    id: 0,
     title: "Run a Node",
     src: "https://docs.muon.net/muon-protocol/running-a-muon-node",
   },
-  // {
-  //   id: 3,
-  //   title: "Buy $MUON",
-  //   src: `https://thena.fi/swap?inputCurrency=BNB&outputCurrency=${MUON_TOKEN_ADDRESS}&swapType=1`,
-  // },
+  { id: 1, title: "Docs", src: "https://docs.muon.net/muon-protocol" },
+  {
+    id: 2,
+    title: "Buy $MUON",
+
+    src: `https://lfj.gg/avalanche/swap?inputCurrency=${
+      MUON_TOKEN_ADDRESS[getCurrentChainId()]
+    }&outputCurrency=AVAX`,
+  },
+  {
+    id: 3,
+    title: "Support",
+    src: `https://discord.com/channels/830888887253073920/1351862250217934860`,
+  },
+  // { id: 0, title: "GitHub", src: "https://Github.com/muon-protocol" },
 ];
 
 const Header = () => {
