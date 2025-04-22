@@ -34,6 +34,7 @@ export default {
         disabled: "#C0C0C0",
         gray3: "#939393",
         menuBgColor: "#8E8888",
+        borderColorOpacity: "#24212499",
         "so-dark-gray": "#3D3D3D",
         "so-dark-gray-2": "#4d4c4c",
         "modal-small": "#C5C6D4",

@@ -57,7 +57,7 @@ export const ConnectWalletButton = ({
                   return (
                     <button
                       onClick={openConnectModal}
-                      className="btn btn--action"
+                      className="btn btn--action !text-[10px] md:!text-base !px-[46px] md:!px-[63px]"
                     >
                       Connect Wallet
                     </button>

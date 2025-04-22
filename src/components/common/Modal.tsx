@@ -30,7 +30,7 @@ const Modal: FC<{
             data-testid="modal-wrapper"
           >
             <Scale
-              className={`modal-content ${
+              className={`modal-content border-borderColorOpacity border-[4px] ${
                 size === "lg" ? "max-w-[466px]" : "max-w-[400px]"
               } w-[90%] px-4 md:px-8 pt-5 pb-4 md:pb-8 relative -z-10 ${
                 size === "sm" ? "bg-sectionBg pb-0" : ""
