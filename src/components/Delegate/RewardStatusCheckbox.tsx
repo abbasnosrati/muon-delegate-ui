@@ -14,7 +14,7 @@ export const RewardStatusCheckbox = () => {
               onChange={() => handleCheckboxChange(RewardStatus.ReStakeReward)}
               className="mr-1"
             />
-            ReStake Reward
+            Restake Reward
           </label>
 
           <label className="cursor-pointer">

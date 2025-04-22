@@ -161,5 +161,5 @@ export type MuonNodeStakingUsersResult = readonly [
 
 export enum RewardStatus {
   TransferReward = "Transfer Reward",
-  ReStakeReward = "ReStake Reward",
+  ReStakeReward = "Restake Reward",
 }

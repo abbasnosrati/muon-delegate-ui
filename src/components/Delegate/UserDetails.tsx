@@ -86,7 +86,7 @@ export const UserDetails = () => {
               <p>Status</p>
               <p className="text-sm md:text-[12px] xl:text-sm font-medium">
                 {userDelegateBalances?.dsp && rewardStatus
-                  ? "ReStake"
+                  ? "Restake"
                   : userDelegateBalances?.dsp && !rewardStatus
                   ? "Transfer"
                   : "..."}
@@ -105,7 +105,7 @@ export const UserDetails = () => {
                 </span>
               ) : (
                 <span>
-                  Switch to <span className="font-medium">"ReStake"</span>
+                  Switch to <span className="font-medium">"Restake"</span>
                 </span>
               )}
               {isLoadingMetamaskSwitchReward ? "..." : ""}
@@ -114,14 +114,14 @@ export const UserDetails = () => {
           {pendingUnstakes ? (
             <div className="border-b pb-2 font-azeretMono px-2">
               <div className="h-[40px] flex justify-between text-sm mt-2">
-                <p>Requested Un Delegate:</p>{" "}
+                <p>Requested Un-Delegate:</p>{" "}
                 <p>{w3bNumberFromBigint(pendingUnstakes!).dsp}</p>
               </div>
 
               <div className="flex items-center w-full justify-end">
                 {!canClaim ? (
                   <p className="text-[12px] sm:text-[12px] w-full">
-                    Un Delegate Time: {userClaimTime}
+                    Un-Delegate Time: {userClaimTime}
                   </p>
                 ) : (
                   ""
@@ -268,7 +268,7 @@ const UnDelegateMUON = () => {
             " cursor-auto text-sm md:text-[12px] xl:text-sm"
           }`}
         >
-          {isMetaMaskLoadingUnDelegate ? "Un Delegating..." : "Un Delegate"}
+          {isMetaMaskLoadingUnDelegate ? "Un-Delegating..." : "Un-Delegate"}
         </button>
       )}
     </div>
