@@ -71,9 +71,9 @@ export const UserDetails = () => {
         </div>
         <div
           className={`${
-            !userDelegateBalances ||
-            (!userDelegateBalances.dsp &&
-              "bg-gray absolute top-0 bottom-0 right-0 left-0 z-[100] opacity-80")
+            !userDelegateBalances?.dsp &&
+            !pendingUnstakes &&
+            "bg-gray absolute top-0 bottom-0 right-0 left-0 z-[100] opacity-80"
           }`}
         ></div>
         <div
