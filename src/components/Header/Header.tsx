@@ -19,12 +19,17 @@ const menuItems = [
   },
   {
     id: 2,
+    title: "Vesting",
+    src: "https://vesting.muon.net/",
+  },
+  {
+    id: 3,
     title: "Run a Node",
     src: "https://docs.muon.net/muon-protocol/running-a-muon-node",
   },
-  { id: 3, title: "Docs", src: "https://docs.muon.net/muon-protocol" },
+  { id: 4, title: "Docs", src: "https://docs.muon.net/muon-protocol" },
   {
-    id: 4,
+    id: 5,
     title: "Buy $MUON",
 
     src: `https://lfj.gg/avalanche/swap?inputCurrency=${
@@ -32,7 +37,7 @@ const menuItems = [
     }&outputCurrency=AVAX`,
   },
   {
-    id: 5,
+    id: 6,
     title: "Support",
     src: `https://discord.com/channels/830888887253073920/1351862250217934860`,
   },
