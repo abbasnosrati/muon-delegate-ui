@@ -20,11 +20,11 @@ export const DelegateMuon = () => {
   return (
     <div>
       <div className=" border-b border-lightDarkText my-10">
-        <div className=" px-2 flex justify-between items-center border-t border-l border-r border-lightDarkText max-w-[200px] h-[42px]">
+        <div className=" px-2 flex justify-between items-center border-t border-l border-r border-lightDarkText max-w-[250px] h-[42px]">
           <p className="balance flex text-sm md:text-[12px] xl:text-sm max-md:font-medium  items-center">
             Balance:
           </p>
-          <span className="text-sm md:text-[12px] xl:text-sm">
+          <span className="text-sm md:text-[12px] xl:text-sm text-nowrap ">
             {muonBalance?.dsp ?? 0} ${MUON.token}
           </span>
         </div>
